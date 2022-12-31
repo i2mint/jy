@@ -68,12 +68,32 @@ def add_js_funcs(
     forbidden_method_names=(),
     apply_defaults=True
 ):
-    """
+    '''
     Add js call functions as attributes to an object.
 
     If object is not given, ``add_js_funcs`` will use a new ``JsBridge`` instance.
 
-    """
+    >>> js_code = """
+    ... function foo(a, b="hello", c= 3) {
+    ...     return a + b.length * c
+    ... }
+    ... const bar = (y, z = 1) => y * z
+    ... func.assigned.to.nested.prop = function (x) {
+    ...     return x + 3
+    ... }
+    ... """
+    >>> js = add_js_funcs(js_code)
+    >>> from inspect import signature
+    >>> list(vars(js))
+    ['foo', 'bar', 'prop']
+    >>> signature(js.foo)
+    <Sig (a, b='hello', c=3)>
+    >>> js.foo(1, 'hi')
+    'foo(1, "hi", 3)'
+    >>> js.prop('up')
+    'func.assigned.to.nested.prop("up")'
+    '''
+
     if obj is None:
         obj = JsBridge()
 

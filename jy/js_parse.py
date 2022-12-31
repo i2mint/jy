@@ -94,6 +94,33 @@ def extract_func_name_and_params(ast_node: AstNode):
 
 
 def func_name_and_params_pairs(js_code: str, *, encoding=None):
+    """
+    Get ``(name, params)`` pairs of function definitions extracted from ``js_code``.
+
+    >>> js_code = '''
+    ... function foo(a, b="hello", c= 3) {
+    ...     return a + b.length * c
+    ... }
+    ... const bar = (y, z = 1) => y * z
+    ... func.assigned.to.nested.prop = function (x) {
+    ...     return x + 3
+    ... }'''
+    >>> assert list(func_name_and_params_pairs(js_code)) == [
+    ...     ('foo', [
+    ...         {'name': 'a'},
+    ...         {'name': 'b', 'default': 'hello'},
+    ...         {'name': 'c', 'default': 3}
+    ...     ]),
+    ...     ('bar', [
+    ...         {'name': 'y'},
+    ...         {'name': 'z', 'default': 1}
+    ...     ]),
+    ...     ('func.assigned.to.nested.prop', [
+    ...         {'name': 'x'}
+    ...     ])
+    ... ]
+
+    """
     ast_script = parse_js_code(js_code, encoding=encoding)
     for ast_node in ast_script.body:
         yield from extract_func_name_and_params(ast_node)
