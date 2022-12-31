@@ -14,13 +14,14 @@ add_one = function (x) {
     return x + 1
 }
 
+// does the presence of a let break the parser?
 let with_let = function (x) {
     return x + 2
 }
 
-const with_const = function (x) {
-    return x + 2
-}
+// with arrow func
+// (also testing if const breaks the parse)
+const with_arrow_func = (y, z= 1) => y * z
 
 // function assigned to a nested property
 func.assigned.to.nested.prop = function (x) {

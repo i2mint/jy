@@ -15,7 +15,7 @@ def test_add_js_call_attributes_to_obj():
 
     # js has two methods called bar and foo
     assert sorted([x for x in dir(js) if not x.startswith('_')]) == [
-        'add_one', 'bar', 'foo', 'obj', 'prop', 'with_const', 'with_let'
+        'add_one', 'bar', 'foo', 'obj', 'prop', 'with_arrow_func', 'with_let'
     ]
 
     # they mirror the signatures of the underlying JS functions

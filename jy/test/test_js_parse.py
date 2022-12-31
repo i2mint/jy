@@ -28,7 +28,7 @@ def test_func_name_and_params_pairs():
         ),
         ('add_one', [{'name': 'x'}]),
         ('with_let', [{'name': 'x'}]),
-        ('with_const', [{'name': 'x'}]),
+        ('with_arrow_func', [{'name': 'y'}, {'name': 'z', 'default': 1}]),
         # Note that the name here is dot-separated!
         ('func.assigned.to.nested.prop', [{'name': 'x'}]),
         ('obj', [{'name': 'exports'}]),

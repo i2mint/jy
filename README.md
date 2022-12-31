@@ -17,7 +17,7 @@ Say you have the ``test01.js``
 js has two methods called bar and foo
 
     assert sorted([x for x in dir(js) if not x.startswith('_')]) == [
-        'add_one', 'bar', 'foo', 'obj', 'prop', 'with_const', 'with_let'
+        'add_one', 'bar', 'foo', 'obj', 'prop', 'with_arrow_func', 'with_let'
     ]
 
 They mirror the signatures of the underlying JS functions
@@ -74,13 +74,14 @@ add_one = function (x) {
     return x + 1
 }
 
+// does the presence of a let break the parser?
 let with_let = function (x) {
     return x + 2
 }
 
-const with_const = function (x) {
-    return x + 2
-}
+// with arrow func
+// (also testing if const breaks the parse)
+const with_arrow_func = (y, z= 1) => y * z
 
 // function assigned to a nested property
 func.assigned.to.nested.prop = function (x) {
