@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 from functools import wraps
 from itertools import chain
+from typing import Optional
 
 import esprima
 
@@ -40,7 +41,7 @@ def if_none_output_raise_unknown_type(context=""):
     return _if_none_output_raise_wrapper
 
 
-def parse_js_code(js_code: str, encoding: str | None = None) -> AstScript:
+def parse_js_code(js_code: str, encoding: Optional[str] = None) -> AstScript:
     if os.path.isfile(js_code):
         js_code = Path(js_code).read_text(encoding=encoding)
     return esprima.parse(js_code)

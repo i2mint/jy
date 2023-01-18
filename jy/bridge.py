@@ -1,6 +1,6 @@
 """Python portals to JS"""
 
-from typing import Any
+from typing import Any, Optional
 from functools import partial
 
 from dol.signatures import Sig
@@ -63,8 +63,8 @@ def add_js_funcs(
     js_code: str,
     *,
     obj: Any = None,
-    name: str | None = None,
-    encoding: str | None = None,
+    name: Optional[str] = None,
+    encoding: Optional[str] = None,
     forbidden_method_names=(),
     apply_defaults=True
 ):
