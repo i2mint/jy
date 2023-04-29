@@ -69,7 +69,8 @@ def add_js_funcs(
     name: Optional[str] = None,
     encoding: Optional[str] = None,
     forbidden_method_names=(),
-    apply_defaults=True
+    apply_defaults=True,
+    value_trans=dflt_py_to_js_value_trans,
 ):
     '''
     Add js call functions as attributes to an object.
@@ -108,17 +109,21 @@ def add_js_funcs(
         #  raising an error
         if func_name in forbidden_method_names:
             raise ValueError(
-                f"This func name was already used, or mentioned in "
-                f"the forbidden_method_names argument: {func_name}"
+                f'This func name was already used, or mentioned in '
+                f'the forbidden_method_names argument: {func_name}'
             )
         setattr(
             obj,
             func_name,
-            mk_py_binder_func(full_func_ref, params, apply_defaults=apply_defaults)
+            mk_py_binder_func(
+                full_func_ref,
+                params,
+                value_trans=value_trans,
+                apply_defaults=apply_defaults,
+            ),
         )
 
     if name:
         obj.__name__ = name
 
     return obj
-

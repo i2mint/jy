@@ -125,7 +125,12 @@ def func_name_and_params_pairs(js_code: str, *, encoding=None):
     """
     ast_script = parse_js_code(js_code, encoding=encoding)
     for ast_node in ast_script.body:
-        yield from extract_func_name_and_params(ast_node)
+        # TODO: Check for type of ast_node before calling extract_func_name_and_params
+        #  For now, just ignoring errors:
+        try:
+            yield from extract_func_name_and_params(ast_node)
+        except Exception as e:
+            print(f"Exception while parsing {ast_node}: {e}")
 
 
 def dflt_py_to_js_value_trans(x):
