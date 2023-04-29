@@ -5,6 +5,7 @@ from pathlib import Path
 from functools import wraps
 from itertools import chain
 from typing import Optional
+import json
 
 import esprima
 
@@ -132,4 +133,6 @@ def dflt_py_to_js_value_trans(x):
         return str(x).lower()
     elif isinstance(x, str):
         return f'"{x}"'  # surround with quotes
+    elif isinstance(x, dict):
+        return json.dumps(x)
     return x

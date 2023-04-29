@@ -7,6 +7,7 @@ from dol.signatures import Sig
 
 from jy.js_parse import dflt_py_to_js_value_trans, func_name_and_params_pairs
 
+
 # TODO: Add value transformer (routing). For example, booleans, True->true
 def _js_func_call(
     *args,
@@ -24,6 +25,8 @@ def _js_func_call(
     return __func_call_template.format(inputs=inputs)
 
 
+# TODO: value_trans only sees value. Might want to transform according to other
+#  contextural information, like the parameter name, or the function name, etc.
 def mk_py_binder_func(
     name,
     params,
