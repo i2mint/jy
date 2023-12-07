@@ -48,6 +48,18 @@ def parse_js_code(js_code: str, encoding: Optional[str] = None) -> AstScript:
     return esprima.parse(js_code)
 
 
+def extract_function_body(function_def_code: str) -> str:
+    """Extract the body of a function definition from its code"""
+    body_tree = parse_js_code(function_def_code).body[0].body
+
+    # Find the position of the first opening brace
+    start = function_def_code.find('{', body_tree.start)
+    # Find the position of the last closing brace
+    end = function_def_code.rfind('}', body_tree.start, body_tree.end)
+    
+    return function_def_code[start+1:end]
+
+
 @if_none_output_raise_unknown_type("to extract obj name from")
 def _extract_obj_name(x: AstNode, /):
     if x.type == "Identifier":
