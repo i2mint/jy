@@ -48,16 +48,26 @@ def parse_js_code(js_code: str, encoding: Optional[str] = None) -> AstScript:
     return esprima.parse(js_code)
 
 
-def extract_function_body(function_def_code: str) -> str:
+def extract_function_def_parts(func_def_code: str) -> str:
     """Extract the body of a function definition from its code"""
-    body_tree = parse_js_code(function_def_code).body[0].body
+    body_tree = parse_js_code(func_def_code).body[0].body
 
     # Find the position of the first opening brace
-    start = function_def_code.find('{', body_tree.start)
+    start = func_def_code.find('{', body_tree.start)
     # Find the position of the last closing brace
-    end = function_def_code.rfind('}', body_tree.start, body_tree.end)
-    
-    return function_def_code[start+1:end]
+    end = func_def_code.rfind('}', body_tree.start, body_tree.end)
+
+    return (
+        func_def_code[:start],
+        func_def_code[start + 1 : end],
+        func_def_code[end + 1 :],
+    )
+
+
+def append_to_func_body(func_def_code: str, code_to_append: str) -> str:
+    """Append code to the body of a function definition"""
+    pre, body, post = extract_function_def_parts(func_def_code)
+    return pre + '{' + body + code_to_append + '}' + post
 
 
 @if_none_output_raise_unknown_type("to extract obj name from")
@@ -181,7 +191,7 @@ def replace_ids_in_code(
 
     This function is useful to make id-unique copies of HTML/JS components that have IDs.
     This need was noticed and discussed in: https://github.com/i2mint/jy/discussions/3#discussioncomment-6862843
-    
+
     """
     # Patterns to match IDs
     patterns = [
