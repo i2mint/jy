@@ -17,9 +17,7 @@ def _js_func_call(
     __apply_defaults=True,
     **kwargs,
 ):
-    _kwargs = __sig.map_arguments(
-        args, kwargs, apply_defaults=__apply_defaults
-    )
+    _kwargs = __sig.map_arguments(args, kwargs, apply_defaults=__apply_defaults)
     inputs = map(__value_trans, _kwargs.values())
     inputs = ', '.join(map(str, inputs))
     return __func_call_template.format(inputs=inputs)

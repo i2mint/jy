@@ -15,11 +15,18 @@ def test_add_js_call_attributes_to_obj():
 
     # js has two methods called bar and foo
     assert sorted([x for x in dir(js) if not x.startswith('_')]) == [
-        'add_one', 'bar', 'foo', 'obj', 'prop', 'with_arrow_func', 'with_let'
+        'add_one',
+        'bar',
+        'foo',
+        'obj',
+        'prop',
+        'with_arrow_func',
+        'with_let',
     ]
 
     # they mirror the signatures of the underlying JS functions
     from inspect import signature
+
     assert str(signature(js.foo)) == "(a, b='hello', c=3)"
     assert str(signature(js.bar)) == "(green, eggs='food', and=True, ham=4)"
 
@@ -31,9 +38,7 @@ def test_add_js_call_attributes_to_obj():
     # Also, notice that though "prop" is the name of js's attribute,
     # the function call string does indeed use the original full reference:
     # ``func.assigned.to.nested.prop``
-    assert js.prop('up') == (
-        'func.assigned.to.nested.prop("up")'
-    )
+    assert js.prop('up') == ('func.assigned.to.nested.prop("up")')
 
     # Notice that the python (signature) defaults are applied before translating to JS
     assert js.bar(42) == 'bar(42, "food", true, 4)'
@@ -44,4 +49,3 @@ def test_add_js_call_attributes_to_obj():
     # which will have the effect of letting JS apply it's defaults, what ever they are
     alt_js = add_js_funcs(test01_js_code, apply_defaults=False)
     assert alt_js.bar(42) == 'bar(42)'
-

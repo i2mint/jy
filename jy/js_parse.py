@@ -19,11 +19,11 @@ AstNode = esprima.nodes.Node
 class UnknownNodeType(ValueError):
     """To be raised when an AST node type wasn't handled by a function"""
 
-    def __init__(self, node_type, context=""):
-        super().__init__(f"Unknown type {context}: {node_type}")
+    def __init__(self, node_type, context=''):
+        super().__init__(f'Unknown type {context}: {node_type}')
 
 
-def if_none_output_raise_unknown_type(context=""):
+def if_none_output_raise_unknown_type(context=''):
     def _if_none_output_raise_wrapper(func):
         @wraps(func)
         def _func(*args, **kwargs):
@@ -70,21 +70,21 @@ def append_to_func_body(func_def_code: str, code_to_append: str) -> str:
     return pre + '{' + body + code_to_append + '}' + post
 
 
-@if_none_output_raise_unknown_type("to extract obj name from")
+@if_none_output_raise_unknown_type('to extract obj name from')
 def _extract_obj_name(x: AstNode, /):
-    if x.type == "Identifier":
+    if x.type == 'Identifier':
         return x.name
-    elif x.type == "MemberExpression":
+    elif x.type == 'MemberExpression':
         object_name = _extract_obj_name(x.object)
         property_name = _extract_obj_name(x.property)
-        return f"{object_name}.{property_name}"
+        return f'{object_name}.{property_name}'
 
 
-@if_none_output_raise_unknown_type("to extract params from")
+@if_none_output_raise_unknown_type('to extract params from')
 def _extract_params(x: AstNode, /):
-    if x.type == "Identifier":
+    if x.type == 'Identifier':
         return dict(name=x.name)
-    elif x.type == "AssignmentPattern":
+    elif x.type == 'AssignmentPattern':
         return dict(name=x.left.name, default=x.right.value)
 
 
@@ -99,21 +99,21 @@ def _extract_params_from_function_expression(x):
 def extract_func_name_and_params(ast_node: AstNode):
     """Extract one or several function ``(name, params)`` pair(s) from an AST node"""
     x = ast_node
-    if x.type == "FunctionDeclaration":
+    if x.type == 'FunctionDeclaration':
         yield x.id.name, list(extract_js_func_params(x.params))
-    elif x.type == "AssignmentExpression":
+    elif x.type == 'AssignmentExpression':
         yield (
             _extract_obj_name(x.left),
             list(extract_js_func_params(x.right.params)),
         )
-    elif x.type == "VariableDeclarator":
+    elif x.type == 'VariableDeclarator':
         yield x.id.name, list(extract_js_func_params(x.init.params))
-    elif x.type == "VariableDeclaration":
+    elif x.type == 'VariableDeclaration':
         # Here we may have several declarations, so we use yield from
         yield from chain.from_iterable(
             map(extract_func_name_and_params, x.declarations)
         )
-    elif x.type == "ExpressionStatement":
+    elif x.type == 'ExpressionStatement':
         yield from extract_func_name_and_params(x.expression)
 
 
@@ -152,7 +152,7 @@ def func_name_and_params_pairs(js_code: str, *, encoding=None):
         try:
             yield from extract_func_name_and_params(ast_node)
         except Exception as e:
-            print(f"Exception while parsing {ast_node}: {e}")
+            print(f'Exception while parsing {ast_node}: {e}')
 
 
 def dflt_py_to_js_value_trans(x):
@@ -171,7 +171,7 @@ from typing import Tuple
 
 _dflt_patterns_for_html_ids = (
     r'id="([^"]+)"',  # HTML id attributes
-    r"#([a-zA-Z][\w\-]*)",  # CSS IDs
+    r'#([a-zA-Z][\w\-]*)',  # CSS IDs
     r'document\.getElementById\("([^"]+)"\)',  # JS getElementById
 )
 
@@ -196,7 +196,7 @@ def replace_ids_in_code(
     # Patterns to match IDs
     patterns = [
         r'id="([^"]+)"',  # HTML id attributes
-        r"#([a-zA-Z][\w\-]*)",  # CSS IDs
+        r'#([a-zA-Z][\w\-]*)',  # CSS IDs
         r'document\.getElementById\("([^"]+)"\)',  # JS getElementById
     ]
 
@@ -205,7 +205,7 @@ def replace_ids_in_code(
     # Generate a unique ID
     def unique_id(match):
         old_id = match.group(1)
-        new_id = old_id + "_" + str(uuid.uuid4()).replace("-", "")[:8]
+        new_id = old_id + '_' + str(uuid.uuid4()).replace('-', '')[:8]
         replaced[old_id] = new_id
         return match.group(0).replace(old_id, new_id)
 
