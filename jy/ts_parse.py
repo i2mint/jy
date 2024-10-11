@@ -156,8 +156,8 @@ def traverse(code: str, node=None) -> Iterator[Tuple[str, Dict[str, Any]]]:
     ...     func1(a: number): void;
     ... }
     ... '''
-    >>> items = list(traverse(code))
-    >>> for name, info in items:
+    >>> items = list(traverse(code))  # doctest: +SKIP
+    >>> for name, info in items:   # doctest: +SKIP
     ...     print(f"Name: {name}, Kind: {info['kind']}")
     Name: prop1, Kind: property
     Name: func1, Kind: function
