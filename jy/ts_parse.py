@@ -122,7 +122,7 @@ def handle_interface_declaration(
     body_node = node.child_by_field_name('body')
     if body_node:
         for member_node in body_node.named_children:
-            yield from traverse(code, member_node)
+            yield from parse_ts(code, member_node)
 
 
 def default_handler(code: str, node) -> Iterator[Tuple[str, Dict[str, Any]]]:
@@ -131,7 +131,7 @@ def default_handler(code: str, node) -> Iterator[Tuple[str, Dict[str, Any]]]:
     """
     # Recurse into child nodes
     for child in node.named_children:
-        yield from traverse(code, child)
+        yield from parse_ts(code, child)
 
 
 # Mapping from node types to handler functions
@@ -143,7 +143,7 @@ node_handlers: Dict[str, Any] = {
 }
 
 
-def traverse(code: str, node=None) -> Iterator[Tuple[str, Dict[str, Any]]]:
+def parse_ts(code: str, node=None) -> Iterator[Tuple[str, Dict[str, Any]]]:
     """
     Generator function that traverses the syntax tree and yields (name, info dict) tuples.
 
@@ -156,7 +156,7 @@ def traverse(code: str, node=None) -> Iterator[Tuple[str, Dict[str, Any]]]:
     ...     func1(a: number): void;
     ... }
     ... '''
-    >>> items = list(traverse(code))  # doctest: +SKIP
+    >>> items = list(parse_ts(code))  # doctest: +SKIP
     >>> for name, info in items:   # doctest: +SKIP
     ...     print(f"Name: {name}, Kind: {info['kind']}")
     Name: prop1, Kind: property
@@ -179,7 +179,7 @@ def traverse(code: str, node=None) -> Iterator[Tuple[str, Dict[str, Any]]]:
     yield from handler(code, node)
 
 
-def test_traverse():
+def test_parse_ts():
     # TODO: Many tests don't work. Make them work!
     code = """
     interface ComplexInterface<T> {
@@ -215,7 +215,7 @@ def test_traverse():
     }
     """
 
-    items = list(traverse(code))
+    items = list(parse_ts(code))
 
     # Collect items into a dictionary for easier access
     items_dict = {name: info for name, info in items}
