@@ -69,8 +69,8 @@ def default_token_replacer(matched_token: str, token_class: str):
     Returns:
     - The replaced token with a unique suffix.
     
-    >>> default_token_replacer('id="test"', 'id')
-    'id="test_<some_unique_suffix>"'
+    >>> default_token_replacer('id="test"', 'id')  # doctest: +ELLIPSIS
+    'id="test_..."'
     """
     unique_suffix = str(uuid.uuid4()).replace('-', '')[
         :8
