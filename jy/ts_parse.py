@@ -1,5 +1,87 @@
 """Tools to parse TS code"""
 
+# -------------------------------------------------------------------------------------
+# The let-an-LLM-do-it way
+
+
+def parse_ts_with_oa(ts_code: str):
+    """
+    Parse TypeScript code using the OpenAI API.
+    """
+
+    from oa.tools import prompt_json_function
+
+    schema = {
+        'name': 'whatevs',
+        'strict': False,
+        'schema': {
+            'type': 'object',
+            'properties': {
+                'interfaces': {
+                    'type': 'array',
+                    'items': {
+                        'type': 'object',
+                        'properties': {
+                            'name': {
+                                'type': 'string',
+                                'description': 'The name of the interface.',
+                            },
+                            'description': {
+                                'type': 'string',
+                                'description': 'A brief description of the interface (if available).',
+                            },
+                            'properties': {
+                                'type': 'array',
+                                'items': {
+                                    'type': 'object',
+                                    'properties': {
+                                        'name': {
+                                            'type': 'string',
+                                            'description': 'The name of the property within the interface.',
+                                        },
+                                        'type': {
+                                            'type': 'string',
+                                            'description': 'The TypeScript type of the property.',
+                                        },
+                                        'description': {
+                                            'type': 'string',
+                                            'description': 'A brief description of the property (if available).',
+                                        },
+                                        'default': {
+                                            'type': ['string', 'number', 'null'],
+                                            'description': 'The default value for the property (if available).',
+                                        },
+                                        'optional': {
+                                            'type': 'boolean',
+                                            'description': 'Indicates whether the property is optional.',
+                                        },
+                                    },
+                                    'required': ['name'],
+                                },
+                            },
+                        },
+                        'required': ['name', 'properties'],
+                    },
+                }
+            },
+        },
+    }
+
+    return prompt_json_function(
+        """
+        You are a typescript parser.
+        Parse through the following typescript file(s) contents and extract information 
+        about the objects in them, returning a json that fits the json_schema.
+
+        {ts_code}
+        """,
+        json_schema=schema,
+    )
+
+
+# -------------------------------------------------------------------------------------
+# The grammar-based-parsing way
+
 from typing import Iterator, Dict, Any, Optional, Tuple
 
 
