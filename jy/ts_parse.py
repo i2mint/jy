@@ -83,8 +83,6 @@ def parse_ts_with_oa(
 
         It is imparative that for each property, you try to see if you can find a default 
         value, and include it as a "default" field in the json schema of that property.
-        When you do find a default mentioned in the description, you can remove that 
-        from the description and include it in the "default" field.
 
         {extra_context}
 
