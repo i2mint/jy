@@ -4,7 +4,9 @@
 # The let-an-LLM-do-it way
 
 
-def parse_ts_with_oa(ts_code: str):
+def parse_ts_with_oa(
+        ts_code: str, *, schema_name='parsed_ts', strict=False
+    ):
     """
     Parse TypeScript code using the OpenAI API.
     """
@@ -12,8 +14,8 @@ def parse_ts_with_oa(ts_code: str):
     from oa.tools import prompt_json_function
 
     schema = {
-        'name': 'whatevs',
-        'strict': False,
+        'name': schema_name,
+        'strict': strict,
         'schema': {
             'type': 'object',
             'properties': {
@@ -67,7 +69,7 @@ def parse_ts_with_oa(ts_code: str):
         },
     }
 
-    return prompt_json_function(
+    parser = prompt_json_function(
         """
         You are a typescript parser.
         Parse through the following typescript file(s) contents and extract information 
@@ -77,6 +79,7 @@ def parse_ts_with_oa(ts_code: str):
         """,
         json_schema=schema,
     )
+    return parser(ts_code)
 
 
 # -------------------------------------------------------------------------------------
