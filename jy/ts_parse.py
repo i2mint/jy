@@ -5,8 +5,13 @@
 
 
 def parse_ts_with_oa(
-        ts_code: str, *, schema_name='parsed_ts', strict=False
-    ):
+    ts_code: str,
+    *,
+    schema_name='parsed_ts',
+    strict=False,
+    model='gpt-4o',
+    extra_context=''
+):
     """
     Parse TypeScript code using the OpenAI API.
     """
@@ -74,10 +79,21 @@ def parse_ts_with_oa(
         You are a typescript parser.
         Parse through the following typescript file(s) contents and extract information 
         about the objects in them, returning a json that fits the json_schema.
+        It's important you find and include default values, if available, for the properties.
 
-        {ts_code}
-        """,
+        It is imparative that for each property, you try to see if you can find a default 
+        value, and include it as a "default" field in the json schema of that property.
+        When you do find a default mentioned in the description, you can remove that 
+        from the description and include it in the "default" field.
+
+        {extra_context}
+
+        {{ts_code}}
+        """.format(
+            extra_context=extra_context
+        ),
         json_schema=schema,
+        model=model,
     )
     return parser(ts_code)
 
