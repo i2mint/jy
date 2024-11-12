@@ -1,9 +1,12 @@
 # jy
+
 Tools to control JS from Python.
 
 (``jy`` stands for "Js pY" or "Js python proxY".)
 
 To install:	```pip install jy```
+
+[Documentation](https://i2mint.github.io/jy/)
 
 
 # Example
