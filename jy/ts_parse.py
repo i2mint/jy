@@ -242,6 +242,7 @@ node_handlers: Dict[str, Any] = {
 }
 
 
+# TODO: Add ability to parse patterns that the simple_ts_parser handles here too.
 def parse_ts(code: str, node=None) -> Iterator[Tuple[str, Dict[str, Any]]]:
     """
     Generator function that traverses the syntax tree and yields (name, info dict) tuples.

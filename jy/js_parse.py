@@ -42,15 +42,32 @@ def if_none_output_raise_unknown_type(context=''):
     return _if_none_output_raise_wrapper
 
 
-def parse_js_code(js_code: str, encoding: Optional[str] = None) -> AstScript:
+# def parse_js(js_code: str, encoding: Optional[str] = None) -> AstScript:
+#     if os.path.isfile(js_code):
+#         js_code = Path(js_code).read_text(encoding=encoding)
+#     return esprima.parse(js_code)
+
+
+def parse_js(
+    js_code: str,
+    encoding: Optional[str] = None,
+    *,
+    ingress=lambda x: x,
+    egress=lambda x: x,
+) -> AstScript:
     if os.path.isfile(js_code):
         js_code = Path(js_code).read_text(encoding=encoding)
-    return esprima.parse(js_code)
+    # Parse the code as a module
+    js_code = ingress(js_code)
+    return egress(esprima.parse(js_code, sourceType='module'))
+
+
+parse_js_code = parse_js  # backwards compatibility alias
 
 
 def extract_function_def_parts(func_def_code: str) -> str:
     """Extract the body of a function definition from its code"""
-    body_tree = parse_js_code(func_def_code).body[0].body
+    body_tree = parse_js(func_def_code).body[0].body
 
     # Find the position of the first opening brace
     start = func_def_code.find('{', body_tree.start)
@@ -145,7 +162,7 @@ def func_name_and_params_pairs(js_code: str, *, encoding=None):
     ... ]
 
     """
-    ast_script = parse_js_code(js_code, encoding=encoding)
+    ast_script = parse_js(js_code, encoding=encoding)
     for ast_node in ast_script.body:
         # TODO: Check for type of ast_node before calling extract_func_name_and_params
         #  For now, just ignoring errors:
@@ -153,6 +170,44 @@ def func_name_and_params_pairs(js_code: str, *, encoding=None):
             yield from extract_func_name_and_params(ast_node)
         except Exception as e:
             print(f'Exception while parsing {ast_node}: {e}')
+
+
+def variable_declarations_pairs(src, *, encoding=None):
+    # Remove 'export ' keywords to make it valid JavaScript
+    remove_export = lambda x: x.replace('export ', '')
+
+    tree = parse_js(src, encoding=encoding, ingress=remove_export)
+
+    # Function to evaluate AST nodes into Python values
+    def eval_node(node):
+        if node.type == 'Literal':
+            return node.value
+        elif node.type == 'ObjectExpression':
+            obj = {}
+            for prop in node.properties:
+                key = prop.key.name if prop.key.type == 'Identifier' else prop.key.value
+                value = eval_node(prop.value)
+                obj[key] = value
+            return obj
+        elif node.type == 'ArrayExpression':
+            return [eval_node(elem) for elem in node.elements]
+        elif node.type == 'UnaryExpression':
+            if node.operator == '-':
+                return -eval_node(node.argument)
+            else:
+                return eval_node(node.argument)
+        else:
+            return None  # Add handling for other node types if necessary
+
+    # Extract variables and their values
+
+    for node in tree.body:
+        if node.type == 'VariableDeclaration':
+            for decl in node.declarations:
+                var_name = decl.id.name
+                var_value = decl.init
+                value = eval_node(var_value)
+                yield var_name, value
 
 
 def dflt_py_to_js_value_trans(x):
