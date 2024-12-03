@@ -266,7 +266,7 @@ def parse_ts(code: str, node=None) -> Iterator[Tuple[str, Dict[str, Any]]]:
     from tree_sitter_languages import get_language
 
     # Initialize the parser with the TypeScript language
-    TS_LANGUAGE = get_language('typescript')
+    TS_LANGUAGE = get_language('typescript')  # pip install tree-sitter==0.21.3 (e.g. 0.23.2 causes problems)
     parser = Parser()
     parser.set_language(TS_LANGUAGE)
 
