@@ -174,7 +174,13 @@ def func_name_and_params_pairs(js_code: str, *, encoding=None):
 
 def variable_declarations_pairs(src, *, encoding=None):
     # Remove 'export ' keywords to make it valid JavaScript
-    remove_export = lambda x: x.replace('export ', '')
+    # use re to remove export that happen in the beginning of the line
+    #
+    #
+
+    import re
+
+    remove_export = lambda x: re.sub(r'^export ', '', x, flags=re.MULTILINE)
 
     tree = parse_js(src, encoding=encoding, ingress=remove_export)
 
