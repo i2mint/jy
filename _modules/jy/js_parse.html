@@ -1,0 +1,439 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jy.js_parse &mdash; jy 0.1.17 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=71734efd"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            jy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy.html">jy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/bridge.html">jy.bridge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/js_parse.html">jy.js_parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/scrap/find_and_replace_ids.html">jy.scrap.find_and_replace_ids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/test/test_bridge.html">jy.test.test_bridge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/test/test_js_parse.html">jy.test.test_js_parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/ts_parse.html">jy.ts_parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/util.html">jy.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jy.js_parse</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jy.js_parse</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Utils to parse JS&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">esprima</span>
+
+<span class="n">AstScript</span> <span class="o">=</span> <span class="n">esprima</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">Script</span>
+<span class="n">AstNode</span> <span class="o">=</span> <span class="n">esprima</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">Node</span>
+
+
+<span class="c1"># TODO: Parse out js docs and add them to py mirror function</span>
+
+
+<div class="viewcode-block" id="UnknownNodeType">
+<a class="viewcode-back" href="../../module_docs/jy/js_parse.html#jy.js_parse.UnknownNodeType">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">UnknownNodeType</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;To be raised when an AST node type wasn&#39;t handled by a function&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unknown type </span><span class="si">{</span><span class="n">context</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">node_type</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">if_none_output_raise_unknown_type</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_if_none_output_raise_wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+        <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">output</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="c1"># Note we only extract from args, if in kwargs won&#39;t work</span>
+                <span class="c1"># For that reason, we should enforce the node to be the first,</span>
+                <span class="c1"># positional only, argument in func</span>
+                <span class="n">node</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">args</span>
+                <span class="k">raise</span> <span class="n">UnknownNodeType</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">output</span>
+
+        <span class="k">return</span> <span class="n">_func</span>
+
+    <span class="k">return</span> <span class="n">_if_none_output_raise_wrapper</span>
+
+
+<span class="c1"># def parse_js(js_code: str, encoding: Optional[str] = None) -&gt; AstScript:</span>
+<span class="c1">#     if os.path.isfile(js_code):</span>
+<span class="c1">#         js_code = Path(js_code).read_text(encoding=encoding)</span>
+<span class="c1">#     return esprima.parse(js_code)</span>
+
+
+<div class="viewcode-block" id="parse_js">
+<a class="viewcode-back" href="../../module_docs/jy/js_parse.html#jy.js_parse.parse_js">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_js</span><span class="p">(</span>
+    <span class="n">js_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">encoding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">ingress</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+    <span class="n">egress</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AstScript</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Parse JavaScript source (or a path to a ``.js`` file) into an esprima AST.</span>
+
+<span class="sd">    ``js_code`` may be a string of JS or a filesystem path, in which case the</span>
+<span class="sd">    file is read (honoring ``encoding``). ``ingress`` preprocesses the source</span>
+<span class="sd">    before parsing; ``egress`` post-processes the resulting AST.</span>
+
+<span class="sd">    &gt;&gt;&gt; tree = parse_js(&quot;const x = 42;&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; tree.body[0].type</span>
+<span class="sd">    &#39;VariableDeclaration&#39;</span>
+<span class="sd">    &gt;&gt;&gt; tree.body[0].declarations[0].id.name</span>
+<span class="sd">    &#39;x&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">js_code</span><span class="p">):</span>
+        <span class="n">js_code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">js_code</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+    <span class="c1"># Parse the code as a module</span>
+    <span class="n">js_code</span> <span class="o">=</span> <span class="n">ingress</span><span class="p">(</span><span class="n">js_code</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">egress</span><span class="p">(</span><span class="n">esprima</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">js_code</span><span class="p">,</span> <span class="n">sourceType</span><span class="o">=</span><span class="s1">&#39;module&#39;</span><span class="p">))</span></div>
+
+
+
+<span class="n">parse_js_code</span> <span class="o">=</span> <span class="n">parse_js</span>  <span class="c1"># backwards compatibility alias</span>
+
+
+<div class="viewcode-block" id="extract_function_def_parts">
+<a class="viewcode-back" href="../../module_docs/jy/js_parse.html#jy.js_parse.extract_function_def_parts">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_function_def_parts</span><span class="p">(</span><span class="n">func_def_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract the body of a function definition from its code&quot;&quot;&quot;</span>
+    <span class="n">body_tree</span> <span class="o">=</span> <span class="n">parse_js</span><span class="p">(</span><span class="n">func_def_code</span><span class="p">)</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">body</span>
+
+    <span class="c1"># Find the position of the first opening brace</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">func_def_code</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">,</span> <span class="n">body_tree</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>
+    <span class="c1"># Find the position of the last closing brace</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">func_def_code</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">,</span> <span class="n">body_tree</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">body_tree</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="n">func_def_code</span><span class="p">[:</span><span class="n">start</span><span class="p">],</span>
+        <span class="n">func_def_code</span><span class="p">[</span><span class="n">start</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:</span> <span class="n">end</span><span class="p">],</span>
+        <span class="n">func_def_code</span><span class="p">[</span><span class="n">end</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">:],</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="append_to_func_body">
+<a class="viewcode-back" href="../../module_docs/jy/js_parse.html#jy.js_parse.append_to_func_body">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">append_to_func_body</span><span class="p">(</span><span class="n">func_def_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">code_to_append</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Append code to the body of a function definition&quot;&quot;&quot;</span>
+    <span class="n">pre</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">post</span> <span class="o">=</span> <span class="n">extract_function_def_parts</span><span class="p">(</span><span class="n">func_def_code</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pre</span> <span class="o">+</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="n">body</span> <span class="o">+</span> <span class="n">code_to_append</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span> <span class="o">+</span> <span class="n">post</span></div>
+
+
+
+<span class="nd">@if_none_output_raise_unknown_type</span><span class="p">(</span><span class="s1">&#39;to extract obj name from&#39;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_obj_name</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">AstNode</span><span class="p">,</span> <span class="o">/</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;Identifier&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;MemberExpression&#39;</span><span class="p">:</span>
+        <span class="n">object_name</span> <span class="o">=</span> <span class="n">_extract_obj_name</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+        <span class="n">property_name</span> <span class="o">=</span> <span class="n">_extract_obj_name</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">property</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">object_name</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">property_name</span><span class="si">}</span><span class="s1">&#39;</span>
+
+
+<span class="nd">@if_none_output_raise_unknown_type</span><span class="p">(</span><span class="s1">&#39;to extract params from&#39;</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_params</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">AstNode</span><span class="p">,</span> <span class="o">/</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;Identifier&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;AssignmentPattern&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_js_func_params</span><span class="p">(</span><span class="n">params_list</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">map</span><span class="p">(</span><span class="n">_extract_params</span><span class="p">,</span> <span class="n">params_list</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_extract_params_from_function_expression</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">extract_js_func_params</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="extract_func_name_and_params">
+<a class="viewcode-back" href="../../module_docs/jy/js_parse.html#jy.js_parse.extract_func_name_and_params">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_func_name_and_params</span><span class="p">(</span><span class="n">ast_node</span><span class="p">:</span> <span class="n">AstNode</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract one or several function ``(name, params)`` pair(s) from an AST node&quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">ast_node</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;FunctionDeclaration&#39;</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">extract_js_func_params</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;AssignmentExpression&#39;</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="p">(</span>
+            <span class="n">_extract_obj_name</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">left</span><span class="p">),</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">extract_js_func_params</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">params</span><span class="p">)),</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;VariableDeclarator&#39;</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">extract_js_func_params</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;VariableDeclaration&#39;</span><span class="p">:</span>
+        <span class="c1"># Here we may have several declarations, so we use yield from</span>
+        <span class="k">yield from</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
+            <span class="nb">map</span><span class="p">(</span><span class="n">extract_func_name_and_params</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">declarations</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;ExpressionStatement&#39;</span><span class="p">:</span>
+        <span class="k">yield from</span> <span class="n">extract_func_name_and_params</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="func_name_and_params_pairs">
+<a class="viewcode-back" href="../../module_docs/jy/js_parse.html#jy.js_parse.func_name_and_params_pairs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">func_name_and_params_pairs</span><span class="p">(</span><span class="n">js_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get ``(name, params)`` pairs of function definitions extracted from ``js_code``.</span>
+
+<span class="sd">    &gt;&gt;&gt; js_code = &#39;&#39;&#39;</span>
+<span class="sd">    ... function foo(a, b=&quot;hello&quot;, c= 3) {</span>
+<span class="sd">    ...     return a + b.length * c</span>
+<span class="sd">    ... }</span>
+<span class="sd">    ... const bar = (y, z = 1) =&gt; y * z</span>
+<span class="sd">    ... func.assigned.to.nested.prop = function (x) {</span>
+<span class="sd">    ...     return x + 3</span>
+<span class="sd">    ... }&#39;&#39;&#39;</span>
+<span class="sd">    &gt;&gt;&gt; assert list(func_name_and_params_pairs(js_code)) == [</span>
+<span class="sd">    ...     (&#39;foo&#39;, [</span>
+<span class="sd">    ...         {&#39;name&#39;: &#39;a&#39;},</span>
+<span class="sd">    ...         {&#39;name&#39;: &#39;b&#39;, &#39;default&#39;: &#39;hello&#39;},</span>
+<span class="sd">    ...         {&#39;name&#39;: &#39;c&#39;, &#39;default&#39;: 3}</span>
+<span class="sd">    ...     ]),</span>
+<span class="sd">    ...     (&#39;bar&#39;, [</span>
+<span class="sd">    ...         {&#39;name&#39;: &#39;y&#39;},</span>
+<span class="sd">    ...         {&#39;name&#39;: &#39;z&#39;, &#39;default&#39;: 1}</span>
+<span class="sd">    ...     ]),</span>
+<span class="sd">    ...     (&#39;func.assigned.to.nested.prop&#39;, [</span>
+<span class="sd">    ...         {&#39;name&#39;: &#39;x&#39;}</span>
+<span class="sd">    ...     ])</span>
+<span class="sd">    ... ]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ast_script</span> <span class="o">=</span> <span class="n">parse_js</span><span class="p">(</span><span class="n">js_code</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ast_node</span> <span class="ow">in</span> <span class="n">ast_script</span><span class="o">.</span><span class="n">body</span><span class="p">:</span>
+        <span class="c1"># TODO: Check for type of ast_node before calling extract_func_name_and_params</span>
+        <span class="c1">#  For now, just ignoring errors:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield from</span> <span class="n">extract_func_name_and_params</span><span class="p">(</span><span class="n">ast_node</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Exception while parsing </span><span class="si">{</span><span class="n">ast_node</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="variable_declarations_pairs">
+<a class="viewcode-back" href="../../module_docs/jy/js_parse.html#jy.js_parse.variable_declarations_pairs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">variable_declarations_pairs</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Yield ``(name, value)`` pairs for the top-level variable declarations in JS.</span>
+
+<span class="sd">    Literal, object, array and unary-minus initializers are evaluated to their</span>
+<span class="sd">    Python equivalents; other initializer kinds yield ``None``. A leading</span>
+<span class="sd">    ``export`` on a declaration is stripped first, so ES-module sources parse.</span>
+
+<span class="sd">    &gt;&gt;&gt; list(variable_declarations_pairs(&quot;const a = 3; let b = &#39;hi&#39;;&quot;))</span>
+<span class="sd">    [(&#39;a&#39;, 3), (&#39;b&#39;, &#39;hi&#39;)]</span>
+<span class="sd">    &gt;&gt;&gt; list(variable_declarations_pairs(&quot;export const config = {x: 1, y: [2, 3]};&quot;))</span>
+<span class="sd">    [(&#39;config&#39;, {&#39;x&#39;: 1, &#39;y&#39;: [2, 3]})]</span>
+<span class="sd">    &gt;&gt;&gt; list(variable_declarations_pairs(&quot;var n = -5; const flag = true;&quot;))</span>
+<span class="sd">    [(&#39;n&#39;, -5), (&#39;flag&#39;, True)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Remove &#39;export &#39; keywords to make it valid JavaScript</span>
+    <span class="c1"># use re to remove export that happen in the beginning of the line</span>
+    <span class="c1">#</span>
+    <span class="c1">#</span>
+
+    <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+    <span class="n">remove_export</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^export &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">parse_js</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span> <span class="n">ingress</span><span class="o">=</span><span class="n">remove_export</span><span class="p">)</span>
+
+    <span class="c1"># Function to evaluate AST nodes into Python values</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">eval_node</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;Literal&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;ObjectExpression&#39;</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;Identifier&#39;</span> <span class="k">else</span> <span class="n">prop</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">value</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">eval_node</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">obj</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">return</span> <span class="n">obj</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;ArrayExpression&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">eval_node</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">elements</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;UnaryExpression&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="o">-</span><span class="n">eval_node</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">argument</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">eval_node</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">argument</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>  <span class="c1"># Add handling for other node types if necessary</span>
+
+    <span class="c1"># Extract variables and their values</span>
+
+    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">body</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;VariableDeclaration&#39;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">decl</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">declarations</span><span class="p">:</span>
+                <span class="n">var_name</span> <span class="o">=</span> <span class="n">decl</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">name</span>
+                <span class="n">var_value</span> <span class="o">=</span> <span class="n">decl</span><span class="o">.</span><span class="n">init</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">eval_node</span><span class="p">(</span><span class="n">var_value</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">value</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">dflt_py_to_js_value_trans</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&quot;&#39;</span>  <span class="c1"># surround with quotes</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span>
+
+<span class="n">_dflt_patterns_for_html_ids</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="sa">r</span><span class="s1">&#39;id=&quot;([^&quot;]+)&quot;&#39;</span><span class="p">,</span>  <span class="c1"># HTML id attributes</span>
+    <span class="sa">r</span><span class="s1">&#39;#([a-zA-Z][\w\-]*)&#39;</span><span class="p">,</span>  <span class="c1"># CSS IDs</span>
+    <span class="sa">r</span><span class="s1">&#39;document\.getElementById\(&quot;([^&quot;]+)&quot;\)&#39;</span><span class="p">,</span>  <span class="c1"># JS getElementById</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="replace_ids_in_code">
+<a class="viewcode-back" href="../../module_docs/jy/js_parse.html#jy.js_parse.replace_ids_in_code">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">replace_ids_in_code</span><span class="p">(</span>
+    <span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">patterns</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">_dflt_patterns_for_html_ids</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Replaces IDs in a mixed HTML, CSS, and JS string with unique versions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - code (str): The input code containing HTML, CSS, and/or JS.</span>
+<span class="sd">    - patterns (tuple): A tuple of regex patterns to match IDs.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - tuple: A tuple containing the modified code and a dictionary of old-to-new ID mappings.</span>
+
+<span class="sd">    This function is useful to make id-unique copies of HTML/JS components that have IDs.</span>
+<span class="sd">    This need was noticed and discussed in: https://github.com/i2mint/jy/discussions/3#discussioncomment-6862843</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Patterns to match IDs</span>
+    <span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="sa">r</span><span class="s1">&#39;id=&quot;([^&quot;]+)&quot;&#39;</span><span class="p">,</span>  <span class="c1"># HTML id attributes</span>
+        <span class="sa">r</span><span class="s1">&#39;#([a-zA-Z][\w\-]*)&#39;</span><span class="p">,</span>  <span class="c1"># CSS IDs</span>
+        <span class="sa">r</span><span class="s1">&#39;document\.getElementById\(&quot;([^&quot;]+)&quot;\)&#39;</span><span class="p">,</span>  <span class="c1"># JS getElementById</span>
+    <span class="p">]</span>
+
+    <span class="n">replaced</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># Generate a unique ID</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">unique_id</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
+        <span class="n">old_id</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">new_id</span> <span class="o">=</span> <span class="n">old_id</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)[:</span><span class="mi">8</span><span class="p">]</span>
+        <span class="n">replaced</span><span class="p">[</span><span class="n">old_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_id</span>
+        <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">old_id</span><span class="p">,</span> <span class="n">new_id</span><span class="p">)</span>
+
+    <span class="c1"># Replace all IDs in the code</span>
+    <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">patterns</span><span class="p">:</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">pattern</span><span class="p">,</span> <span class="n">unique_id</span><span class="p">,</span> <span class="n">code</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">code</span><span class="p">,</span> <span class="n">replaced</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

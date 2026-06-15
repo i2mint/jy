@@ -1,0 +1,169 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jy.test.test_bridge &mdash; jy 0.1.17 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=71734efd"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            jy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/jy.html">jy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/jy/bridge.html">jy.bridge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/jy/js_parse.html">jy.js_parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/jy/scrap/find_and_replace_ids.html">jy.scrap.find_and_replace_ids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/jy/test/test_bridge.html">jy.test.test_bridge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/jy/test/test_js_parse.html">jy.test.test_js_parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/jy/ts_parse.html">jy.ts_parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/jy/util.html">jy.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">jy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jy.test.test_bridge</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jy.test.test_bridge</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Tests for the bridge module&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jy.bridge</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_js_funcs</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jy.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">js_files</span>
+
+<span class="n">test01_js_code</span> <span class="o">=</span> <span class="n">js_files</span><span class="p">[</span><span class="s1">&#39;test01&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="test_add_js_call_attributes_to_obj">
+<a class="viewcode-back" href="../../../module_docs/jy/test/test_bridge.html#jy.test.test_bridge.test_add_js_call_attributes_to_obj">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_add_js_call_attributes_to_obj</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    See test_js_parse.test_func_name_and_params_pairs for intermediate data of this test</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">js</span> <span class="o">=</span> <span class="n">add_js_funcs</span><span class="p">(</span><span class="n">test01_js_code</span><span class="p">)</span>
+
+    <span class="c1"># js has two methods called bar and foo</span>
+    <span class="k">assert</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">js</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)])</span> <span class="o">==</span> <span class="p">[</span>
+        <span class="s1">&#39;add_one&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;foo&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;obj&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;prop&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;with_arrow_func&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;with_let&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="c1"># they mirror the signatures of the underlying JS functions</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">inspect</span><span class="w"> </span><span class="kn">import</span> <span class="n">signature</span>
+
+    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">signature</span><span class="p">(</span><span class="n">js</span><span class="o">.</span><span class="n">foo</span><span class="p">))</span> <span class="o">==</span> <span class="s2">&quot;(a, b=&#39;hello&#39;, c=3)&quot;</span>
+    <span class="c1"># ``and`` is a Python keyword, so it (and every param before it) becomes</span>
+    <span class="c1"># positional-only -- hence the ``/`` marker. See bridge._demote_keyword_named_params.</span>
+    <span class="k">assert</span> <span class="nb">str</span><span class="p">(</span><span class="n">signature</span><span class="p">(</span><span class="n">js</span><span class="o">.</span><span class="n">bar</span><span class="p">))</span> <span class="o">==</span> <span class="s2">&quot;(green, eggs=&#39;food&#39;, and=True, /, ham=4)&quot;</span>
+
+    <span class="c1"># Calling this function returns a string</span>
+    <span class="c1"># (the code to call the underlying JS function)</span>
+    <span class="k">assert</span> <span class="n">js</span><span class="o">.</span><span class="n">foo</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;foo(1, &quot;hi&quot;, 5)&#39;</span>
+
+    <span class="c1"># Notice that you can use positional or keyword arguments</span>
+    <span class="c1"># Also, notice that though &quot;prop&quot; is the name of js&#39;s attribute,</span>
+    <span class="c1"># the function call string does indeed use the original full reference:</span>
+    <span class="c1"># ``func.assigned.to.nested.prop``</span>
+    <span class="k">assert</span> <span class="n">js</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="s1">&#39;up&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;func.assigned.to.nested.prop(&quot;up&quot;)&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Notice that the python (signature) defaults are applied before translating to JS</span>
+    <span class="k">assert</span> <span class="n">js</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;bar(42, &quot;food&quot;, true, 4)&#39;</span>
+
+    <span class="n">alt_js</span> <span class="o">=</span> <span class="n">add_js_funcs</span><span class="p">(</span><span class="n">test01_js_code</span><span class="p">,</span> <span class="n">apply_defaults</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1"># You can opt not to do this by specifying apply_defaults=False</span>
+    <span class="c1"># This will result in only injecting those inputs you specify in the js call string,</span>
+    <span class="c1"># which will have the effect of letting JS apply it&#39;s defaults, what ever they are</span>
+    <span class="n">alt_js</span> <span class="o">=</span> <span class="n">add_js_funcs</span><span class="p">(</span><span class="n">test01_js_code</span><span class="p">,</span> <span class="n">apply_defaults</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">alt_js</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;bar(42)&#39;</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

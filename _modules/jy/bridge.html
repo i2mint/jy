@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jy.bridge &mdash; jy 0.1.17 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=71734efd"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            jy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy.html">jy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/bridge.html">jy.bridge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/js_parse.html">jy.js_parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/scrap/find_and_replace_ids.html">jy.scrap.find_and_replace_ids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/test/test_bridge.html">jy.test.test_bridge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/test/test_js_parse.html">jy.test.test_js_parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/ts_parse.html">jy.ts_parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/jy/util.html">jy.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">jy.bridge</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for jy.bridge</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Python portals to JS&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">inspect</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parameter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">keyword</span><span class="w"> </span><span class="kn">import</span> <span class="n">iskeyword</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol.signatures</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sig</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jy.js_parse</span><span class="w"> </span><span class="kn">import</span> <span class="n">dflt_py_to_js_value_trans</span><span class="p">,</span> <span class="n">func_name_and_params_pairs</span>
+
+
+<span class="c1"># TODO: Add value transformer (routing). For example, booleans, True-&gt;true</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_js_func_call</span><span class="p">(</span>
+    <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+    <span class="n">__sig</span><span class="p">,</span>
+    <span class="n">__func_call_template</span><span class="p">,</span>
+    <span class="n">__value_trans</span><span class="o">=</span><span class="n">dflt_py_to_js_value_trans</span><span class="p">,</span>
+    <span class="n">__apply_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">_kwargs</span> <span class="o">=</span> <span class="n">__sig</span><span class="o">.</span><span class="n">map_arguments</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">apply_defaults</span><span class="o">=</span><span class="n">__apply_defaults</span><span class="p">)</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">__value_trans</span><span class="p">,</span> <span class="n">_kwargs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">inputs</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">__func_call_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_demote_keyword_named_params</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Mark Python-keyword-named params (and any preceding them) positional-only.</span>
+
+<span class="sd">    A JS parameter may be named after a Python keyword (e.g. ``and``) -- a</span>
+<span class="sd">    perfectly valid JS identifier.  Python&#39;s :class:`inspect.Parameter` rejects</span>
+<span class="sd">    such a name *unless* the parameter is positional-only (the same exemption</span>
+<span class="sd">    CPython makes for C functions).  This is also semantically correct: you can</span>
+<span class="sd">    never pass ``and=...`` by keyword from Python (it is a syntax error), so the</span>
+<span class="sd">    parameter can only ever be supplied positionally.  Since positional-only</span>
+<span class="sd">    parameters must precede positional-or-keyword ones, every parameter up to and</span>
+<span class="sd">    including the last keyword-named one is demoted.</span>
+
+<span class="sd">    ``params`` is a list of parameter dicts (``{&#39;name&#39;, &#39;default&#39;, ...}``) as</span>
+<span class="sd">    produced by :func:`jy.js_parse.func_name_and_params_pairs`.  A new list is</span>
+<span class="sd">    returned; the input is left untouched.  Without any keyword-named parameter</span>
+<span class="sd">    the params pass through unchanged.</span>
+
+<span class="sd">    &gt;&gt;&gt; _demote_keyword_named_params([{&#39;name&#39;: &#39;a&#39;}, {&#39;name&#39;: &#39;b&#39;, &#39;default&#39;: 1}])</span>
+<span class="sd">    [{&#39;name&#39;: &#39;a&#39;}, {&#39;name&#39;: &#39;b&#39;, &#39;default&#39;: 1}]</span>
+<span class="sd">    &gt;&gt;&gt; demoted = _demote_keyword_named_params(</span>
+<span class="sd">    ...     [{&#39;name&#39;: &#39;green&#39;}, {&#39;name&#39;: &#39;and&#39;, &#39;default&#39;: True}, {&#39;name&#39;: &#39;ham&#39;}]</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; [(p[&#39;name&#39;], p.get(&#39;kind&#39;)) for p in demoted] == [</span>
+<span class="sd">    ...     (&#39;green&#39;, Parameter.POSITIONAL_ONLY),</span>
+<span class="sd">    ...     (&#39;and&#39;, Parameter.POSITIONAL_ONLY),</span>
+<span class="sd">    ...     (&#39;ham&#39;, None),</span>
+<span class="sd">    ... ]</span>
+<span class="sd">    True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">keyword_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="k">if</span> <span class="n">iskeyword</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">keyword_indices</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">params</span>
+    <span class="n">last_keyword_index</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">keyword_indices</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="p">{</span><span class="o">**</span><span class="n">p</span><span class="p">,</span> <span class="s1">&#39;kind&#39;</span><span class="p">:</span> <span class="n">Parameter</span><span class="o">.</span><span class="n">POSITIONAL_ONLY</span><span class="p">}</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">last_keyword_index</span> <span class="k">else</span> <span class="nb">dict</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="p">]</span>
+
+
+<span class="c1"># TODO: value_trans only sees value. Might want to transform according to other</span>
+<span class="c1">#  contextural information, like the parameter name, or the function name, etc.</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">mk_py_binder_func</span><span class="p">(</span>
+    <span class="n">name</span><span class="p">,</span>
+    <span class="n">params</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">doc</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">value_trans</span><span class="o">=</span><span class="n">dflt_py_to_js_value_trans</span><span class="p">,</span>
+    <span class="n">apply_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="n">func_name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>  <span class="c1"># e.g. object.containing.func --&gt; func</span>
+    <span class="n">func_call_template</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;(</span><span class="si">{inputs}</span><span class="s1">)&#39;</span> <span class="o">+</span> <span class="n">suffix</span>
+
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">Sig</span><span class="o">.</span><span class="n">from_params</span><span class="p">(</span><span class="n">_demote_keyword_named_params</span><span class="p">(</span><span class="n">params</span><span class="p">))</span>
+    <span class="n">js_func_call</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+        <span class="n">_js_func_call</span><span class="p">,</span>
+        <span class="n">__sig</span><span class="o">=</span><span class="n">sig</span><span class="p">,</span>
+        <span class="n">__func_call_template</span><span class="o">=</span><span class="n">func_call_template</span><span class="p">,</span>
+        <span class="n">__value_trans</span><span class="o">=</span><span class="n">value_trans</span><span class="p">,</span>
+        <span class="n">__apply_defaults</span><span class="o">=</span><span class="n">apply_defaults</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">js_func_call</span> <span class="o">=</span> <span class="n">sig</span><span class="p">(</span><span class="n">js_func_call</span><span class="p">)</span>
+    <span class="n">js_func_call</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">func_name</span>
+    <span class="n">js_func_call</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">doc</span>
+
+    <span class="k">return</span> <span class="n">js_func_call</span>
+
+
+<div class="viewcode-block" id="JsBridge">
+<a class="viewcode-back" href="../../module_docs/jy/bridge.html#jy.bridge.JsBridge">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">JsBridge</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The default class to make instances that will contain methods that mirror JS</span>
+<span class="sd">    function calls</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="add_js_funcs">
+<a class="viewcode-back" href="../../module_docs/jy/bridge.html#jy.bridge.add_js_funcs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_js_funcs</span><span class="p">(</span>
+    <span class="n">js_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">encoding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">forbidden_method_names</span><span class="o">=</span><span class="p">(),</span>
+    <span class="n">apply_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">value_trans</span><span class="o">=</span><span class="n">dflt_py_to_js_value_trans</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Add js call functions as attributes to an object.</span>
+
+<span class="sd">    If object is not given, ``add_js_funcs`` will use a new ``JsBridge`` instance.</span>
+
+<span class="sd">    &gt;&gt;&gt; js_code = &quot;&quot;&quot;</span>
+<span class="sd">    ... function foo(a, b=&quot;hello&quot;, c= 3) {</span>
+<span class="sd">    ...     return a + b.length * c</span>
+<span class="sd">    ... }</span>
+<span class="sd">    ... const bar = (y, z = 1) =&gt; y * z</span>
+<span class="sd">    ... func.assigned.to.nested.prop = function (x) {</span>
+<span class="sd">    ...     return x + 3</span>
+<span class="sd">    ... }</span>
+<span class="sd">    ... &quot;&quot;&quot;</span>
+<span class="sd">    &gt;&gt;&gt; js = add_js_funcs(js_code)</span>
+<span class="sd">    &gt;&gt;&gt; from inspect import signature</span>
+<span class="sd">    &gt;&gt;&gt; list(vars(js))</span>
+<span class="sd">    [&#39;foo&#39;, &#39;bar&#39;, &#39;prop&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; signature(js.foo)</span>
+<span class="sd">    &lt;Sig (a, b=&#39;hello&#39;, c=3)&gt;</span>
+<span class="sd">    &gt;&gt;&gt; js.foo(1, &#39;hi&#39;)</span>
+<span class="sd">    &#39;foo(1, &quot;hi&quot;, 3)&#39;</span>
+<span class="sd">    &gt;&gt;&gt; js.prop(&#39;up&#39;)</span>
+<span class="sd">    &#39;func.assigned.to.nested.prop(&quot;up&quot;)&#39;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">JsBridge</span><span class="p">()</span>
+
+    <span class="n">forbidden_method_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">forbidden_method_names</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">full_func_ref</span><span class="p">,</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">func_name_and_params_pairs</span><span class="p">(</span><span class="n">js_code</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">):</span>
+        <span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="n">func_name</span> <span class="o">=</span> <span class="n">full_func_ref</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>  <span class="c1"># e.g. object.containing.func --&gt; func</span>
+        <span class="c1"># TODO: Could specify a recovery function that finds another name instead of</span>
+        <span class="c1">#  raising an error</span>
+        <span class="k">if</span> <span class="n">func_name</span> <span class="ow">in</span> <span class="n">forbidden_method_names</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;This func name was already used, or mentioned in &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;the forbidden_method_names argument: </span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span>
+            <span class="n">obj</span><span class="p">,</span>
+            <span class="n">func_name</span><span class="p">,</span>
+            <span class="n">mk_py_binder_func</span><span class="p">(</span>
+                <span class="n">full_func_ref</span><span class="p">,</span>
+                <span class="n">params</span><span class="p">,</span>
+                <span class="n">value_trans</span><span class="o">=</span><span class="n">value_trans</span><span class="p">,</span>
+                <span class="n">apply_defaults</span><span class="o">=</span><span class="n">apply_defaults</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">name</span><span class="p">:</span>
+        <span class="n">obj</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

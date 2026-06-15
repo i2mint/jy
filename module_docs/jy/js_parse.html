@@ -1,0 +1,249 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jy.js_parse &mdash; jy 0.1.17 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=71734efd"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="jy.scrap.find_and_replace_ids" href="scrap/find_and_replace_ids.html" />
+    <link rel="prev" title="jy.bridge" href="bridge.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            jy
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../jy.html">jy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bridge.html">jy.bridge</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">jy.js_parse</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#jy.js_parse.UnknownNodeType"><code class="docutils literal notranslate"><span class="pre">UnknownNodeType</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jy.js_parse.append_to_func_body"><code class="docutils literal notranslate"><span class="pre">append_to_func_body()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jy.js_parse.extract_func_name_and_params"><code class="docutils literal notranslate"><span class="pre">extract_func_name_and_params()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jy.js_parse.extract_function_def_parts"><code class="docutils literal notranslate"><span class="pre">extract_function_def_parts()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jy.js_parse.func_name_and_params_pairs"><code class="docutils literal notranslate"><span class="pre">func_name_and_params_pairs()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jy.js_parse.parse_js"><code class="docutils literal notranslate"><span class="pre">parse_js()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jy.js_parse.parse_js_code"><code class="docutils literal notranslate"><span class="pre">parse_js_code()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jy.js_parse.replace_ids_in_code"><code class="docutils literal notranslate"><span class="pre">replace_ids_in_code()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jy.js_parse.variable_declarations_pairs"><code class="docutils literal notranslate"><span class="pre">variable_declarations_pairs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scrap/find_and_replace_ids.html">jy.scrap.find_and_replace_ids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test/test_bridge.html">jy.test.test_bridge</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test/test_js_parse.html">jy.test.test_js_parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ts_parse.html">jy.ts_parse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">jy.util</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">jy</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">jy.js_parse</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/jy/js_parse.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-jy.js_parse">
+<span id="jy-js-parse"></span><h1>jy.js_parse<a class="headerlink" href="#module-jy.js_parse" title="Link to this heading"></a></h1>
+<p>Utils to parse JS</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="jy.js_parse.UnknownNodeType">
+<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jy.js_parse.</span></span><span class="sig-name descname"><span class="pre">UnknownNodeType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/jy/js_parse.html#UnknownNodeType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.js_parse.UnknownNodeType" title="Link to this definition"></a></dt>
+<dd><p>To be raised when an AST node type wasn’t handled by a function</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jy.js_parse.append_to_func_body">
+<span class="sig-prename descclassname"><span class="pre">jy.js_parse.</span></span><span class="sig-name descname"><span class="pre">append_to_func_body</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func_def_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code_to_append</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/jy/js_parse.html#append_to_func_body"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.js_parse.append_to_func_body" title="Link to this definition"></a></dt>
+<dd><p>Append code to the body of a function definition</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jy.js_parse.extract_func_name_and_params">
+<span class="sig-prename descclassname"><span class="pre">jy.js_parse.</span></span><span class="sig-name descname"><span class="pre">extract_func_name_and_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ast_node</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Node</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/jy/js_parse.html#extract_func_name_and_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.js_parse.extract_func_name_and_params" title="Link to this definition"></a></dt>
+<dd><p>Extract one or several function <code class="docutils literal notranslate"><span class="pre">(name,</span> <span class="pre">params)</span></code> pair(s) from an AST node</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jy.js_parse.extract_function_def_parts">
+<span class="sig-prename descclassname"><span class="pre">jy.js_parse.</span></span><span class="sig-name descname"><span class="pre">extract_function_def_parts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func_def_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/jy/js_parse.html#extract_function_def_parts"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.js_parse.extract_function_def_parts" title="Link to this definition"></a></dt>
+<dd><p>Extract the body of a function definition from its code</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jy.js_parse.func_name_and_params_pairs">
+<span class="sig-prename descclassname"><span class="pre">jy.js_parse.</span></span><span class="sig-name descname"><span class="pre">func_name_and_params_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">js_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/jy/js_parse.html#func_name_and_params_pairs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.js_parse.func_name_and_params_pairs" title="Link to this definition"></a></dt>
+<dd><p>Get <code class="docutils literal notranslate"><span class="pre">(name,</span> <span class="pre">params)</span></code> pairs of function definitions extracted from <code class="docutils literal notranslate"><span class="pre">js_code</span></code>.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">js_code</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="gp">... </span><span class="s1">function foo(a, b=&quot;hello&quot;, c= 3) {</span>
+<span class="gp">... </span><span class="s1">    return a + b.length * c</span>
+<span class="gp">... </span><span class="s1">}</span>
+<span class="gp">... </span><span class="s1">const bar = (y, z = 1) =&gt; y * z</span>
+<span class="gp">... </span><span class="s1">func.assigned.to.nested.prop = function (x) {</span>
+<span class="gp">... </span><span class="s1">    return x + 3</span>
+<span class="gp">... </span><span class="s1">}&#39;&#39;&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">list</span><span class="p">(</span><span class="n">func_name_and_params_pairs</span><span class="p">(</span><span class="n">js_code</span><span class="p">))</span> <span class="o">==</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="p">[</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">},</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">},</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+<span class="gp">... </span>    <span class="p">]),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="p">[</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;y&#39;</span><span class="p">},</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="gp">... </span>    <span class="p">]),</span>
+<span class="gp">... </span>    <span class="p">(</span><span class="s1">&#39;func.assigned.to.nested.prop&#39;</span><span class="p">,</span> <span class="p">[</span>
+<span class="gp">... </span>        <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">}</span>
+<span class="gp">... </span>    <span class="p">])</span>
+<span class="gp">... </span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jy.js_parse.parse_js">
+<span class="sig-prename descclassname"><span class="pre">jy.js_parse.</span></span><span class="sig-name descname"><span class="pre">parse_js</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">js_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ingress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">egress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Script</span></span></span><a class="reference internal" href="../../_modules/jy/js_parse.html#parse_js"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.js_parse.parse_js" title="Link to this definition"></a></dt>
+<dd><p>Parse JavaScript source (or a path to a <code class="docutils literal notranslate"><span class="pre">.js</span></code> file) into an esprima AST.</p>
+<p><code class="docutils literal notranslate"><span class="pre">js_code</span></code> may be a string of JS or a filesystem path, in which case the
+file is read (honoring <code class="docutils literal notranslate"><span class="pre">encoding</span></code>). <code class="docutils literal notranslate"><span class="pre">ingress</span></code> preprocesses the source
+before parsing; <code class="docutils literal notranslate"><span class="pre">egress</span></code> post-processes the resulting AST.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">parse_js</span><span class="p">(</span><span class="s2">&quot;const x = 42;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;VariableDeclaration&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">declarations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;x&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jy.js_parse.parse_js_code">
+<span class="sig-prename descclassname"><span class="pre">jy.js_parse.</span></span><span class="sig-name descname"><span class="pre">parse_js_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">js_code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ingress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">egress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">&lt;lambda&gt;&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Script</span></span></span><a class="headerlink" href="#jy.js_parse.parse_js_code" title="Link to this definition"></a></dt>
+<dd><p>Parse JavaScript source (or a path to a <code class="docutils literal notranslate"><span class="pre">.js</span></code> file) into an esprima AST.</p>
+<p><code class="docutils literal notranslate"><span class="pre">js_code</span></code> may be a string of JS or a filesystem path, in which case the
+file is read (honoring <code class="docutils literal notranslate"><span class="pre">encoding</span></code>). <code class="docutils literal notranslate"><span class="pre">ingress</span></code> preprocesses the source
+before parsing; <code class="docutils literal notranslate"><span class="pre">egress</span></code> post-processes the resulting AST.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span> <span class="o">=</span> <span class="n">parse_js</span><span class="p">(</span><span class="s2">&quot;const x = 42;&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">type</span>
+<span class="go">&#39;VariableDeclaration&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tree</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">declarations</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">name</span>
+<span class="go">&#39;x&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jy.js_parse.replace_ids_in_code">
+<span class="sig-prename descclassname"><span class="pre">jy.js_parse.</span></span><span class="sig-name descname"><span class="pre">replace_ids_in_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('id=&quot;([^&quot;]+)&quot;'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'#([a-zA-Z][\\w\\-]*)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'document\\.getElementById\\(&quot;([^&quot;]+)&quot;\\)'))</span> <span class="pre">-&gt;</span> <span class="pre">(&lt;class</span> <span class="pre">'str'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'dict'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/jy/js_parse.html#replace_ids_in_code"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.js_parse.replace_ids_in_code" title="Link to this definition"></a></dt>
+<dd><p>Replaces IDs in a mixed HTML, CSS, and JS string with unique versions.</p>
+<p>Args:
+- code (str): The input code containing HTML, CSS, and/or JS.
+- patterns (tuple): A tuple of regex patterns to match IDs.</p>
+<p>Returns:
+- tuple: A tuple containing the modified code and a dictionary of old-to-new ID mappings.</p>
+<p>This function is useful to make id-unique copies of HTML/JS components that have IDs.
+This need was noticed and discussed in: <a class="reference external" href="https://github.com/i2mint/jy/discussions/3#discussioncomment-6862843">https://github.com/i2mint/jy/discussions/3#discussioncomment-6862843</a></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jy.js_parse.variable_declarations_pairs">
+<span class="sig-prename descclassname"><span class="pre">jy.js_parse.</span></span><span class="sig-name descname"><span class="pre">variable_declarations_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/jy/js_parse.html#variable_declarations_pairs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.js_parse.variable_declarations_pairs" title="Link to this definition"></a></dt>
+<dd><p>Yield <code class="docutils literal notranslate"><span class="pre">(name,</span> <span class="pre">value)</span></code> pairs for the top-level variable declarations in JS.</p>
+<p>Literal, object, array and unary-minus initializers are evaluated to their
+Python equivalents; other initializer kinds yield <code class="docutils literal notranslate"><span class="pre">None</span></code>. A leading
+<code class="docutils literal notranslate"><span class="pre">export</span></code> on a declaration is stripped first, so ES-module sources parse.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">variable_declarations_pairs</span><span class="p">(</span><span class="s2">&quot;const a = 3; let b = &#39;hi&#39;;&quot;</span><span class="p">))</span>
+<span class="go">[(&#39;a&#39;, 3), (&#39;b&#39;, &#39;hi&#39;)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">variable_declarations_pairs</span><span class="p">(</span><span class="s2">&quot;export const config = {x: 1, y: [2, 3]};&quot;</span><span class="p">))</span>
+<span class="go">[(&#39;config&#39;, {&#39;x&#39;: 1, &#39;y&#39;: [2, 3]})]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">variable_declarations_pairs</span><span class="p">(</span><span class="s2">&quot;var n = -5; const flag = true;&quot;</span><span class="p">))</span>
+<span class="go">[(&#39;n&#39;, -5), (&#39;flag&#39;, True)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="bridge.html" class="btn btn-neutral float-left" title="jy.bridge" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scrap/find_and_replace_ids.html" class="btn btn-neutral float-right" title="jy.scrap.find_and_replace_ids" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
