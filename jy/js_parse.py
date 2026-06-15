@@ -55,6 +55,18 @@ def parse_js(
     ingress=lambda x: x,
     egress=lambda x: x,
 ) -> AstScript:
+    """Parse JavaScript source (or a path to a ``.js`` file) into an esprima AST.
+
+    ``js_code`` may be a string of JS or a filesystem path, in which case the
+    file is read (honoring ``encoding``). ``ingress`` preprocesses the source
+    before parsing; ``egress`` post-processes the resulting AST.
+
+    >>> tree = parse_js("const x = 42;")
+    >>> tree.body[0].type
+    'VariableDeclaration'
+    >>> tree.body[0].declarations[0].id.name
+    'x'
+    """
     if os.path.isfile(js_code):
         js_code = Path(js_code).read_text(encoding=encoding)
     # Parse the code as a module
@@ -173,6 +185,19 @@ def func_name_and_params_pairs(js_code: str, *, encoding=None):
 
 
 def variable_declarations_pairs(src, *, encoding=None):
+    """Yield ``(name, value)`` pairs for the top-level variable declarations in JS.
+
+    Literal, object, array and unary-minus initializers are evaluated to their
+    Python equivalents; other initializer kinds yield ``None``. A leading
+    ``export`` on a declaration is stripped first, so ES-module sources parse.
+
+    >>> list(variable_declarations_pairs("const a = 3; let b = 'hi';"))
+    [('a', 3), ('b', 'hi')]
+    >>> list(variable_declarations_pairs("export const config = {x: 1, y: [2, 3]};"))
+    [('config', {'x': 1, 'y': [2, 3]})]
+    >>> list(variable_declarations_pairs("var n = -5; const flag = true;"))
+    [('n', -5), ('flag', True)]
+    """
     # Remove 'export ' keywords to make it valid JavaScript
     # use re to remove export that happen in the beginning of the line
     #
