@@ -20,21 +20,22 @@ except AttributeError:
 
     _files = importlib_resources.files
 
-files = _files('jy')
+files = _files("jy")
 # data_dir = files / 'data'
 # data_dir_path = str(data_dir)
-js_dir = files / 'js'
+js_dir = files / "js"
 js_dir_path = str(js_dir)
 
 
 @add_ipython_key_completions
-@wrap_kvs(key_of_id=lambda x: x[: -len('.js')], id_of_key=lambda x: x + '.js')
-@filt_iter(filt=lambda x: x.endswith('.js'))
+@wrap_kvs(key_of_id=lambda x: x[: -len(".js")], id_of_key=lambda x: x + ".js")
+@filt_iter(filt=lambda x: x.endswith(".js"))
 class JsFiles(TextFiles):
     """A store of js files"""
 
 
-_replace_non_alphanumerics_by_underscore = partial(re.compile(r'\W').sub, '_')
+_replace_non_alphanumerics_by_underscore = partial(re.compile(r"\W").sub, "_")
+
 
 # Note: js_files_as_attrs is not used in the module, but can be useful when working
 # in a notebook, or console, where we might want the convenience of tab-completion of

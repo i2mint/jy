@@ -4,7 +4,7 @@ from jy.bridge import add_js_funcs
 
 from jy.util import js_files
 
-test01_js_code = js_files['test01']
+test01_js_code = js_files["test01"]
 
 
 def test_add_js_call_attributes_to_obj():
@@ -14,14 +14,14 @@ def test_add_js_call_attributes_to_obj():
     js = add_js_funcs(test01_js_code)
 
     # js has two methods called bar and foo
-    assert sorted([x for x in dir(js) if not x.startswith('_')]) == [
-        'add_one',
-        'bar',
-        'foo',
-        'obj',
-        'prop',
-        'with_arrow_func',
-        'with_let',
+    assert sorted([x for x in dir(js) if not x.startswith("_")]) == [
+        "add_one",
+        "bar",
+        "foo",
+        "obj",
+        "prop",
+        "with_arrow_func",
+        "with_let",
     ]
 
     # they mirror the signatures of the underlying JS functions
@@ -34,13 +34,13 @@ def test_add_js_call_attributes_to_obj():
 
     # Calling this function returns a string
     # (the code to call the underlying JS function)
-    assert js.foo(1, 'hi', 5) == 'foo(1, "hi", 5)'
+    assert js.foo(1, "hi", 5) == 'foo(1, "hi", 5)'
 
     # Notice that you can use positional or keyword arguments
     # Also, notice that though "prop" is the name of js's attribute,
     # the function call string does indeed use the original full reference:
     # ``func.assigned.to.nested.prop``
-    assert js.prop('up') == ('func.assigned.to.nested.prop("up")')
+    assert js.prop("up") == ('func.assigned.to.nested.prop("up")')
 
     # Notice that the python (signature) defaults are applied before translating to JS
     assert js.bar(42) == 'bar(42, "food", true, 4)'
@@ -50,4 +50,4 @@ def test_add_js_call_attributes_to_obj():
     # This will result in only injecting those inputs you specify in the js call string,
     # which will have the effect of letting JS apply it's defaults, what ever they are
     alt_js = add_js_funcs(test01_js_code, apply_defaults=False)
-    assert alt_js.bar(42) == 'bar(42)'
+    assert alt_js.bar(42) == "bar(42)"

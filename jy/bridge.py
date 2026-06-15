@@ -21,7 +21,7 @@ def _js_func_call(
 ):
     _kwargs = __sig.map_arguments(args, kwargs, apply_defaults=__apply_defaults)
     inputs = map(__value_trans, _kwargs.values())
-    inputs = ', '.join(map(str, inputs))
+    inputs = ", ".join(map(str, inputs))
     return __func_call_template.format(inputs=inputs)
 
 
@@ -55,12 +55,12 @@ def _demote_keyword_named_params(params):
     True
     """
     params = list(params)
-    keyword_indices = [i for i, p in enumerate(params) if iskeyword(p['name'])]
+    keyword_indices = [i for i, p in enumerate(params) if iskeyword(p["name"])]
     if not keyword_indices:
         return params
     last_keyword_index = max(keyword_indices)
     return [
-        {**p, 'kind': Parameter.POSITIONAL_ONLY} if i <= last_keyword_index else dict(p)
+        {**p, "kind": Parameter.POSITIONAL_ONLY} if i <= last_keyword_index else dict(p)
         for i, p in enumerate(params)
     ]
 
@@ -71,14 +71,14 @@ def mk_py_binder_func(
     name,
     params,
     *,
-    prefix='',
-    suffix='',
-    doc='',
+    prefix="",
+    suffix="",
+    doc="",
     value_trans=dflt_py_to_js_value_trans,
     apply_defaults=True,
 ):
-    *_, func_name = name.split('.')  # e.g. object.containing.func --> func
-    func_call_template = prefix + name + '({inputs})' + suffix
+    *_, func_name = name.split(".")  # e.g. object.containing.func --> func
+    func_call_template = prefix + name + "({inputs})" + suffix
 
     sig = Sig.from_params(_demote_keyword_named_params(params))
     js_func_call = partial(
@@ -144,13 +144,13 @@ def add_js_funcs(
     forbidden_method_names = set(forbidden_method_names)
 
     for full_func_ref, params in func_name_and_params_pairs(js_code, encoding=encoding):
-        *_, func_name = full_func_ref.split('.')  # e.g. object.containing.func --> func
+        *_, func_name = full_func_ref.split(".")  # e.g. object.containing.func --> func
         # TODO: Could specify a recovery function that finds another name instead of
         #  raising an error
         if func_name in forbidden_method_names:
             raise ValueError(
-                f'This func name was already used, or mentioned in '
-                f'the forbidden_method_names argument: {func_name}'
+                f"This func name was already used, or mentioned in "
+                f"the forbidden_method_names argument: {func_name}"
             )
         setattr(
             obj,
