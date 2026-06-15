@@ -28,7 +28,9 @@ def test_add_js_call_attributes_to_obj():
     from inspect import signature
 
     assert str(signature(js.foo)) == "(a, b='hello', c=3)"
-    assert str(signature(js.bar)) == "(green, eggs='food', and=True, ham=4)"
+    # ``and`` is a Python keyword, so it (and every param before it) becomes
+    # positional-only -- hence the ``/`` marker. See bridge._demote_keyword_named_params.
+    assert str(signature(js.bar)) == "(green, eggs='food', and=True, /, ham=4)"
 
     # Calling this function returns a string
     # (the code to call the underlying JS function)

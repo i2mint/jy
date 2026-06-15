@@ -2,6 +2,8 @@
 
 from typing import Any, Optional
 from functools import partial
+from inspect import Parameter
+from keyword import iskeyword
 
 from dol.signatures import Sig
 
@@ -23,6 +25,46 @@ def _js_func_call(
     return __func_call_template.format(inputs=inputs)
 
 
+def _demote_keyword_named_params(params):
+    """Mark Python-keyword-named params (and any preceding them) positional-only.
+
+    A JS parameter may be named after a Python keyword (e.g. ``and``) -- a
+    perfectly valid JS identifier.  Python's :class:`inspect.Parameter` rejects
+    such a name *unless* the parameter is positional-only (the same exemption
+    CPython makes for C functions).  This is also semantically correct: you can
+    never pass ``and=...`` by keyword from Python (it is a syntax error), so the
+    parameter can only ever be supplied positionally.  Since positional-only
+    parameters must precede positional-or-keyword ones, every parameter up to and
+    including the last keyword-named one is demoted.
+
+    ``params`` is a list of parameter dicts (``{'name', 'default', ...}``) as
+    produced by :func:`jy.js_parse.func_name_and_params_pairs`.  A new list is
+    returned; the input is left untouched.  Without any keyword-named parameter
+    the params pass through unchanged.
+
+    >>> _demote_keyword_named_params([{'name': 'a'}, {'name': 'b', 'default': 1}])
+    [{'name': 'a'}, {'name': 'b', 'default': 1}]
+    >>> demoted = _demote_keyword_named_params(
+    ...     [{'name': 'green'}, {'name': 'and', 'default': True}, {'name': 'ham'}]
+    ... )
+    >>> [(p['name'], p.get('kind')) for p in demoted] == [
+    ...     ('green', Parameter.POSITIONAL_ONLY),
+    ...     ('and', Parameter.POSITIONAL_ONLY),
+    ...     ('ham', None),
+    ... ]
+    True
+    """
+    params = list(params)
+    keyword_indices = [i for i, p in enumerate(params) if iskeyword(p['name'])]
+    if not keyword_indices:
+        return params
+    last_keyword_index = max(keyword_indices)
+    return [
+        {**p, 'kind': Parameter.POSITIONAL_ONLY} if i <= last_keyword_index else dict(p)
+        for i, p in enumerate(params)
+    ]
+
+
 # TODO: value_trans only sees value. Might want to transform according to other
 #  contextural information, like the parameter name, or the function name, etc.
 def mk_py_binder_func(
@@ -38,7 +80,7 @@ def mk_py_binder_func(
     *_, func_name = name.split('.')  # e.g. object.containing.func --> func
     func_call_template = prefix + name + '({inputs})' + suffix
 
-    sig = Sig.from_params(params)
+    sig = Sig.from_params(_demote_keyword_named_params(params))
     js_func_call = partial(
         _js_func_call,
         __sig=sig,
