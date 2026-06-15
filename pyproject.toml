@@ -11,9 +11,29 @@ description = "Tools to control JS from Python (jy for Js pY or Js python proxY)
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
-keywords = []
-authors = [
-    { name = "Thor Whalen" },
+keywords = [
+    "javascript",
+    "python",
+    "js",
+    "typescript",
+    "ast",
+    "parsing",
+    "code-generation",
+    "interop",
+]
+authors = []
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Software Development :: Code Generators",
 ]
 dependencies = [
     "dol",
@@ -21,7 +41,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/thorwhalen/jy"
+Homepage = "https://github.com/i2mint/jy"
+Documentation = "https://i2mint.github.io/jy/"
+Repository = "https://github.com/i2mint/jy"
+Issues = "https://github.com/i2mint/jy/issues"
+Changelog = "https://github.com/i2mint/jy/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
 # TypeScript parsing (jy.ts_parse.parse_ts) -- lazily imported, opt-in.
