@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "jy"
-version = "0.1.0"
+version = "0.1.17"
 description = "Tools to control JS from Python (jy for Js pY or Js python proxY)"
 readme = "README.md"
 requires-python = ">=3.10"
