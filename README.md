@@ -27,7 +27,11 @@ They mirror the signatures of the underlying JS functions
 
     from inspect import signature
     assert str(signature(js.foo)) == "(a, b='hello', c=3)"
-    assert str(signature(js.bar)) == "(green, eggs='food', and=True, ham=4)"
+    assert str(signature(js.bar)) == "(green, eggs='food', and=True, /, ham=4)"
+
+(``and`` is a Python keyword, so it -- and every parameter before it -- is
+exposed as positional-only, hence the ``/``. You can never pass ``and=...`` by
+keyword from Python anyway.)
 
 Calling this function returns a string
 (the code to call the underlying JS function)
@@ -46,13 +50,13 @@ the function call string does indeed use the original full reference:
 Notice that the python (signature) defaults are applied before translating to JS
 
     assert js.bar(42) == 'bar(42, "food", true, 4)'
-    alt_js = add_js_funcs(test01_js_code, apply_defaults=False)
+    alt_js = add_js_funcs("./test01.js", apply_defaults=False)
 
 You can opt not to do this by specifying `apply_defaults=False`
 This will result in only injecting those inputs you specify in the js call string,
 which will have the effect of letting JS apply its defaults, what ever they are
 
-    alt_js = add_js_funcs(test01_js_code, apply_defaults=False)
+    alt_js = add_js_funcs("./test01.js", apply_defaults=False)
     assert alt_js.bar(42) == 'bar(42)'
 
 
