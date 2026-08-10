@@ -4,7 +4,6 @@ import os
 from pathlib import Path
 from functools import wraps
 from itertools import chain
-from typing import Optional
 import json
 
 import esprima
@@ -42,7 +41,7 @@ def if_none_output_raise_unknown_type(context=""):
     return _if_none_output_raise_wrapper
 
 
-# def parse_js(js_code: str, encoding: Optional[str] = None) -> AstScript:
+# def parse_js(js_code: str, encoding: str | None = None) -> AstScript:
 #     if os.path.isfile(js_code):
 #         js_code = Path(js_code).read_text(encoding=encoding)
 #     return esprima.parse(js_code)
@@ -50,7 +49,7 @@ def if_none_output_raise_unknown_type(context=""):
 
 def parse_js(
     js_code: str,
-    encoding: Optional[str] = None,
+    encoding: str | None = None,
     *,
     ingress=lambda x: x,
     egress=lambda x: x,
@@ -253,7 +252,6 @@ def dflt_py_to_js_value_trans(x):
 
 import re
 import uuid
-from typing import Tuple
 
 _dflt_patterns_for_html_ids = (
     r'id="([^"]+)"',  # HTML id attributes
@@ -263,8 +261,8 @@ _dflt_patterns_for_html_ids = (
 
 
 def replace_ids_in_code(
-    code: str, patterns: Tuple[str] = _dflt_patterns_for_html_ids
-) -> (str, dict):
+    code: str, patterns: tuple[str] = _dflt_patterns_for_html_ids
+) -> tuple[str, dict]:
     """
     Replaces IDs in a mixed HTML, CSS, and JS string with unique versions.
 

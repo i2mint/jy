@@ -1,6 +1,6 @@
 """Python portals to JS"""
 
-from typing import Any, Optional
+from typing import Any
 from functools import partial
 from inspect import Parameter
 from keyword import iskeyword
@@ -106,8 +106,8 @@ def add_js_funcs(
     js_code: str,
     *,
     obj: Any = None,
-    name: Optional[str] = None,
-    encoding: Optional[str] = None,
+    name: str | None = None,
+    encoding: str | None = None,
     forbidden_method_names=(),
     apply_defaults=True,
     value_trans=dflt_py_to_js_value_trans,

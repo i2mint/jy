@@ -13,7 +13,7 @@ This code has tests!
 
 import re
 from functools import partial
-from typing import Callable, Optional, Union
+from collections.abc import Callable
 
 
 def replace_tokens(string: str, token_extractor: Callable, token_replacer: Callable):
@@ -158,10 +158,10 @@ _dflt_replacer_for_kind = tuple(
 
 def replace_ids(
     string,
-    kind: Optional[str] = None,
+    kind: str | None = None,
     *,
     replacer_for_kind=_dflt_replacer_for_kind,
-    string_to_kind: Optional[Callable] = _string_kind
+    string_to_kind: Callable | None = _string_kind
 ):
     kind = kind or string_to_kind(string)
     replacer_for_kind = dict(replacer_for_kind)

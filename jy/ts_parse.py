@@ -97,16 +97,17 @@ def parse_ts_with_oa(
 # -------------------------------------------------------------------------------------
 # The grammar-based-parsing way
 
-from typing import Iterator, Dict, Any, Optional, Tuple
+from typing import Any
+from collections.abc import Iterator
 
 
-def extract_parameters(code: str, parameters_node) -> Iterator[Dict[str, Any]]:
+def extract_parameters(code: str, parameters_node) -> Iterator[dict[str, Any]]:
     """
     Generator function that yields parameter dictionaries.
     """
     if parameters_node:
         for param_node in parameters_node.named_children:
-            param: Dict[str, Any] = {}
+            param: dict[str, Any] = {}
             # Get parameter name
             param_name_node = param_node.child_by_field_name("name")
             if param_name_node:
@@ -130,7 +131,7 @@ def extract_parameters(code: str, parameters_node) -> Iterator[Dict[str, Any]]:
             yield param  # Yield the parameter
 
 
-def find_function_type_node(node) -> Optional[Any]:
+def find_function_type_node(node) -> Any | None:
     """
     Recursively search for a 'function_type' node within a given node.
     """
@@ -143,7 +144,7 @@ def find_function_type_node(node) -> Optional[Any]:
     return None
 
 
-def handle_property_signature(code: str, node) -> Iterator[Tuple[str, Dict[str, Any]]]:
+def handle_property_signature(code: str, node) -> Iterator[tuple[str, dict[str, Any]]]:
     """
     Handle 'property_signature' nodes, yielding (property name, property info) tuples.
     """
@@ -152,7 +153,7 @@ def handle_property_signature(code: str, node) -> Iterator[Tuple[str, Dict[str, 
 
     if name_node:
         prop_name = code[name_node.start_byte : name_node.end_byte]
-        prop_info: Dict[str, Any] = {"name": prop_name}
+        prop_info: dict[str, Any] = {"name": prop_name}
 
         # Check if the property is optional (has a '?')
         question_node = node.child_by_field_name("question_mark")
@@ -178,7 +179,7 @@ def handle_property_signature(code: str, node) -> Iterator[Tuple[str, Dict[str, 
         yield (prop_name, prop_info)
 
 
-def handle_method_signature(code: str, node) -> Iterator[Tuple[str, Dict[str, Any]]]:
+def handle_method_signature(code: str, node) -> Iterator[tuple[str, dict[str, Any]]]:
     """
     Handle 'method_signature' nodes, yielding (method name, method info) tuples.
     """
@@ -188,7 +189,7 @@ def handle_method_signature(code: str, node) -> Iterator[Tuple[str, Dict[str, An
 
     if name_node:
         method_name = code[name_node.start_byte : name_node.end_byte]
-        method_info: Dict[str, Any] = {"name": method_name}
+        method_info: dict[str, Any] = {"name": method_name}
 
         # Check if the method is optional (has a '?')
         question_node = node.child_by_field_name("question_mark")
@@ -212,7 +213,7 @@ def handle_method_signature(code: str, node) -> Iterator[Tuple[str, Dict[str, An
 
 def handle_interface_declaration(
     code: str, node
-) -> Iterator[Tuple[str, Dict[str, Any]]]:
+) -> Iterator[tuple[str, dict[str, Any]]]:
     """
     Handle 'interface_declaration' nodes by traversing their members.
     """
@@ -222,7 +223,7 @@ def handle_interface_declaration(
             yield from parse_ts(code, member_node)
 
 
-def default_handler(code: str, node) -> Iterator[Tuple[str, Dict[str, Any]]]:
+def default_handler(code: str, node) -> Iterator[tuple[str, dict[str, Any]]]:
     """
     Default handler for nodes that don't have a specific handler.
     """
@@ -232,7 +233,7 @@ def default_handler(code: str, node) -> Iterator[Tuple[str, Dict[str, Any]]]:
 
 
 # Mapping from node types to handler functions
-node_handlers: Dict[str, Any] = {
+node_handlers: dict[str, Any] = {
     "property_signature": handle_property_signature,
     "method_signature": handle_method_signature,
     "interface_declaration": handle_interface_declaration,
@@ -241,7 +242,7 @@ node_handlers: Dict[str, Any] = {
 
 
 # TODO: Add ability to parse patterns that the simple_ts_parser handles here too.
-def parse_ts(code: str, node=None) -> Iterator[Tuple[str, Dict[str, Any]]]:
+def parse_ts(code: str, node=None) -> Iterator[tuple[str, dict[str, Any]]]:
     """
     Generator function that traverses the syntax tree and yields (name, info dict) tuples.
 
