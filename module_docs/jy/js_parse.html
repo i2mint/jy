@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jy.js_parse &mdash; jy 0.1.17 documentation</title>
+  <title>jy.js_parse &mdash; jy 0.1.18 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -15,7 +15,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=71734efd"></script>
+      <script src="../../_static/documentation_options.js?v=9969ed3f"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -185,7 +185,7 @@ before parsing; <code class="docutils literal notranslate"><span class="pre">egr
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jy.js_parse.replace_ids_in_code">
-<span class="sig-prename descclassname"><span class="pre">jy.js_parse.</span></span><span class="sig-name descname"><span class="pre">replace_ids_in_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('id=&quot;([^&quot;]+)&quot;'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'#([a-zA-Z][\\w\\-]*)'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">'document\\.getElementById\\(&quot;([^&quot;]+)&quot;\\)'))</span> <span class="pre">-&gt;</span> <span class="pre">(&lt;class</span> <span class="pre">'str'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">&lt;class</span> <span class="pre">'dict'&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/jy/js_parse.html#replace_ids_in_code"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.js_parse.replace_ids_in_code" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">jy.js_parse.</span></span><span class="sig-name descname"><span class="pre">replace_ids_in_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patterns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">('id=&quot;([^&quot;]+)&quot;',</span> <span class="pre">'#([a-zA-Z][\\w\\-]*)',</span> <span class="pre">'document\\.getElementById\\(&quot;([^&quot;]+)&quot;\\)')</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/jy/js_parse.html#replace_ids_in_code"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.js_parse.replace_ids_in_code" title="Link to this definition"></a></dt>
 <dd><p>Replaces IDs in a mixed HTML, CSS, and JS string with unique versions.</p>
 <p>Args:
 - code (str): The input code containing HTML, CSS, and/or JS.

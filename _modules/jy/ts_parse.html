@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jy.ts_parse &mdash; jy 0.1.17 documentation</title>
+  <title>jy.ts_parse &mdash; jy 0.1.18 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=71734efd"></script>
+      <script src="../../_static/documentation_options.js?v=9969ed3f"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -92,10 +92,10 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_ts_with_oa</span><span class="p">(</span>
     <span class="n">ts_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
-    <span class="n">schema_name</span><span class="o">=</span><span class="s1">&#39;parsed_ts&#39;</span><span class="p">,</span>
+    <span class="n">schema_name</span><span class="o">=</span><span class="s2">&quot;parsed_ts&quot;</span><span class="p">,</span>
     <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="s1">&#39;gpt-4o&#39;</span><span class="p">,</span>
-    <span class="n">extra_context</span><span class="o">=</span><span class="s1">&#39;&#39;</span>
+    <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">,</span>
+    <span class="n">extra_context</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parse TypeScript code using the OpenAI API.</span>
@@ -104,55 +104,55 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">oa.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">prompt_json_function</span>
 
     <span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">schema_name</span><span class="p">,</span>
-        <span class="s1">&#39;strict&#39;</span><span class="p">:</span> <span class="n">strict</span><span class="p">,</span>
-        <span class="s1">&#39;schema&#39;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s1">&#39;interfaces&#39;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
-                    <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{</span>
-                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
-                        <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
-                            <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">{</span>
-                                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
-                                <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;The name of the interface.&#39;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">schema_name</span><span class="p">,</span>
+        <span class="s2">&quot;strict&quot;</span><span class="p">:</span> <span class="n">strict</span><span class="p">,</span>
+        <span class="s2">&quot;schema&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;interfaces&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The name of the interface.&quot;</span><span class="p">,</span>
                             <span class="p">},</span>
-                            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="p">{</span>
-                                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
-                                <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;A brief description of the interface (if available).&#39;</span><span class="p">,</span>
+                            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A brief description of the interface (if available).&quot;</span><span class="p">,</span>
                             <span class="p">},</span>
-                            <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
-                                <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;array&#39;</span><span class="p">,</span>
-                                <span class="s1">&#39;items&#39;</span><span class="p">:</span> <span class="p">{</span>
-                                    <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;object&#39;</span><span class="p">,</span>
-                                    <span class="s1">&#39;properties&#39;</span><span class="p">:</span> <span class="p">{</span>
-                                        <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="p">{</span>
-                                            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
-                                            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;The name of the property within the interface.&#39;</span><span class="p">,</span>
+                            <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;array&quot;</span><span class="p">,</span>
+                                <span class="s2">&quot;items&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">,</span>
+                                    <span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The name of the property within the interface.&quot;</span><span class="p">,</span>
                                         <span class="p">},</span>
-                                        <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="p">{</span>
-                                            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
-                                            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;The TypeScript type of the property.&#39;</span><span class="p">,</span>
+                                        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The TypeScript type of the property.&quot;</span><span class="p">,</span>
                                         <span class="p">},</span>
-                                        <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="p">{</span>
-                                            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span>
-                                            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;A brief description of the property (if available).&#39;</span><span class="p">,</span>
+                                        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;A brief description of the property (if available).&quot;</span><span class="p">,</span>
                                         <span class="p">},</span>
-                                        <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
-                                            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;string&#39;</span><span class="p">,</span> <span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;null&#39;</span><span class="p">],</span>
-                                            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;The default value for the property (if available).&#39;</span><span class="p">,</span>
+                                        <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;string&quot;</span><span class="p">,</span> <span class="s2">&quot;number&quot;</span><span class="p">,</span> <span class="s2">&quot;null&quot;</span><span class="p">],</span>
+                                            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;The default value for the property (if available).&quot;</span><span class="p">,</span>
                                         <span class="p">},</span>
-                                        <span class="s1">&#39;optional&#39;</span><span class="p">:</span> <span class="p">{</span>
-                                            <span class="s1">&#39;type&#39;</span><span class="p">:</span> <span class="s1">&#39;boolean&#39;</span><span class="p">,</span>
-                                            <span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;Indicates whether the property is optional.&#39;</span><span class="p">,</span>
+                                        <span class="s2">&quot;optional&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;boolean&quot;</span><span class="p">,</span>
+                                            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Indicates whether the property is optional.&quot;</span><span class="p">,</span>
                                         <span class="p">},</span>
                                     <span class="p">},</span>
-                                    <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span>
+                                    <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
                                 <span class="p">},</span>
                             <span class="p">},</span>
                         <span class="p">},</span>
-                        <span class="s1">&#39;required&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;properties&#39;</span><span class="p">],</span>
+                        <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;properties&quot;</span><span class="p">],</span>
                     <span class="p">},</span>
                 <span class="p">}</span>
             <span class="p">},</span>
@@ -172,9 +172,7 @@
 <span class="sd">        {extra_context}</span>
 
 <span class="sd">        {{ts_code}}</span>
-<span class="sd">        &quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="n">extra_context</span><span class="o">=</span><span class="n">extra_context</span>
-        <span class="p">),</span>
+<span class="sd">        &quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">extra_context</span><span class="o">=</span><span class="n">extra_context</span><span class="p">),</span>
         <span class="n">json_schema</span><span class="o">=</span><span class="n">schema</span><span class="p">,</span>
         <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
     <span class="p">)</span>
@@ -185,37 +183,38 @@
 <span class="c1"># -------------------------------------------------------------------------------------</span>
 <span class="c1"># The grammar-based-parsing way</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterator</span>
 
 
 <div class="viewcode-block" id="extract_parameters">
 <a class="viewcode-back" href="../../module_docs/jy/ts_parse.html#jy.ts_parse.extract_parameters">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">extract_parameters</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parameters_node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_parameters</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">parameters_node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generator function that yields parameter dictionaries.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">parameters_node</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">param_node</span> <span class="ow">in</span> <span class="n">parameters_node</span><span class="o">.</span><span class="n">named_children</span><span class="p">:</span>
-            <span class="n">param</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">param</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="c1"># Get parameter name</span>
-            <span class="n">param_name_node</span> <span class="o">=</span> <span class="n">param_node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+            <span class="n">param_name_node</span> <span class="o">=</span> <span class="n">param_node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">param_name_node</span><span class="p">:</span>
-                <span class="n">param</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">code</span><span class="p">[</span>
+                <span class="n">param</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">code</span><span class="p">[</span>
                     <span class="n">param_name_node</span><span class="o">.</span><span class="n">start_byte</span> <span class="p">:</span> <span class="n">param_name_node</span><span class="o">.</span><span class="n">end_byte</span>
                 <span class="p">]</span>
 
             <span class="c1"># Get parameter type</span>
-            <span class="n">type_node</span> <span class="o">=</span> <span class="n">param_node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
+            <span class="n">type_node</span> <span class="o">=</span> <span class="n">param_node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">type_node</span><span class="p">:</span>
-                <span class="n">param</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">code</span><span class="p">[</span><span class="n">type_node</span><span class="o">.</span><span class="n">start_byte</span> <span class="p">:</span> <span class="n">type_node</span><span class="o">.</span><span class="n">end_byte</span><span class="p">]</span>
+                <span class="n">param</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">code</span><span class="p">[</span><span class="n">type_node</span><span class="o">.</span><span class="n">start_byte</span> <span class="p">:</span> <span class="n">type_node</span><span class="o">.</span><span class="n">end_byte</span><span class="p">]</span>
 
             <span class="c1"># Check if parameter is optional</span>
-            <span class="n">param</span><span class="p">[</span><span class="s1">&#39;optional&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="n">param_node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s1">&#39;question_mark&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="n">param</span><span class="p">[</span><span class="s2">&quot;optional&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">param_node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s2">&quot;question_mark&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
             <span class="p">)</span>
 
             <span class="c1"># Check if parameter is a rest parameter</span>
-            <span class="n">param</span><span class="p">[</span><span class="s1">&#39;rest&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">param_node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;rest_parameter&#39;</span>
+            <span class="n">param</span><span class="p">[</span><span class="s2">&quot;rest&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">param_node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;rest_parameter&quot;</span>
 
             <span class="k">yield</span> <span class="n">param</span>  <span class="c1"># Yield the parameter</span></div>
 
@@ -223,11 +222,11 @@
 
 <div class="viewcode-block" id="find_function_type_node">
 <a class="viewcode-back" href="../../module_docs/jy/ts_parse.html#jy.ts_parse.find_function_type_node">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">find_function_type_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_function_type_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Recursively search for a &#39;function_type&#39; node within a given node.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;function_type&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;function_type&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">node</span>
     <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">find_function_type_node</span><span class="p">(</span><span class="n">child</span><span class="p">)</span>
@@ -239,37 +238,37 @@
 
 <div class="viewcode-block" id="handle_property_signature">
 <a class="viewcode-back" href="../../module_docs/jy/ts_parse.html#jy.ts_parse.handle_property_signature">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">handle_property_signature</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_property_signature</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handle &#39;property_signature&#39; nodes, yielding (property name, property info) tuples.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">name_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
-    <span class="n">type_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
+    <span class="n">name_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+    <span class="n">type_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">name_node</span><span class="p">:</span>
         <span class="n">prop_name</span> <span class="o">=</span> <span class="n">code</span><span class="p">[</span><span class="n">name_node</span><span class="o">.</span><span class="n">start_byte</span> <span class="p">:</span> <span class="n">name_node</span><span class="o">.</span><span class="n">end_byte</span><span class="p">]</span>
-        <span class="n">prop_info</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">prop_name</span><span class="p">}</span>
+        <span class="n">prop_info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">prop_name</span><span class="p">}</span>
 
         <span class="c1"># Check if the property is optional (has a &#39;?&#39;)</span>
-        <span class="n">question_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s1">&#39;question_mark&#39;</span><span class="p">)</span>
-        <span class="n">prop_info</span><span class="p">[</span><span class="s1">&#39;optional&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">question_node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">question_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s2">&quot;question_mark&quot;</span><span class="p">)</span>
+        <span class="n">prop_info</span><span class="p">[</span><span class="s2">&quot;optional&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">question_node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="n">type_node</span><span class="p">:</span>
             <span class="n">type_str</span> <span class="o">=</span> <span class="n">code</span><span class="p">[</span><span class="n">type_node</span><span class="o">.</span><span class="n">start_byte</span> <span class="p">:</span> <span class="n">type_node</span><span class="o">.</span><span class="n">end_byte</span><span class="p">]</span>
-            <span class="n">prop_info</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">type_str</span>
+            <span class="n">prop_info</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">type_str</span>
 
             <span class="c1"># Check if the type is a function type</span>
             <span class="n">function_type_node</span> <span class="o">=</span> <span class="n">find_function_type_node</span><span class="p">(</span><span class="n">type_node</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">function_type_node</span><span class="p">:</span>
                 <span class="c1"># It&#39;s a function type</span>
-                <span class="n">parameters_node</span> <span class="o">=</span> <span class="n">function_type_node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
+                <span class="n">parameters_node</span> <span class="o">=</span> <span class="n">function_type_node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s2">&quot;parameters&quot;</span><span class="p">)</span>
                 <span class="n">params_generator</span> <span class="o">=</span> <span class="n">extract_parameters</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">parameters_node</span><span class="p">)</span>
-                <span class="n">prop_info</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;function&#39;</span>
-                <span class="n">prop_info</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">params_generator</span><span class="p">)</span>
+                <span class="n">prop_info</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;function&quot;</span>
+                <span class="n">prop_info</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">params_generator</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">prop_info</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;property&#39;</span>
+                <span class="n">prop_info</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;property&quot;</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">prop_info</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;property&#39;</span>
+            <span class="n">prop_info</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;property&quot;</span>
 
         <span class="k">yield</span> <span class="p">(</span><span class="n">prop_name</span><span class="p">,</span> <span class="n">prop_info</span><span class="p">)</span></div>
 
@@ -277,34 +276,34 @@
 
 <div class="viewcode-block" id="handle_method_signature">
 <a class="viewcode-back" href="../../module_docs/jy/ts_parse.html#jy.ts_parse.handle_method_signature">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">handle_method_signature</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">handle_method_signature</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handle &#39;method_signature&#39; nodes, yielding (method name, method info) tuples.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">name_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
-    <span class="n">parameters_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s1">&#39;parameters&#39;</span><span class="p">)</span>
-    <span class="n">type_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
+    <span class="n">name_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">)</span>
+    <span class="n">parameters_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s2">&quot;parameters&quot;</span><span class="p">)</span>
+    <span class="n">type_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">name_node</span><span class="p">:</span>
         <span class="n">method_name</span> <span class="o">=</span> <span class="n">code</span><span class="p">[</span><span class="n">name_node</span><span class="o">.</span><span class="n">start_byte</span> <span class="p">:</span> <span class="n">name_node</span><span class="o">.</span><span class="n">end_byte</span><span class="p">]</span>
-        <span class="n">method_info</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">method_name</span><span class="p">}</span>
+        <span class="n">method_info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">method_name</span><span class="p">}</span>
 
         <span class="c1"># Check if the method is optional (has a &#39;?&#39;)</span>
-        <span class="n">question_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s1">&#39;question_mark&#39;</span><span class="p">)</span>
-        <span class="n">method_info</span><span class="p">[</span><span class="s1">&#39;optional&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">question_node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="n">question_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s2">&quot;question_mark&quot;</span><span class="p">)</span>
+        <span class="n">method_info</span><span class="p">[</span><span class="s2">&quot;optional&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">question_node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
 
         <span class="c1"># Get parameters</span>
         <span class="n">params_generator</span> <span class="o">=</span> <span class="n">extract_parameters</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">parameters_node</span><span class="p">)</span>
-        <span class="n">method_info</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">params_generator</span><span class="p">)</span>
+        <span class="n">method_info</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">params_generator</span><span class="p">)</span>
 
         <span class="c1"># Get return type</span>
         <span class="k">if</span> <span class="n">type_node</span><span class="p">:</span>
             <span class="n">return_type</span> <span class="o">=</span> <span class="n">code</span><span class="p">[</span><span class="n">type_node</span><span class="o">.</span><span class="n">start_byte</span> <span class="p">:</span> <span class="n">type_node</span><span class="o">.</span><span class="n">end_byte</span><span class="p">]</span>
-            <span class="n">method_info</span><span class="p">[</span><span class="s1">&#39;return_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">return_type</span>
+            <span class="n">method_info</span><span class="p">[</span><span class="s2">&quot;return_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">return_type</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">method_info</span><span class="p">[</span><span class="s1">&#39;return_type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="n">method_info</span><span class="p">[</span><span class="s2">&quot;return_type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 
-        <span class="n">method_info</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;function&#39;</span>
+        <span class="n">method_info</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;function&quot;</span>
 
         <span class="k">yield</span> <span class="p">(</span><span class="n">method_name</span><span class="p">,</span> <span class="n">method_info</span><span class="p">)</span></div>
 
@@ -314,11 +313,11 @@
 <a class="viewcode-back" href="../../module_docs/jy/ts_parse.html#jy.ts_parse.handle_interface_declaration">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">handle_interface_declaration</span><span class="p">(</span>
     <span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handle &#39;interface_declaration&#39; nodes by traversing their members.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">body_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span>
+    <span class="n">body_node</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">child_by_field_name</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">body_node</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">member_node</span> <span class="ow">in</span> <span class="n">body_node</span><span class="o">.</span><span class="n">named_children</span><span class="p">:</span>
             <span class="k">yield from</span> <span class="n">parse_ts</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">member_node</span><span class="p">)</span></div>
@@ -327,7 +326,7 @@
 
 <div class="viewcode-block" id="default_handler">
 <a class="viewcode-back" href="../../module_docs/jy/ts_parse.html#jy.ts_parse.default_handler">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">default_handler</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">default_handler</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Default handler for nodes that don&#39;t have a specific handler.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -338,10 +337,10 @@
 
 
 <span class="c1"># Mapping from node types to handler functions</span>
-<span class="n">node_handlers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;property_signature&#39;</span><span class="p">:</span> <span class="n">handle_property_signature</span><span class="p">,</span>
-    <span class="s1">&#39;method_signature&#39;</span><span class="p">:</span> <span class="n">handle_method_signature</span><span class="p">,</span>
-    <span class="s1">&#39;interface_declaration&#39;</span><span class="p">:</span> <span class="n">handle_interface_declaration</span><span class="p">,</span>
+<span class="n">node_handlers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;property_signature&quot;</span><span class="p">:</span> <span class="n">handle_property_signature</span><span class="p">,</span>
+    <span class="s2">&quot;method_signature&quot;</span><span class="p">:</span> <span class="n">handle_method_signature</span><span class="p">,</span>
+    <span class="s2">&quot;interface_declaration&quot;</span><span class="p">:</span> <span class="n">handle_interface_declaration</span><span class="p">,</span>
     <span class="c1"># Add more handlers here as needed</span>
 <span class="p">}</span>
 
@@ -349,7 +348,7 @@
 <span class="c1"># TODO: Add ability to parse patterns that the simple_ts_parser handles here too.</span>
 <div class="viewcode-block" id="parse_ts">
 <a class="viewcode-back" href="../../module_docs/jy/ts_parse.html#jy.ts_parse.parse_ts">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">parse_ts</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_ts</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generator function that traverses the syntax tree and yields (name, info dict) tuples.</span>
 
@@ -373,12 +372,14 @@
     <span class="kn">from</span><span class="w"> </span><span class="nn">tree_sitter_languages</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_language</span>
 
     <span class="c1"># Initialize the parser with the TypeScript language</span>
-    <span class="n">TS_LANGUAGE</span> <span class="o">=</span> <span class="n">get_language</span><span class="p">(</span><span class="s1">&#39;typescript&#39;</span><span class="p">)</span>  <span class="c1"># pip install tree-sitter==0.21.3 (e.g. 0.23.2 causes problems)</span>
+    <span class="n">TS_LANGUAGE</span> <span class="o">=</span> <span class="n">get_language</span><span class="p">(</span>
+        <span class="s2">&quot;typescript&quot;</span>
+    <span class="p">)</span>  <span class="c1"># pip install tree-sitter==0.21.3 (e.g. 0.23.2 causes problems)</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">Parser</span><span class="p">()</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">set_language</span><span class="p">(</span><span class="n">TS_LANGUAGE</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">node</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">tree</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="s1">&#39;utf8&#39;</span><span class="p">))</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="s2">&quot;utf8&quot;</span><span class="p">))</span>
         <span class="n">node</span> <span class="o">=</span> <span class="n">tree</span><span class="o">.</span><span class="n">root_node</span>
 
     <span class="n">handler</span> <span class="o">=</span> <span class="n">node_handlers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">default_handler</span><span class="p">)</span>
@@ -430,21 +431,21 @@
     <span class="c1"># Assertions</span>
 
     <span class="c1"># simpleProp</span>
-    <span class="k">assert</span> <span class="s1">&#39;simpleProp&#39;</span> <span class="ow">in</span> <span class="n">items_dict</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;simpleProp&#39;</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;property&#39;</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;simpleProp&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;: string&#39;</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;simpleProp&#39;</span><span class="p">][</span><span class="s1">&#39;optional&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">False</span>
+    <span class="k">assert</span> <span class="s2">&quot;simpleProp&quot;</span> <span class="ow">in</span> <span class="n">items_dict</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;simpleProp&quot;</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;property&quot;</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;simpleProp&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;: string&quot;</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;simpleProp&quot;</span><span class="p">][</span><span class="s2">&quot;optional&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">False</span>
 
     <span class="c1"># optionalProp</span>
-    <span class="k">assert</span> <span class="s1">&#39;optionalProp&#39;</span> <span class="ow">in</span> <span class="n">items_dict</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;optionalProp&#39;</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;property&#39;</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;optionalProp&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;: number&#39;</span>
+    <span class="k">assert</span> <span class="s2">&quot;optionalProp&quot;</span> <span class="ow">in</span> <span class="n">items_dict</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;optionalProp&quot;</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;property&quot;</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;optionalProp&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;: number&quot;</span>
     <span class="c1"># assert items_dict[&#39;optionalProp&#39;][&#39;optional&#39;] == True</span>
 
     <span class="c1"># functionWithParams</span>
-    <span class="k">assert</span> <span class="s1">&#39;functionWithParams&#39;</span> <span class="ow">in</span> <span class="n">items_dict</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;functionWithParams&#39;</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;function&#39;</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;functionWithParams&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="s2">&quot;functionWithParams&quot;</span> <span class="ow">in</span> <span class="n">items_dict</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;functionWithParams&quot;</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;functionWithParams&quot;</span><span class="p">][</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
     <span class="c1"># assert params[0][&#39;name&#39;] == &#39;a&#39;</span>
     <span class="c1"># assert params[0][&#39;type&#39;] == &#39;number&#39;</span>
@@ -454,45 +455,45 @@
     <span class="c1"># assert params[1][&#39;optional&#39;] == True</span>
 
     <span class="c1"># functionWithRest</span>
-    <span class="k">assert</span> <span class="s1">&#39;functionWithRest&#39;</span> <span class="ow">in</span> <span class="n">items_dict</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;functionWithRest&#39;</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;function&#39;</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;functionWithRest&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="s2">&quot;functionWithRest&quot;</span> <span class="ow">in</span> <span class="n">items_dict</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;functionWithRest&quot;</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;functionWithRest&quot;</span><span class="p">][</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
     <span class="c1"># assert params[0][&#39;name&#39;] == &#39;args&#39;</span>
     <span class="c1"># assert params[0][&#39;type&#39;] == &#39;any[]&#39;</span>
     <span class="c1"># assert params[0][&#39;rest&#39;] == True</span>
 
     <span class="c1"># genericFunction</span>
-    <span class="k">assert</span> <span class="s1">&#39;genericFunction&#39;</span> <span class="ow">in</span> <span class="n">items_dict</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;genericFunction&#39;</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;function&#39;</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;genericFunction&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="s2">&quot;genericFunction&quot;</span> <span class="ow">in</span> <span class="n">items_dict</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;genericFunction&quot;</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;genericFunction&quot;</span><span class="p">][</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
     <span class="c1"># assert params[0][&#39;name&#39;] == &#39;param&#39;</span>
     <span class="c1"># assert params[0][&#39;type&#39;] == &#39;U&#39;</span>
 
     <span class="c1"># functionTypeProp</span>
-    <span class="k">assert</span> <span class="s1">&#39;functionTypeProp&#39;</span> <span class="ow">in</span> <span class="n">items_dict</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;functionTypeProp&#39;</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;function&#39;</span>
-    <span class="n">params</span> <span class="o">=</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;functionTypeProp&#39;</span><span class="p">][</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span>
+    <span class="k">assert</span> <span class="s2">&quot;functionTypeProp&quot;</span> <span class="ow">in</span> <span class="n">items_dict</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;functionTypeProp&quot;</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;function&quot;</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;functionTypeProp&quot;</span><span class="p">][</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
     <span class="c1"># assert params[0][&#39;name&#39;] == &#39;x&#39;</span>
     <span class="c1"># assert params[0][&#39;type&#39;] == &#39;T&#39;</span>
 
     <span class="c1"># arrayProp</span>
-    <span class="k">assert</span> <span class="s1">&#39;arrayProp&#39;</span> <span class="ow">in</span> <span class="n">items_dict</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;arrayProp&#39;</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;property&#39;</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;arrayProp&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;: number[]&#39;</span>
+    <span class="k">assert</span> <span class="s2">&quot;arrayProp&quot;</span> <span class="ow">in</span> <span class="n">items_dict</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;arrayProp&quot;</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;property&quot;</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;arrayProp&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;: number[]&quot;</span>
 
     <span class="c1"># unionProp</span>
-    <span class="k">assert</span> <span class="s1">&#39;unionProp&#39;</span> <span class="ow">in</span> <span class="n">items_dict</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;unionProp&#39;</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;property&#39;</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;unionProp&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;: string | number&#39;</span>
+    <span class="k">assert</span> <span class="s2">&quot;unionProp&quot;</span> <span class="ow">in</span> <span class="n">items_dict</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;unionProp&quot;</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;property&quot;</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;unionProp&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;: string | number&quot;</span>
 
     <span class="c1"># nested</span>
-    <span class="k">assert</span> <span class="s1">&#39;nested&#39;</span> <span class="ow">in</span> <span class="n">items_dict</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;nested&#39;</span><span class="p">][</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;property&#39;</span>
+    <span class="k">assert</span> <span class="s2">&quot;nested&quot;</span> <span class="ow">in</span> <span class="n">items_dict</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;nested&quot;</span><span class="p">][</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;property&quot;</span>
     <span class="c1"># Since the type includes &#39;: &#39; prefix and is a complex type, we&#39;ll accept it as is</span>
-    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s1">&#39;nested&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;: {&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">items_dict</span><span class="p">[</span><span class="s2">&quot;nested&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;: {&quot;</span><span class="p">)</span>
 </pre></div>
 
            </div>

@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jy.js_parse &mdash; jy 0.1.17 documentation</title>
+  <title>jy.js_parse &mdash; jy 0.1.18 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=71734efd"></script>
+      <script src="../../_static/documentation_options.js?v=9969ed3f"></script>
       <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -87,7 +87,6 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">wraps</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">chain</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">esprima</span>
@@ -104,12 +103,12 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">UnknownNodeType</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;To be raised when an AST node type wasn&#39;t handled by a function&quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unknown type </span><span class="si">{</span><span class="n">context</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">node_type</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_type</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown type </span><span class="si">{</span><span class="n">context</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">node_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">if_none_output_raise_unknown_type</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">if_none_output_raise_unknown_type</span><span class="p">(</span><span class="n">context</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_if_none_output_raise_wrapper</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
         <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -128,7 +127,7 @@
     <span class="k">return</span> <span class="n">_if_none_output_raise_wrapper</span>
 
 
-<span class="c1"># def parse_js(js_code: str, encoding: Optional[str] = None) -&gt; AstScript:</span>
+<span class="c1"># def parse_js(js_code: str, encoding: str | None = None) -&gt; AstScript:</span>
 <span class="c1">#     if os.path.isfile(js_code):</span>
 <span class="c1">#         js_code = Path(js_code).read_text(encoding=encoding)</span>
 <span class="c1">#     return esprima.parse(js_code)</span>
@@ -138,7 +137,7 @@
 <a class="viewcode-back" href="../../module_docs/jy/js_parse.html#jy.js_parse.parse_js">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_js</span><span class="p">(</span>
     <span class="n">js_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">encoding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">encoding</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">ingress</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
     <span class="n">egress</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
@@ -159,7 +158,7 @@
         <span class="n">js_code</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">js_code</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">)</span>
     <span class="c1"># Parse the code as a module</span>
     <span class="n">js_code</span> <span class="o">=</span> <span class="n">ingress</span><span class="p">(</span><span class="n">js_code</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">egress</span><span class="p">(</span><span class="n">esprima</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">js_code</span><span class="p">,</span> <span class="n">sourceType</span><span class="o">=</span><span class="s1">&#39;module&#39;</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="n">egress</span><span class="p">(</span><span class="n">esprima</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">js_code</span><span class="p">,</span> <span class="n">sourceType</span><span class="o">=</span><span class="s2">&quot;module&quot;</span><span class="p">))</span></div>
 
 
 
@@ -173,9 +172,9 @@
     <span class="n">body_tree</span> <span class="o">=</span> <span class="n">parse_js</span><span class="p">(</span><span class="n">func_def_code</span><span class="p">)</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">body</span>
 
     <span class="c1"># Find the position of the first opening brace</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="n">func_def_code</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">,</span> <span class="n">body_tree</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">func_def_code</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;{&quot;</span><span class="p">,</span> <span class="n">body_tree</span><span class="o">.</span><span class="n">start</span><span class="p">)</span>
     <span class="c1"># Find the position of the last closing brace</span>
-    <span class="n">end</span> <span class="o">=</span> <span class="n">func_def_code</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">,</span> <span class="n">body_tree</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">body_tree</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="n">func_def_code</span><span class="o">.</span><span class="n">rfind</span><span class="p">(</span><span class="s2">&quot;}&quot;</span><span class="p">,</span> <span class="n">body_tree</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">body_tree</span><span class="o">.</span><span class="n">end</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">(</span>
         <span class="n">func_def_code</span><span class="p">[:</span><span class="n">start</span><span class="p">],</span>
@@ -190,25 +189,25 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">append_to_func_body</span><span class="p">(</span><span class="n">func_def_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">code_to_append</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Append code to the body of a function definition&quot;&quot;&quot;</span>
     <span class="n">pre</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">post</span> <span class="o">=</span> <span class="n">extract_function_def_parts</span><span class="p">(</span><span class="n">func_def_code</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">pre</span> <span class="o">+</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="n">body</span> <span class="o">+</span> <span class="n">code_to_append</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span> <span class="o">+</span> <span class="n">post</span></div>
+    <span class="k">return</span> <span class="n">pre</span> <span class="o">+</span> <span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="n">body</span> <span class="o">+</span> <span class="n">code_to_append</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span> <span class="o">+</span> <span class="n">post</span></div>
 
 
 
-<span class="nd">@if_none_output_raise_unknown_type</span><span class="p">(</span><span class="s1">&#39;to extract obj name from&#39;</span><span class="p">)</span>
+<span class="nd">@if_none_output_raise_unknown_type</span><span class="p">(</span><span class="s2">&quot;to extract obj name from&quot;</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_extract_obj_name</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">AstNode</span><span class="p">,</span> <span class="o">/</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;Identifier&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;Identifier&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span>
-    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;MemberExpression&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;MemberExpression&quot;</span><span class="p">:</span>
         <span class="n">object_name</span> <span class="o">=</span> <span class="n">_extract_obj_name</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
         <span class="n">property_name</span> <span class="o">=</span> <span class="n">_extract_obj_name</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">property</span><span class="p">)</span>
-        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">object_name</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">property_name</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">object_name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">property_name</span><span class="si">}</span><span class="s2">&quot;</span>
 
 
-<span class="nd">@if_none_output_raise_unknown_type</span><span class="p">(</span><span class="s1">&#39;to extract params from&#39;</span><span class="p">)</span>
+<span class="nd">@if_none_output_raise_unknown_type</span><span class="p">(</span><span class="s2">&quot;to extract params from&quot;</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">_extract_params</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">AstNode</span><span class="p">,</span> <span class="o">/</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;Identifier&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;Identifier&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;AssignmentPattern&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;AssignmentPattern&quot;</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">left</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
 
 
@@ -225,21 +224,21 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">extract_func_name_and_params</span><span class="p">(</span><span class="n">ast_node</span><span class="p">:</span> <span class="n">AstNode</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Extract one or several function ``(name, params)`` pair(s) from an AST node&quot;&quot;&quot;</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">ast_node</span>
-    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;FunctionDeclaration&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;FunctionDeclaration&quot;</span><span class="p">:</span>
         <span class="k">yield</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">extract_js_func_params</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
-    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;AssignmentExpression&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;AssignmentExpression&quot;</span><span class="p">:</span>
         <span class="k">yield</span> <span class="p">(</span>
             <span class="n">_extract_obj_name</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">left</span><span class="p">),</span>
             <span class="nb">list</span><span class="p">(</span><span class="n">extract_js_func_params</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">right</span><span class="o">.</span><span class="n">params</span><span class="p">)),</span>
         <span class="p">)</span>
-    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;VariableDeclarator&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;VariableDeclarator&quot;</span><span class="p">:</span>
         <span class="k">yield</span> <span class="n">x</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">extract_js_func_params</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">params</span><span class="p">))</span>
-    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;VariableDeclaration&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;VariableDeclaration&quot;</span><span class="p">:</span>
         <span class="c1"># Here we may have several declarations, so we use yield from</span>
         <span class="k">yield from</span> <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
             <span class="nb">map</span><span class="p">(</span><span class="n">extract_func_name_and_params</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">declarations</span><span class="p">)</span>
         <span class="p">)</span>
-    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;ExpressionStatement&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;ExpressionStatement&quot;</span><span class="p">:</span>
         <span class="k">yield from</span> <span class="n">extract_func_name_and_params</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span></div>
 
 
@@ -281,7 +280,7 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">yield from</span> <span class="n">extract_func_name_and_params</span><span class="p">(</span><span class="n">ast_node</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Exception while parsing </span><span class="si">{</span><span class="n">ast_node</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exception while parsing </span><span class="si">{</span><span class="n">ast_node</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 
 
@@ -308,25 +307,25 @@
 
     <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 
-    <span class="n">remove_export</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;^export &#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
+    <span class="n">remove_export</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;^export &quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">MULTILINE</span><span class="p">)</span>
 
     <span class="n">tree</span> <span class="o">=</span> <span class="n">parse_js</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span> <span class="n">ingress</span><span class="o">=</span><span class="n">remove_export</span><span class="p">)</span>
 
     <span class="c1"># Function to evaluate AST nodes into Python values</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">eval_node</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;Literal&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;Literal&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">node</span><span class="o">.</span><span class="n">value</span>
-        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;ObjectExpression&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;ObjectExpression&quot;</span><span class="p">:</span>
             <span class="n">obj</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">properties</span><span class="p">:</span>
-                <span class="n">key</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;Identifier&#39;</span> <span class="k">else</span> <span class="n">prop</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">value</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;Identifier&quot;</span> <span class="k">else</span> <span class="n">prop</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">value</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="n">eval_node</span><span class="p">(</span><span class="n">prop</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
                 <span class="n">obj</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
             <span class="k">return</span> <span class="n">obj</span>
-        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;ArrayExpression&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;ArrayExpression&quot;</span><span class="p">:</span>
             <span class="k">return</span> <span class="p">[</span><span class="n">eval_node</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">elements</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;UnaryExpression&#39;</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;UnaryExpression&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">operator</span> <span class="o">==</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
                 <span class="k">return</span> <span class="o">-</span><span class="n">eval_node</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">argument</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">eval_node</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">argument</span><span class="p">)</span>
@@ -336,7 +335,7 @@
     <span class="c1"># Extract variables and their values</span>
 
     <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">tree</span><span class="o">.</span><span class="n">body</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;VariableDeclaration&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;VariableDeclaration&quot;</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">decl</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">declarations</span><span class="p">:</span>
                 <span class="n">var_name</span> <span class="o">=</span> <span class="n">decl</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">name</span>
                 <span class="n">var_value</span> <span class="o">=</span> <span class="n">decl</span><span class="o">.</span><span class="n">init</span>
@@ -357,11 +356,10 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Tuple</span>
 
 <span class="n">_dflt_patterns_for_html_ids</span> <span class="o">=</span> <span class="p">(</span>
     <span class="sa">r</span><span class="s1">&#39;id=&quot;([^&quot;]+)&quot;&#39;</span><span class="p">,</span>  <span class="c1"># HTML id attributes</span>
-    <span class="sa">r</span><span class="s1">&#39;#([a-zA-Z][\w\-]*)&#39;</span><span class="p">,</span>  <span class="c1"># CSS IDs</span>
+    <span class="sa">r</span><span class="s2">&quot;#([a-zA-Z][\w\-]*)&quot;</span><span class="p">,</span>  <span class="c1"># CSS IDs</span>
     <span class="sa">r</span><span class="s1">&#39;document\.getElementById\(&quot;([^&quot;]+)&quot;\)&#39;</span><span class="p">,</span>  <span class="c1"># JS getElementById</span>
 <span class="p">)</span>
 
@@ -369,8 +367,8 @@
 <div class="viewcode-block" id="replace_ids_in_code">
 <a class="viewcode-back" href="../../module_docs/jy/js_parse.html#jy.js_parse.replace_ids_in_code">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">replace_ids_in_code</span><span class="p">(</span>
-    <span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">patterns</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">_dflt_patterns_for_html_ids</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">patterns</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">_dflt_patterns_for_html_ids</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Replaces IDs in a mixed HTML, CSS, and JS string with unique versions.</span>
 
@@ -388,7 +386,7 @@
     <span class="c1"># Patterns to match IDs</span>
     <span class="n">patterns</span> <span class="o">=</span> <span class="p">[</span>
         <span class="sa">r</span><span class="s1">&#39;id=&quot;([^&quot;]+)&quot;&#39;</span><span class="p">,</span>  <span class="c1"># HTML id attributes</span>
-        <span class="sa">r</span><span class="s1">&#39;#([a-zA-Z][\w\-]*)&#39;</span><span class="p">,</span>  <span class="c1"># CSS IDs</span>
+        <span class="sa">r</span><span class="s2">&quot;#([a-zA-Z][\w\-]*)&quot;</span><span class="p">,</span>  <span class="c1"># CSS IDs</span>
         <span class="sa">r</span><span class="s1">&#39;document\.getElementById\(&quot;([^&quot;]+)&quot;\)&#39;</span><span class="p">,</span>  <span class="c1"># JS getElementById</span>
     <span class="p">]</span>
 
@@ -397,7 +395,7 @@
     <span class="c1"># Generate a unique ID</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">unique_id</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
         <span class="n">old_id</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">new_id</span> <span class="o">=</span> <span class="n">old_id</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)[:</span><span class="mi">8</span><span class="p">]</span>
+        <span class="n">new_id</span> <span class="o">=</span> <span class="n">old_id</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)[:</span><span class="mi">8</span><span class="p">]</span>
         <span class="n">replaced</span><span class="p">[</span><span class="n">old_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_id</span>
         <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">old_id</span><span class="p">,</span> <span class="n">new_id</span><span class="p">)</span>
 

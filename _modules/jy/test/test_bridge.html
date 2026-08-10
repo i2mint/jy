@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jy.test.test_bridge &mdash; jy 0.1.17 documentation</title>
+  <title>jy.test.test_bridge &mdash; jy 0.1.18 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
@@ -14,7 +14,7 @@
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=71734efd"></script>
+      <script src="../../../_static/documentation_options.js?v=9969ed3f"></script>
       <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
       <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
@@ -87,7 +87,7 @@
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">jy.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">js_files</span>
 
-<span class="n">test01_js_code</span> <span class="o">=</span> <span class="n">js_files</span><span class="p">[</span><span class="s1">&#39;test01&#39;</span><span class="p">]</span>
+<span class="n">test01_js_code</span> <span class="o">=</span> <span class="n">js_files</span><span class="p">[</span><span class="s2">&quot;test01&quot;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="test_add_js_call_attributes_to_obj">
@@ -99,14 +99,14 @@
     <span class="n">js</span> <span class="o">=</span> <span class="n">add_js_funcs</span><span class="p">(</span><span class="n">test01_js_code</span><span class="p">)</span>
 
     <span class="c1"># js has two methods called bar and foo</span>
-    <span class="k">assert</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">js</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)])</span> <span class="o">==</span> <span class="p">[</span>
-        <span class="s1">&#39;add_one&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;bar&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;foo&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;obj&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;prop&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;with_arrow_func&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;with_let&#39;</span><span class="p">,</span>
+    <span class="k">assert</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">js</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)])</span> <span class="o">==</span> <span class="p">[</span>
+        <span class="s2">&quot;add_one&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;bar&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;foo&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;obj&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;prop&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;with_arrow_func&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;with_let&quot;</span><span class="p">,</span>
     <span class="p">]</span>
 
     <span class="c1"># they mirror the signatures of the underlying JS functions</span>
@@ -119,13 +119,13 @@
 
     <span class="c1"># Calling this function returns a string</span>
     <span class="c1"># (the code to call the underlying JS function)</span>
-    <span class="k">assert</span> <span class="n">js</span><span class="o">.</span><span class="n">foo</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;foo(1, &quot;hi&quot;, 5)&#39;</span>
+    <span class="k">assert</span> <span class="n">js</span><span class="o">.</span><span class="n">foo</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;hi&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;foo(1, &quot;hi&quot;, 5)&#39;</span>
 
     <span class="c1"># Notice that you can use positional or keyword arguments</span>
     <span class="c1"># Also, notice that though &quot;prop&quot; is the name of js&#39;s attribute,</span>
     <span class="c1"># the function call string does indeed use the original full reference:</span>
     <span class="c1"># ``func.assigned.to.nested.prop``</span>
-    <span class="k">assert</span> <span class="n">js</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="s1">&#39;up&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;func.assigned.to.nested.prop(&quot;up&quot;)&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">js</span><span class="o">.</span><span class="n">prop</span><span class="p">(</span><span class="s2">&quot;up&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="s1">&#39;func.assigned.to.nested.prop(&quot;up&quot;)&#39;</span><span class="p">)</span>
 
     <span class="c1"># Notice that the python (signature) defaults are applied before translating to JS</span>
     <span class="k">assert</span> <span class="n">js</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;bar(42, &quot;food&quot;, true, 4)&#39;</span>
@@ -135,7 +135,7 @@
     <span class="c1"># This will result in only injecting those inputs you specify in the js call string,</span>
     <span class="c1"># which will have the effect of letting JS apply it&#39;s defaults, what ever they are</span>
     <span class="n">alt_js</span> <span class="o">=</span> <span class="n">add_js_funcs</span><span class="p">(</span><span class="n">test01_js_code</span><span class="p">,</span> <span class="n">apply_defaults</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">alt_js</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;bar(42)&#39;</span></div>
+    <span class="k">assert</span> <span class="n">alt_js</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;bar(42)&quot;</span></div>
 
 </pre></div>
 
