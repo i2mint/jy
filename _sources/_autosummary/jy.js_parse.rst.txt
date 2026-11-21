@@ -1,0 +1,28 @@
+jy.js\_parse
+============
+
+.. automodule:: jy.js_parse
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      append_to_func_body
+      dflt_py_to_js_value_trans
+      extract_func_name_and_params
+      extract_function_def_parts
+      extract_js_func_params
+      func_name_and_params_pairs
+      if_none_output_raise_unknown_type
+      parse_js
+      parse_js_code
+      replace_ids_in_code
+      variable_declarations_pairs
+   
+   .. rubric:: Exceptions
+
+   .. autosummary::
+   
+      UnknownNodeType
+   

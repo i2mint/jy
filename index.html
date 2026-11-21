@@ -1,183 +1,522 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to jy’s documentation! &mdash; jy 0.1.18 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
 
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt" type="text/markdown">
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt">
+    <title>jy &#8212; jy</title>
   
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=9969ed3f"></script>
-      <script src="_static/doctools.js?v=fd6eb6e6"></script>
-      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
-      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/js/theme.js"></script>
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=75c7c72ae941e8b558d8" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d75fae25" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx_autodoc_typehints.css?v=057ac668" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/epythet.css?v=5afcb159" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="_static/scripts/fontawesome.js?digest=75c7c72ae941e8b558d8"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
+
+    <script src="_static/documentation_options.js?v=3d116926"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=fd10adb8"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="jy" href="module_docs/jy.html" /> 
-</head>
+    <link rel="next" title="API reference" href="api.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="color-scheme" content="light dark"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1.19" />
+  
+    
+    <script src="_static/searchtools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
 
-          
-          
-          <a href="#" class="icon icon-home">
-            jy
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy.html">jy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/bridge.html">jy.bridge</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/js_parse.html">jy.js_parse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/scrap/find_and_replace_ids.html">jy.scrap.find_and_replace_ids</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/test/test_bridge.html">jy.test.test_bridge</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/test/test_js_parse.html">jy.test.test_js_parse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/ts_parse.html">jy.ts_parse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/util.html">jy.util</a></li>
-</ul>
 
-        </div>
-      </div>
-    </nav>
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button type="button" class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation" aria-expanded="false" aria-controls="pst-primary-sidebar-modal">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">jy</a>
-      </nav>
+  
+    
+  
 
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to jy’s documentation!</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">jy</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API reference
+  </a>
+</li>
+
   </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="welcome-to-jy-s-documentation">
-<h1>Welcome to jy’s documentation!<a class="headerlink" href="#welcome-to-jy-s-documentation" title="Link to this heading"></a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy.html">jy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/bridge.html">jy.bridge</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/bridge.html#jy.bridge.JsBridge"><code class="docutils literal notranslate"><span class="pre">JsBridge</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/bridge.html#jy.bridge.add_js_funcs"><code class="docutils literal notranslate"><span class="pre">add_js_funcs()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/bridge.html#jy.bridge.iskeyword"><code class="docutils literal notranslate"><span class="pre">iskeyword()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/js_parse.html">jy.js_parse</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/js_parse.html#jy.js_parse.UnknownNodeType"><code class="docutils literal notranslate"><span class="pre">UnknownNodeType</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/js_parse.html#jy.js_parse.append_to_func_body"><code class="docutils literal notranslate"><span class="pre">append_to_func_body()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/js_parse.html#jy.js_parse.extract_func_name_and_params"><code class="docutils literal notranslate"><span class="pre">extract_func_name_and_params()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/js_parse.html#jy.js_parse.extract_function_def_parts"><code class="docutils literal notranslate"><span class="pre">extract_function_def_parts()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/js_parse.html#jy.js_parse.func_name_and_params_pairs"><code class="docutils literal notranslate"><span class="pre">func_name_and_params_pairs()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/js_parse.html#jy.js_parse.parse_js"><code class="docutils literal notranslate"><span class="pre">parse_js()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/js_parse.html#jy.js_parse.parse_js_code"><code class="docutils literal notranslate"><span class="pre">parse_js_code()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/js_parse.html#jy.js_parse.replace_ids_in_code"><code class="docutils literal notranslate"><span class="pre">replace_ids_in_code()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/js_parse.html#jy.js_parse.variable_declarations_pairs"><code class="docutils literal notranslate"><span class="pre">variable_declarations_pairs()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/scrap/find_and_replace_ids.html">jy.scrap.find_and_replace_ids</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/scrap/find_and_replace_ids.html#jy.scrap.find_and_replace_ids.default_token_replacer"><code class="docutils literal notranslate"><span class="pre">default_token_replacer()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/scrap/find_and_replace_ids.html#jy.scrap.find_and_replace_ids.replace_css_ids"><code class="docutils literal notranslate"><span class="pre">replace_css_ids()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/scrap/find_and_replace_ids.html#jy.scrap.find_and_replace_ids.replace_html_ids"><code class="docutils literal notranslate"><span class="pre">replace_html_ids()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/scrap/find_and_replace_ids.html#jy.scrap.find_and_replace_ids.replace_js_ids"><code class="docutils literal notranslate"><span class="pre">replace_js_ids()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/scrap/find_and_replace_ids.html#jy.scrap.find_and_replace_ids.replace_tokens"><code class="docutils literal notranslate"><span class="pre">replace_tokens()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/test/test_bridge.html">jy.test.test_bridge</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/test/test_bridge.html#jy.test.test_bridge.test_add_js_call_attributes_to_obj"><code class="docutils literal notranslate"><span class="pre">test_add_js_call_attributes_to_obj()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/test/test_js_parse.html">jy.test.test_js_parse</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/ts_parse.html">jy.ts_parse</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/ts_parse.html#jy.ts_parse.default_handler"><code class="docutils literal notranslate"><span class="pre">default_handler()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/ts_parse.html#jy.ts_parse.extract_parameters"><code class="docutils literal notranslate"><span class="pre">extract_parameters()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/ts_parse.html#jy.ts_parse.find_function_type_node"><code class="docutils literal notranslate"><span class="pre">find_function_type_node()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/ts_parse.html#jy.ts_parse.handle_interface_declaration"><code class="docutils literal notranslate"><span class="pre">handle_interface_declaration()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/ts_parse.html#jy.ts_parse.handle_method_signature"><code class="docutils literal notranslate"><span class="pre">handle_method_signature()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/ts_parse.html#jy.ts_parse.handle_property_signature"><code class="docutils literal notranslate"><span class="pre">handle_property_signature()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/ts_parse.html#jy.ts_parse.parse_ts"><code class="docutils literal notranslate"><span class="pre">parse_ts()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/ts_parse.html#jy.ts_parse.parse_ts_with_oa"><code class="docutils literal notranslate"><span class="pre">parse_ts_with_oa()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/jy/util.html">jy.util</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/util.html#jy.util.JsFiles"><code class="docutils literal notranslate"><span class="pre">JsFiles</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/util.html#jy.util.js_files_as_attrs"><code class="docutils literal notranslate"><span class="pre">js_files_as_attrs()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/jy/util.html#jy.util.mk_js_files"><code class="docutils literal notranslate"><span class="pre">mk_js_files</span></code></a></li>
-</ul>
-</li>
-</ul>
-</div>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-<p>Release: 0.1.18</p>
-<p>Last change: Aug 10, 2026</p>
-</section>
-
-
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="module_docs/jy.html" class="btn btn-neutral float-right" title="jy" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+</nav></div>
+      
     </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p></p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
         </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+      
+      
+        <div class="navbar-item">
 
-</body>
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/i2mint/jy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button type="button" class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button type="button" class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page" aria-expanded="false" aria-controls="pst-secondary-sidebar-modal">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal" tabindex="-1"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api.html">
+    API reference
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button type="button" class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg me-1"></i>System Settings</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg me-1"></i>Light</button></li>
+    <li><button type="button" class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/i2mint/jy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none"></div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <!-- generated by epythet -->
+<section id="jy">
+<h1>jy<a class="headerlink" href="#jy" title="Link to this heading">#</a></h1>
+<p>Tools to control JS from Python.</p>
+<p>(<code class="docutils literal notranslate"><span class="pre">jy</span></code> stands for “Js pY” or “Js python proxY”.)</p>
+<p>To install:	<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">jy</span></code></p>
+<p><a class="reference external" href="https://i2mint.github.io/jy/">Documentation</a></p>
+</section>
+<section id="example">
+<h1>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h1>
+<p>Say you have the <code class="docutils literal notranslate"><span class="pre">test01.js</span></code>
+(whose contents are displayed in the next subsection).</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from jy import add_js_funcs
+js = add_js_funcs("./test01.js")
+</pre></div>
+</div>
+<p>js has two methods called bar and foo</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>assert sorted([x for x in dir(js) if not x.startswith('_')]) == [
+    'add_one', 'bar', 'foo', 'obj', 'prop', 'with_arrow_func', 'with_let'
+]
+</pre></div>
+</div>
+<p>They mirror the signatures of the underlying JS functions</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>from inspect import signature
+assert str(signature(js.foo)) == "(a, b='hello', c=3)"
+assert str(signature(js.bar)) == "(green, eggs='food', and=True, /, ham=4)"
+</pre></div>
+</div>
+<p>(<code class="docutils literal notranslate"><span class="pre">and</span></code> is a Python keyword, so it – and every parameter before it – is
+exposed as positional-only, hence the <code class="docutils literal notranslate"><span class="pre">/</span></code>. You can never pass <code class="docutils literal notranslate"><span class="pre">and=...</span></code> by
+keyword from Python anyway.)</p>
+<p>Calling this function returns a string
+(the code to call the underlying JS function)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>assert js.foo(1, 'hi', 5) == 'foo(1, "hi", 5)'
+</pre></div>
+</div>
+<p>Notice that you can use positional or keyword arguments
+Also, notice that though “prop” is the name of <code class="docutils literal notranslate"><span class="pre">js</span></code>’s attribute,
+the function call string does indeed use the original full reference:
+<code class="docutils literal notranslate"><span class="pre">func.assigned.to.nested.prop</span></code></p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>assert js.prop('up') == (
+    'func.assigned.to.nested.prop("up")'
+)
+</pre></div>
+</div>
+<p>Notice that the python (signature) defaults are applied before translating to JS</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>assert js.bar(42) == 'bar(42, "food", true, 4)'
+alt_js = add_js_funcs("./test01.js", apply_defaults=False)
+</pre></div>
+</div>
+<p>You can opt not to do this by specifying <code class="docutils literal notranslate"><span class="pre">apply_defaults=False</span></code>
+This will result in only injecting those inputs you specify in the js call string,
+which will have the effect of letting JS apply its defaults, what ever they are</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>alt_js = add_js_funcs("./test01.js", apply_defaults=False)
+assert alt_js.bar(42) == 'bar(42)'
+</pre></div>
+</div>
+</section>
+<section id="appendix">
+<h1>Appendix<a class="headerlink" href="#appendix" title="Link to this heading">#</a></h1>
+<section id="the-test01-js-file-s-contents">
+<span id="the-test01js-files-contents"></span><h2>The <code class="docutils literal notranslate"><span class="pre">test01.js</span></code> file’s contents<a class="headerlink" href="#the-test01-js-file-s-contents" title="Link to this heading">#</a></h2>
+<div class="highlight-javascript notranslate"><div class="highlight"><pre><span></span><span class="c1">// "test01.js" file</span>
+<span class="c1">// Straight function definition</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">foo</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span><span class="w"> </span><span class="nx">b</span><span class="o">=</span><span class="s2">"hello"</span><span class="p">,</span><span class="w"> </span><span class="nx">c</span><span class="o">=</span><span class="w"> </span><span class="mf">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">b</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">c</span>
+<span class="p">}</span>
+
+<span class="c1">// Straight function definition</span>
+<span class="kd">function</span><span class="w"> </span><span class="nx">bar</span><span class="p">(</span><span class="nx">green</span><span class="p">,</span><span class="w"> </span><span class="nx">eggs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'food'</span><span class="p">,</span><span class="w"> </span><span class="nx">and</span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="nx">ham</span><span class="o">=</span><span class="w"> </span><span class="mf">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">and</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="nx">eggs</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">ham</span>
+<span class="p">}</span>
+
+<span class="c1">// global callable variable</span>
+<span class="nx">add_one</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span>
+<span class="p">}</span>
+
+<span class="c1">// does the presence of a let break the parser?</span>
+<span class="kd">let</span><span class="w"> </span><span class="nx">with_let</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">2</span>
+<span class="p">}</span>
+
+<span class="c1">// with arrow func</span>
+<span class="c1">// (also testing if const breaks the parse)</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">with_arrow_func</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">y</span><span class="p">,</span><span class="w"> </span><span class="nx">z</span><span class="o">=</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">z</span>
+
+<span class="c1">// function assigned to a nested property</span>
+<span class="nx">func</span><span class="p">.</span><span class="nx">assigned</span><span class="p">.</span><span class="nx">to</span><span class="p">.</span><span class="nx">nested</span><span class="p">.</span><span class="nx">prop</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">x</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">3</span>
+<span class="p">}</span>
+
+<span class="c1">// function nested in some other function, assigned to a variable</span>
+<span class="kd">var</span><span class="w"> </span><span class="nx">obj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kd">function</span><span class="w"> </span><span class="p">(</span><span class="nx">exports</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="nx">bar</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">"__"</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">})</span>
+</pre></div>
+</div>
+<p class="epythet-aggregates">This documentation as a single file: <a href="jy.md">jy.md</a> (Markdown, for agents).</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-11-21 18:06 UTC from <a href="https://github.com/i2mint/jy/commit/5fb64c4159c71641a6f1d75b14b979dbe738878d">5fb64c4</a> (main) · jy 0.1.19 · <a href="about-this-build.html">about this build</a></p>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="api.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">API reference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal" tabindex="-1"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">jy</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix">Appendix</a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-test01-js-file-s-contents">The <code class="docutils literal notranslate"><span class="pre">test01.js</span></code> file’s contents</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="_sources/index.md.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.24.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
 </html>

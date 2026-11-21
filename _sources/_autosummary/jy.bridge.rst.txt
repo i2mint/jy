@@ -1,0 +1,19 @@
+jy.bridge
+=========
+
+.. automodule:: jy.bridge
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      add_js_funcs
+      mk_py_binder_func
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      JsBridge
+   

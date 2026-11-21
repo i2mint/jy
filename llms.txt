@@ -1,0 +1,26 @@
+# jy
+
+> Tools to control JS from Python (jy for Js pY or Js python proxY)
+
+
+## Pages
+
+- [jy](index.html.md): Tools to control JS from Python.
+- [API reference](api.html.md): | &#96;jy&#96;   | Python functions to talk to Javascript   |
+- [jy](_autosummary/jy.html.md): Python functions to talk to Javascript
+- [jy.bridge](_autosummary/jy.bridge.html.md): Python portals to JS
+- [jy.js_parse](_autosummary/jy.js_parse.html.md): Utils to parse JS
+- [jy.test](_autosummary/jy.test.html.md): | &#96;test_bridge&#96;     | Tests for the bridge module   |
+- [jy.test.test_bridge](_autosummary/jy.test.test_bridge.html.md): Tests for the bridge module
+- [jy.test.test_js_parse](_autosummary/jy.test.test_js_parse.html.md): Tests for js_bridge
+- [jy.ts_parse](_autosummary/jy.ts_parse.html.md): Tools to parse TS code
+- [jy.util](_autosummary/jy.util.html.md): General utils
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-21 18:06 UTC&#42;&#42; from commit &lt;a href="https://github.com/i2m...
+
+## Optional
+
+- [jy.md](jy.md): Complete documentation in a single file.
+
+## Build
+
+- [build_info.json](build_info.json): build provenance (commit, version, tool versions, whether the docs match the package)

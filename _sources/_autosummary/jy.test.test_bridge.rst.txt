@@ -1,0 +1,12 @@
+jy.test.test\_bridge
+====================
+
+.. automodule:: jy.test.test_bridge
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      test_add_js_call_attributes_to_obj
+   

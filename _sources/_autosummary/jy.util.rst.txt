@@ -1,0 +1,19 @@
+jy.util
+=======
+
+.. automodule:: jy.util
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      js_files_as_attrs
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      JsFiles
+      mk_js_files
+   
