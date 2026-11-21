@@ -28,7 +28,7 @@ js_dir_path = str(js_dir)
 
 
 @add_ipython_key_completions
-@wrap_kvs(key_of_id=lambda x: x[: -len(".js")], id_of_key=lambda x: x + ".js")
+@wrap_kvs(key_decoder=lambda x: x[: -len(".js")], key_encoder=lambda x: x + ".js")
 @filt_iter(filt=lambda x: x.endswith(".js"))
 class JsFiles(TextFiles):
     """A store of js files"""
@@ -52,7 +52,7 @@ def js_files_as_attrs(rootdir):
     key_for_id = {id_: _replace_non_alphanumerics_by_underscore(id_) for id_ in s}
     key_for_id, id_for_key = invertible_maps(key_for_id)
     return AttrContainer(
-        **wrap_kvs(s, key_of_id=key_for_id.get, id_of_key=id_for_key.get)
+        **wrap_kvs(s, key_decoder=key_for_id.get, key_encoder=id_for_key.get)
     )
 
 
