@@ -44,7 +44,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
-    <script src="../_static/documentation_options.js?v=3d116926"></script>
+    <script src="../_static/documentation_options.js?v=17aaaefc"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -53,12 +53,12 @@
     <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="jy.test" href="jy.test.html" />
+    <link rel="next" title="jy.runtime" href="jy.runtime.html" />
     <link rel="prev" title="jy.bridge" href="jy.bridge.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.19" />
+  <meta name="docsearch:version" content="0.1.20" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -308,6 +308,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="jy.html">jy</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="jy.bridge.html">jy.bridge</a></li>
 <li class="toctree-l2 current active"><a aria-current="page" class="current reference internal" href="#">jy.js_parse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jy.runtime.html">jy.runtime</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="jy.test.html">jy.test</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="jy.test.test_bridge.html">jy.test.test_bridge</a></li>
 <li class="toctree-l3"><a class="reference internal" href="jy.test.test_js_parse.html">jy.test.test_js_parse</a></li>
@@ -389,8 +390,8 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#jy.js_parse.append_to_func_body" title="jy.js_parse.append_to_func_body"><code class="xref py py-obj docutils literal notranslate"><span class="pre">append_to_func_body</span></code></a>(func_def_code, ...)</p></td>
 <td><p>Append code to the body of a function definition</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dflt_py_to_js_value_trans</span></code>(x)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jy.js_parse.dflt_py_to_js_value_trans" title="jy.js_parse.dflt_py_to_js_value_trans"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dflt_py_to_js_value_trans</span></code></a>(x)</p></td>
+<td><p>Python value -&gt; JS literal text, via <code class="docutils literal notranslate"><span class="pre">json.dumps</span></code> (quotes and nesting are escaped).</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#jy.js_parse.extract_func_name_and_params" title="jy.js_parse.extract_func_name_and_params"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_func_name_and_params</span></code></a>(ast_node)</p></td>
 <td><p>Extract one or several function <code class="docutils literal notranslate"><span class="pre">(name,</span> <span class="pre">params)</span></code> pair(s) from an AST node</p></td>
@@ -447,6 +448,22 @@
 <dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="jy.js_parse.dflt_py_to_js_value_trans">
+<span class="sig-prename descclassname"><span class="pre">jy.js_parse.</span></span><span class="sig-name descname"><span class="pre">dflt_py_to_js_value_trans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jy/js_parse.html#dflt_py_to_js_value_trans"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.js_parse.dflt_py_to_js_value_trans" title="Link to this definition">#</a></dt>
+<dd><p>Python value -&gt; JS literal text, via <code class="docutils literal notranslate"><span class="pre">json.dumps</span></code> (quotes and nesting are escaped).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dflt_py_to_js_value_trans</span><span class="p">(</span><span class="kc">True</span><span class="p">),</span> <span class="n">dflt_py_to_js_value_trans</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+<span class="go">('true', 'null')</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dflt_py_to_js_value_trans</span><span class="p">(</span><span class="s1">'say "hi"</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+<span class="go">'"say \\"hi\\"\\n"'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dflt_py_to_js_value_trans</span><span class="p">([{</span><span class="s2">"a"</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="s2">"b"</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">]}])</span>
+<span class="go">'[{"a": 1}, {"b": [2, "x"]}]'</span>
+</pre></div>
+</div>
+<p>Values <code class="docutils literal notranslate"><span class="pre">json</span></code> cannot encode are passed through unchanged (so a caller can
+supply a raw JS expression object whose <code class="docutils literal notranslate"><span class="pre">str</span></code> is the code).</p>
 </dd></dl>
 
 <dl class="py function">
@@ -603,11 +620,11 @@ Python equivalents; other initializer kinds yield <code class="docutils literal 
       </div>
     </a>
     <a class="right-next"
-       href="jy.test.html"
+       href="jy.runtime.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">jy.test</p>
+        <p class="prev-next-title">jy.runtime</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -632,6 +649,7 @@ Python equivalents; other initializer kinds yield <code class="docutils literal 
     <ul class="pst-show_toc_level nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jy.js_parse.UnknownNodeType"><code class="docutils literal notranslate"><span class="pre">UnknownNodeType</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jy.js_parse.append_to_func_body"><code class="docutils literal notranslate"><span class="pre">append_to_func_body()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jy.js_parse.dflt_py_to_js_value_trans"><code class="docutils literal notranslate"><span class="pre">dflt_py_to_js_value_trans()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jy.js_parse.extract_func_name_and_params"><code class="docutils literal notranslate"><span class="pre">extract_func_name_and_params()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jy.js_parse.extract_function_def_parts"><code class="docutils literal notranslate"><span class="pre">extract_function_def_parts()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jy.js_parse.func_name_and_params_pairs"><code class="docutils literal notranslate"><span class="pre">func_name_and_params_pairs()</span></code></a></li>

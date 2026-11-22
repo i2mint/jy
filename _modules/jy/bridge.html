@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
-    <script src="../../_static/documentation_options.js?v=3d116926"></script>
+    <script src="../../_static/documentation_options.js?v=17aaaefc"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -411,7 +411,7 @@ window.runMermaid = runMermaid;</script>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.19" />
+  <meta name="docsearch:version" content="0.1.20" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -776,6 +776,7 @@ window.runMermaid = runMermaid;</script>
     <span class="n">doc</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
     <span class="n">value_trans</span><span class="o">=</span><span class="n">dflt_py_to_js_value_trans</span><span class="p">,</span>
     <span class="n">apply_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
     <span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="n">func_name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"."</span><span class="p">)</span>  <span class="c1"># e.g. object.containing.func --&gt; func</span>
     <span class="n">func_call_template</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">"(</span><span class="si">{inputs}</span><span class="s2">)"</span> <span class="o">+</span> <span class="n">suffix</span>
@@ -788,6 +789,12 @@ window.runMermaid = runMermaid;</script>
         <span class="n">__value_trans</span><span class="o">=</span><span class="n">value_trans</span><span class="p">,</span>
         <span class="n">__apply_defaults</span><span class="o">=</span><span class="n">apply_defaults</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="k">if</span> <span class="n">runtime</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">call_text</span> <span class="o">=</span> <span class="n">js_func_call</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">js_func_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">runtime</span><span class="p">(</span><span class="n">call_text</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
     <span class="n">js_func_call</span> <span class="o">=</span> <span class="n">sig</span><span class="p">(</span><span class="n">js_func_call</span><span class="p">)</span>
     <span class="n">js_func_call</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="n">func_name</span>
     <span class="n">js_func_call</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">doc</span>
@@ -816,6 +823,7 @@ window.runMermaid = runMermaid;</script>
     <span class="n">forbidden_method_names</span><span class="o">=</span><span class="p">(),</span>
     <span class="n">apply_defaults</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="n">value_trans</span><span class="o">=</span><span class="n">dflt_py_to_js_value_trans</span><span class="p">,</span>
+    <span class="n">runtime</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
 <span class="w">    </span><span class="sd">'''</span>
 <span class="sd">    Add js call functions as attributes to an object.</span>
@@ -841,6 +849,10 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">    'foo(1, "hi", 3)'</span>
 <span class="sd">    &gt;&gt;&gt; js.prop('up')</span>
 <span class="sd">    'func.assigned.to.nested.prop("up")'</span>
+
+<span class="sd">    With a ``runtime`` (a callable taking the call text and returning its value,</span>
+<span class="sd">    e.g. :class:`jy.runtime.NodeRuntime`), the functions execute the call instead</span>
+<span class="sd">    of returning its text.</span>
 <span class="sd">    '''</span>
 
     <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -865,6 +877,7 @@ window.runMermaid = runMermaid;</script>
                 <span class="n">params</span><span class="p">,</span>
                 <span class="n">value_trans</span><span class="o">=</span><span class="n">value_trans</span><span class="p">,</span>
                 <span class="n">apply_defaults</span><span class="o">=</span><span class="n">apply_defaults</span><span class="p">,</span>
+                <span class="n">runtime</span><span class="o">=</span><span class="n">runtime</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">)</span>
 

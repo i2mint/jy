@@ -44,7 +44,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
-    <script src="../_static/documentation_options.js?v=3d116926"></script>
+    <script src="../_static/documentation_options.js?v=17aaaefc"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -58,7 +58,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.19" />
+  <meta name="docsearch:version" content="0.1.20" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -308,6 +308,7 @@
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="jy.html">jy</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a aria-current="page" class="current reference internal" href="#">jy.bridge</a></li>
 <li class="toctree-l2"><a class="reference internal" href="jy.js_parse.html">jy.js_parse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jy.runtime.html">jy.runtime</a></li>
 <li class="toctree-l2 has-children"><a class="reference internal" href="jy.test.html">jy.test</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l3"><a class="reference internal" href="jy.test.test_bridge.html">jy.test.test_bridge</a></li>
 <li class="toctree-l3"><a class="reference internal" href="jy.test.test_js_parse.html">jy.test.test_js_parse</a></li>
@@ -414,7 +415,7 @@ function calls</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="jy.bridge.add_js_funcs">
-<span class="sig-prename descclassname"><span class="pre">jy.bridge.</span></span><span class="sig-name descname"><span class="pre">add_js_funcs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">js_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forbidden_method_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apply_defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_trans</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">dflt_py_to_js_value_trans&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jy/bridge.html#add_js_funcs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.bridge.add_js_funcs" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">jy.bridge.</span></span><span class="sig-name descname"><span class="pre">add_js_funcs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">js_code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forbidden_method_names</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apply_defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value_trans</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;function</span> <span class="pre">dflt_py_to_js_value_trans&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">runtime</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jy/bridge.html#add_js_funcs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.bridge.add_js_funcs" title="Link to this definition">#</a></dt>
 <dd><p>Add js call functions as attributes to an object.</p>
 <p>If object is not given, <code class="docutils literal notranslate"><span class="pre">add_js_funcs</span></code> will use a new <code class="docutils literal notranslate"><span class="pre">JsBridge</span></code> instance.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">js_code</span> <span class="o">=</span> <span class="s2">"""</span>
@@ -438,6 +439,9 @@ function calls</p>
 <span class="go">'func.assigned.to.nested.prop("up")'</span>
 </pre></div>
 </div>
+<p>With a <code class="docutils literal notranslate"><span class="pre">runtime</span></code> (a callable taking the call text and returning its value,
+e.g. <a class="reference internal" href="jy.runtime.html#jy.runtime.NodeRuntime" title="jy.runtime.NodeRuntime"><code class="xref py py-class docutils literal notranslate"><span class="pre">jy.runtime.NodeRuntime</span></code></a>), the functions execute the call instead
+of returning its text.</p>
 <dl class="field-list simple">
 </dl>
 </dd></dl>

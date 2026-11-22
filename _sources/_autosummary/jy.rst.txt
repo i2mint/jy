@@ -12,6 +12,7 @@
 
    bridge
    js_parse
+   runtime
    test
    ts_parse
    util

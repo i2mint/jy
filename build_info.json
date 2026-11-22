@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-21T18:06:48Z",
+  "built_at": "2026-11-22T11:56:10Z",
   "package": {
     "name": "jy",
-    "version": "0.1.19",
+    "version": "0.1.20",
     "display_name": "jy",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "5fb64c4159c71641a6f1d75b14b979dbe738878d",
-    "short_commit": "5fb64c4",
+    "commit": "72d0c9d80251f9aab819e8679118129b3eb676b0",
+    "short_commit": "72d0c9d",
     "branch": "main",
     "tags": [],
     "dirty": false,
     "remote_url": "https://github.com/i2mint/jy",
-    "commit_url": "https://github.com/i2mint/jy/commit/5fb64c4159c71641a6f1d75b14b979dbe738878d",
+    "commit_url": "https://github.com/i2mint/jy/commit/72d0c9d80251f9aab819e8679118129b3eb676b0",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "i2mint/jy",
-    "sha": "5fb64c4159c71641a6f1d75b14b979dbe738878d",
+    "sha": "72d0c9d80251f9aab819e8679118129b3eb676b0",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "44933592000",
-    "run_url": "https://github.com/i2mint/jy/actions/runs/44933592000",
+    "run_id": "45019611239",
+    "run_url": "https://github.com/i2mint/jy/actions/runs/45019611239",
     "server_url": "https://github.com"
   },
   "tools": {
@@ -55,21 +55,19 @@
     "docs_dir": "docsrc"
   },
   "site": {
-    "modules_documented": 8,
-    "objects_documented": 26
+    "modules_documented": 9,
+    "objects_documented": 31
   },
   "pypi": {
     "checked": true,
     "latest": "0.1.20",
-    "relation": "behind",
+    "relation": "same",
     "error": null
   },
-  "reproduce": "git clone https://github.com/i2mint/jy && cd jy\ngit checkout 5fb64c4159c71641a6f1d75b14b979dbe738878d\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/i2mint/jy && cd jy\ngit checkout 72d0c9d80251f9aab819e8679118129b3eb676b0\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
-    "aligned": false,
-    "notes": [
-      "The documented version (0.1.19) is behind the latest release on PyPI (0.1.20): `pip install jy` gives newer code than these docs describe."
-    ]
+    "aligned": true,
+    "notes": []
   }
 }

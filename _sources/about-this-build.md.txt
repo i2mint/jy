@@ -5,19 +5,17 @@ orphan: true
 
 # About this build
 
-This documentation was built on **2026-11-21 18:06 UTC** from commit <a href="https://github.com/i2mint/jy/commit/5fb64c4159c71641a6f1d75b14b979dbe738878d"><code>5fb64c4</code></a> on branch <code>main</code>, for **jy 0.1.19** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-22 11:56 UTC** from commit <a href="https://github.com/i2mint/jy/commit/72d0c9d80251f9aab819e8679118129b3eb676b0"><code>72d0c9d</code></a> on branch <code>main</code>, for **jy 0.1.20** (from <code>pyproject.toml</code>).
 
-:::{warning}
-The documentation and the package may be misaligned:
-
-- The documented version (0.1.19) is behind the latest release on PyPI (0.1.20): `pip install jy` gives newer code than these docs describe.
+:::{note}
+Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
 :::
 
 ## Source
 
 | | |
 |---|---|
-| Commit | <a href="https://github.com/i2mint/jy/commit/5fb64c4159c71641a6f1d75b14b979dbe738878d"><code>5fb64c4159c71641a6f1d75b14b979dbe738878d</code></a> |
+| Commit | <a href="https://github.com/i2mint/jy/commit/72d0c9d80251f9aab819e8679118129b3eb676b0"><code>72d0c9d80251f9aab819e8679118129b3eb676b0</code></a> |
 | Branch | <code>main</code> |
 | Tags at this commit | none |
 | Working tree | clean |
@@ -28,9 +26,9 @@ The documentation and the package may be misaligned:
 | | |
 |---|---|
 | Repository | <code>i2mint/jy</code> |
-| Run | <a href="https://github.com/i2mint/jy/actions/runs/44933592000">44933592000</a> |
+| Run | <a href="https://github.com/i2mint/jy/actions/runs/45019611239">45019611239</a> |
 | Ref | <code>refs/heads/main</code> |
-| Event commit | <code>5fb64c4159c71641a6f1d75b14b979dbe738878d</code> (in the history of the built commit) |
+| Event commit | <code>72d0c9d80251f9aab819e8679118129b3eb676b0</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -55,13 +53,13 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/jy/0.1.20/">0.1.20</a>, newer than the documented version (0.1.19).
+Latest release: <a href="https://pypi.org/project/jy/0.1.20/">0.1.20</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/i2mint/jy && cd jy
-git checkout 5fb64c4159c71641a6f1d75b14b979dbe738878d
+git checkout 72d0c9d80251f9aab819e8679118129b3eb676b0
 pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

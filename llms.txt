@@ -10,12 +10,13 @@
 - [jy](_autosummary/jy.html.md): Python functions to talk to Javascript
 - [jy.bridge](_autosummary/jy.bridge.html.md): Python portals to JS
 - [jy.js_parse](_autosummary/jy.js_parse.html.md): Utils to parse JS
+- [jy.runtime](_autosummary/jy.runtime.html.md): Runtimes that execute the call strings jy builds, and return their values.
 - [jy.test](_autosummary/jy.test.html.md): | &#96;test_bridge&#96;     | Tests for the bridge module   |
 - [jy.test.test_bridge](_autosummary/jy.test.test_bridge.html.md): Tests for the bridge module
 - [jy.test.test_js_parse](_autosummary/jy.test.test_js_parse.html.md): Tests for js_bridge
 - [jy.ts_parse](_autosummary/jy.ts_parse.html.md): Tools to parse TS code
 - [jy.util](_autosummary/jy.util.html.md): General utils
-- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-21 18:06 UTC&#42;&#42; from commit &lt;a href="https://github.com/i2m...
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-11-22 11:56 UTC&#42;&#42; from commit &lt;a href="https://github.com/i2m...
 
 ## Optional
 

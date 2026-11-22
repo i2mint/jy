@@ -1,4 +1,4 @@
-> built 2026-11-21 18:06 UTC from 5fb64c4 (main) · jy 0.1.19. Details: build_info.json
+> built 2026-11-22 11:56 UTC from 72d0c9d (main) · jy 0.1.20. Details: build_info.json
 
 # index.html.md
 
@@ -149,7 +149,7 @@ Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 The default class to make instances that will contain methods that mirror JS
 function calls
 
-### jy.bridge.add_js_funcs(js_code, \*, obj=None, name=None, encoding=None, forbidden_method_names=(), apply_defaults=True, value_trans=<function dflt_py_to_js_value_trans>)
+### jy.bridge.add_js_funcs(js_code, \*, obj=None, name=None, encoding=None, forbidden_method_names=(), apply_defaults=True, value_trans=<function dflt_py_to_js_value_trans>, runtime=None)
 
 Add js call functions as attributes to an object.
 
@@ -177,6 +177,10 @@ If object is not given, `add_js_funcs` will use a new `JsBridge` instance.
 'func.assigned.to.nested.prop("up")'
 ```
 
+With a `runtime` (a callable taking the call text and returning its value,
+e.g. [`jy.runtime.NodeRuntime`](_autosummary/jy.runtime.html.md#jy.runtime.NodeRuntime)), the functions execute the call instead
+of returning its text.
+
 ### jy.bridge.iskeyword()
 
 x._\_contains_\_(y) <==> y in x.
@@ -190,12 +194,13 @@ Python functions to talk to Javascript
 
 ### Modules
 
-| [`bridge`](_autosummary/jy.bridge.html.md#module-jy.bridge)     | Python portals to JS   |
-|------------------------------------------------------------------------------|------------------------|
-| [`js_parse`](_autosummary/jy.js_parse.html.md#module-jy.js_parse) | Utils to parse JS      |
-| [`test`](_autosummary/jy.test.html.md#module-jy.test)         |                        |
-| [`ts_parse`](_autosummary/jy.ts_parse.html.md#module-jy.ts_parse) | Tools to parse TS code |
-| [`util`](_autosummary/jy.util.html.md#module-jy.util)         | General utils          |
+| [`bridge`](_autosummary/jy.bridge.html.md#module-jy.bridge)     | Python portals to JS                                                       |
+|------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| [`js_parse`](_autosummary/jy.js_parse.html.md#module-jy.js_parse) | Utils to parse JS                                                          |
+| [`runtime`](_autosummary/jy.runtime.html.md#module-jy.runtime)   | Runtimes that execute the call strings jy builds, and return their values. |
+| [`test`](_autosummary/jy.test.html.md#module-jy.test)         |                                                                            |
+| [`ts_parse`](_autosummary/jy.ts_parse.html.md#module-jy.ts_parse) | Tools to parse TS code                                                     |
+| [`util`](_autosummary/jy.util.html.md#module-jy.util)         | General utils                                                              |
 
 
 # _autosummary/jy.js_parse.html.md
@@ -206,18 +211,18 @@ Utils to parse JS
 
 ### Functions
 
-| [`append_to_func_body`](_autosummary/jy.js_parse.html.md#jy.js_parse.append_to_func_body)(func_def_code, ...)          | Append code to the body of a function definition                             |
-|---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
-| `dflt_py_to_js_value_trans`(x)                                                                    |                                                                              |
-| [`extract_func_name_and_params`](_autosummary/jy.js_parse.html.md#jy.js_parse.extract_func_name_and_params)(ast_node)           | Extract one or several function `(name, params)` pair(s) from an AST node    |
-| [`extract_function_def_parts`](_autosummary/jy.js_parse.html.md#jy.js_parse.extract_function_def_parts)(func_def_code)        | Extract the body of a function definition from its code                      |
-| `extract_js_func_params`(params_list)                                                             |                                                                              |
-| [`func_name_and_params_pairs`](_autosummary/jy.js_parse.html.md#jy.js_parse.func_name_and_params_pairs)(js_code, \*[, ...])   | Get `(name, params)` pairs of function definitions extracted from `js_code`. |
-| `if_none_output_raise_unknown_type`([context])                                                    |                                                                              |
-| [`parse_js`](_autosummary/jy.js_parse.html.md#jy.js_parse.parse_js)(js_code[, encoding, ingress, egress])   | Parse JavaScript source (or a path to a `.js` file) into an esprima AST.     |
-| [`parse_js_code`](_autosummary/jy.js_parse.html.md#jy.js_parse.parse_js_code)(js_code[, encoding, ingress, ...]) | Parse JavaScript source (or a path to a `.js` file) into an esprima AST.     |
-| [`replace_ids_in_code`](_autosummary/jy.js_parse.html.md#jy.js_parse.replace_ids_in_code)(code[, patterns])            | Replaces IDs in a mixed HTML, CSS, and JS string with unique versions.       |
-| [`variable_declarations_pairs`](_autosummary/jy.js_parse.html.md#jy.js_parse.variable_declarations_pairs)(src, \*[, encoding]) | Yield `(name, value)` pairs for the top-level variable declarations in JS.   |
+| [`append_to_func_body`](_autosummary/jy.js_parse.html.md#jy.js_parse.append_to_func_body)(func_def_code, ...)          | Append code to the body of a function definition                                    |
+|---------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| [`dflt_py_to_js_value_trans`](_autosummary/jy.js_parse.html.md#jy.js_parse.dflt_py_to_js_value_trans)(x)                     | Python value -> JS literal text, via `json.dumps` (quotes and nesting are escaped). |
+| [`extract_func_name_and_params`](_autosummary/jy.js_parse.html.md#jy.js_parse.extract_func_name_and_params)(ast_node)           | Extract one or several function `(name, params)` pair(s) from an AST node           |
+| [`extract_function_def_parts`](_autosummary/jy.js_parse.html.md#jy.js_parse.extract_function_def_parts)(func_def_code)        | Extract the body of a function definition from its code                             |
+| `extract_js_func_params`(params_list)                                                             |                                                                                     |
+| [`func_name_and_params_pairs`](_autosummary/jy.js_parse.html.md#jy.js_parse.func_name_and_params_pairs)(js_code, \*[, ...])   | Get `(name, params)` pairs of function definitions extracted from `js_code`.        |
+| `if_none_output_raise_unknown_type`([context])                                                    |                                                                                     |
+| [`parse_js`](_autosummary/jy.js_parse.html.md#jy.js_parse.parse_js)(js_code[, encoding, ingress, egress])   | Parse JavaScript source (or a path to a `.js` file) into an esprima AST.            |
+| [`parse_js_code`](_autosummary/jy.js_parse.html.md#jy.js_parse.parse_js_code)(js_code[, encoding, ingress, ...]) | Parse JavaScript source (or a path to a `.js` file) into an esprima AST.            |
+| [`replace_ids_in_code`](_autosummary/jy.js_parse.html.md#jy.js_parse.replace_ids_in_code)(code[, patterns])            | Replaces IDs in a mixed HTML, CSS, and JS string with unique versions.              |
+| [`variable_declarations_pairs`](_autosummary/jy.js_parse.html.md#jy.js_parse.variable_declarations_pairs)(src, \*[, encoding]) | Yield `(name, value)` pairs for the top-level variable declarations in JS.          |
 
 ### Exceptions
 
@@ -236,6 +241,22 @@ Append code to the body of a function definition
 
 * **Return type:**
   [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
+
+### jy.js_parse.dflt_py_to_js_value_trans(x)
+
+Python value -> JS literal text, via `json.dumps` (quotes and nesting are escaped).
+
+```pycon
+>>> dflt_py_to_js_value_trans(True), dflt_py_to_js_value_trans(None)
+('true', 'null')
+>>> dflt_py_to_js_value_trans('say "hi"\n')
+'"say \\"hi\\"\\n"'
+>>> dflt_py_to_js_value_trans([{"a": 1}, {"b": [2, "x"]}])
+'[{"a": 1}, {"b": [2, "x"]}]'
+```
+
+Values `json` cannot encode are passed through unchanged (so a caller can
+supply a raw JS expression object whose `str` is the code).
 
 ### jy.js_parse.extract_func_name_and_params(ast_node)
 
@@ -350,6 +371,68 @@ Python equivalents; other initializer kinds yield `None`. A leading
 >>> list(variable_declarations_pairs("var n = -5; const flag = true;"))
 [('n', -5), ('flag', True)]
 ```
+
+
+# _autosummary/jy.runtime.html.md
+
+# jy.runtime
+
+Runtimes that execute the call strings jy builds, and return their values.
+
+A runtime is any callable `(call_text: str) -> value`. [`NodeRuntime`](_autosummary/jy.runtime.html.md#jy.runtime.NodeRuntime)
+runs the call in a fresh `node` process loaded with the JS source, and decodes
+the JSON-serialized result (`Promise` results are awaited).
+
+```pycon
+>>> from jy import add_js_funcs
+>>> from jy.runtime import NodeRuntime
+>>> code = "function shout(s, n=1) { return s.toUpperCase() + '!'.repeat(n) }"
+>>> js = add_js_funcs(code, runtime=NodeRuntime(code))
+>>> js.shout('say "hi"', 2)
+'SAY "HI"!!'
+```
+
+### Module Attributes
+
+| [`RESULT_MARKER`](_autosummary/jy.runtime.html.md#jy.runtime.RESULT_MARKER)   | Line prefix marking the JSON result among whatever else the JS prints.   |
+|------------------------------------------------------------------|--------------------------------------------------------------------------|
+
+### Classes
+
+| [`NodeRuntime`](_autosummary/jy.runtime.html.md#jy.runtime.NodeRuntime)([js_code, prelude, node, timeout])   | Execute jy call strings in `node` (one process per call, stateless).   |
+|---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
+
+### Exceptions
+
+| [`JsRuntimeError`](_autosummary/jy.runtime.html.md#jy.runtime.JsRuntimeError)   | The JS call failed (non-zero exit); the message carries stderr.   |
+|-------------------------------------------------------------------|-------------------------------------------------------------------|
+
+### *exception* jy.runtime.JsRuntimeError
+
+Bases: [`RuntimeError`](https://docs.python.org/3/builtins/exceptions.html#RuntimeError)
+
+The JS call failed (non-zero exit); the message carries stderr.
+
+### *class* jy.runtime.NodeRuntime(js_code='', , prelude='', node='node', timeout=60)
+
+Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
+
+Execute jy call strings in `node` (one process per call, stateless).
+
+`js_code` is evaluated before each call (`prelude` is extra code run
+first, e.g. a `require`). `node` is the executable (or an argv prefix),
+`timeout` bounds one call in seconds.
+
+#### script(call_text)
+
+The full program run for one call.
+
+* **Return type:**
+  [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
+
+### jy.runtime.RESULT_MARKER *= '\\x00jy-result\\x00'*
+
+Line prefix marking the JSON result among whatever else the JS prints.
 
 
 # _autosummary/jy.test.html.md
@@ -531,18 +614,16 @@ alias of [`JsFiles`](_autosummary/jy.util.html.md#jy.util.JsFiles)
 
 # About this build
 
-This documentation was built on **2026-11-21 18:06 UTC** from commit <a href="https://github.com/i2mint/jy/commit/5fb64c4159c71641a6f1d75b14b979dbe738878d"><code>5fb64c4</code></a> on branch <code>main</code>, for **jy 0.1.19** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-22 11:56 UTC** from commit <a href="https://github.com/i2mint/jy/commit/72d0c9d80251f9aab819e8679118129b3eb676b0"><code>72d0c9d</code></a> on branch <code>main</code>, for **jy 0.1.20** (from <code>pyproject.toml</code>).
 
-#### WARNING
-The documentation and the package may be misaligned:
-
-- The documented version (0.1.19) is behind the latest release on PyPI (0.1.20): `pip install jy` gives newer code than these docs describe.
+#### NOTE
+Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
 
 ## Source
 
 |                     |                                                                                                                                                  |
 |---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/i2mint/jy/commit/5fb64c4159c71641a6f1d75b14b979dbe738878d"><code>5fb64c4159c71641a6f1d75b14b979dbe738878d</code></a> |
+| Commit              | <a href="https://github.com/i2mint/jy/commit/72d0c9d80251f9aab819e8679118129b3eb676b0"><code>72d0c9d80251f9aab819e8679118129b3eb676b0</code></a> |
 | Branch              | <code>main</code>                                                                                                                                |
 | Tags at this commit | none                                                                                                                                             |
 | Working tree        | clean                                                                                                                                            |
@@ -553,9 +634,9 @@ The documentation and the package may be misaligned:
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>i2mint/jy</code>                                                                     |
-| Run          | <a href="https://github.com/i2mint/jy/actions/runs/44933592000">44933592000</a>            |
+| Run          | <a href="https://github.com/i2mint/jy/actions/runs/45019611239">45019611239</a>            |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>5fb64c4159c71641a6f1d75b14b979dbe738878d</code> (in the history of the built commit) |
+| Event commit | <code>72d0c9d80251f9aab819e8679118129b3eb676b0</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -580,13 +661,13 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/jy/0.1.20/">0.1.20</a>, newer than the documented version (0.1.19).
+Latest release: <a href="https://pypi.org/project/jy/0.1.20/">0.1.20</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/i2mint/jy && cd jy
-git checkout 5fb64c4159c71641a6f1d75b14b979dbe738878d
+git checkout 72d0c9d80251f9aab819e8679118129b3eb676b0
 pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

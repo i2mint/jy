@@ -20,7 +20,7 @@ Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
 The default class to make instances that will contain methods that mirror JS
 function calls
 
-### jy.bridge.add_js_funcs(js_code, \*, obj=None, name=None, encoding=None, forbidden_method_names=(), apply_defaults=True, value_trans=<function dflt_py_to_js_value_trans>)
+### jy.bridge.add_js_funcs(js_code, \*, obj=None, name=None, encoding=None, forbidden_method_names=(), apply_defaults=True, value_trans=<function dflt_py_to_js_value_trans>, runtime=None)
 
 Add js call functions as attributes to an object.
 
@@ -47,6 +47,10 @@ If object is not given, `add_js_funcs` will use a new `JsBridge` instance.
 >>> js.prop('up')
 'func.assigned.to.nested.prop("up")'
 ```
+
+With a `runtime` (a callable taking the call text and returning its value,
+e.g. [`jy.runtime.NodeRuntime`](jy.runtime.html.md#jy.runtime.NodeRuntime)), the functions execute the call instead
+of returning its text.
 
 ### jy.bridge.iskeyword()
 
