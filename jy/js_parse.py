@@ -241,13 +241,22 @@ def variable_declarations_pairs(src, *, encoding=None):
 
 
 def dflt_py_to_js_value_trans(x):
-    if isinstance(x, bool):
-        return str(x).lower()
-    elif isinstance(x, str):
-        return f'"{x}"'  # surround with quotes
-    elif isinstance(x, dict):
+    """Python value -> JS literal text, via ``json.dumps`` (quotes and nesting are escaped).
+
+    >>> dflt_py_to_js_value_trans(True), dflt_py_to_js_value_trans(None)
+    ('true', 'null')
+    >>> dflt_py_to_js_value_trans('say "hi"\\n')
+    '"say \\\\"hi\\\\"\\\\n"'
+    >>> dflt_py_to_js_value_trans([{"a": 1}, {"b": [2, "x"]}])
+    '[{"a": 1}, {"b": [2, "x"]}]'
+
+    Values ``json`` cannot encode are passed through unchanged (so a caller can
+    supply a raw JS expression object whose ``str`` is the code).
+    """
+    try:
         return json.dumps(x)
-    return x
+    except (TypeError, ValueError):
+        return x
 
 
 import re
