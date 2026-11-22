@@ -76,6 +76,7 @@ def mk_py_binder_func(
     doc="",
     value_trans=dflt_py_to_js_value_trans,
     apply_defaults=True,
+    runtime=None,
 ):
     *_, func_name = name.split(".")  # e.g. object.containing.func --> func
     func_call_template = prefix + name + "({inputs})" + suffix
@@ -88,6 +89,12 @@ def mk_py_binder_func(
         __value_trans=value_trans,
         __apply_defaults=apply_defaults,
     )
+    if runtime is not None:
+        call_text = js_func_call
+
+        def js_func_call(*args, **kwargs):
+            return runtime(call_text(*args, **kwargs))
+
     js_func_call = sig(js_func_call)
     js_func_call.__name__ = func_name
     js_func_call.__doc__ = doc
@@ -111,6 +118,7 @@ def add_js_funcs(
     forbidden_method_names=(),
     apply_defaults=True,
     value_trans=dflt_py_to_js_value_trans,
+    runtime=None,
 ):
     '''
     Add js call functions as attributes to an object.
@@ -136,6 +144,10 @@ def add_js_funcs(
     'foo(1, "hi", 3)'
     >>> js.prop('up')
     'func.assigned.to.nested.prop("up")'
+
+    With a ``runtime`` (a callable taking the call text and returning its value,
+    e.g. :class:`jy.runtime.NodeRuntime`), the functions execute the call instead
+    of returning its text.
     '''
 
     if obj is None:
@@ -160,6 +172,7 @@ def add_js_funcs(
                 params,
                 value_trans=value_trans,
                 apply_defaults=apply_defaults,
+                runtime=runtime,
             ),
         )
 
