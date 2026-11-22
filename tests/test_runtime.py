@@ -32,3 +32,46 @@ def test_node_runtime_round_trips():
     assert js.later(3) == {"x": 3}
     with pytest.raises(JsRuntimeError, match="bad"):
         js.boom()
+
+
+def _chromium_available():
+    try:
+        from playwright.sync_api import sync_playwright
+
+        with sync_playwright() as p:
+            p.chromium.launch().close()
+        return True
+    except Exception:
+        return False
+
+
+@pytest.mark.skipif(
+    not _chromium_available(), reason="playwright chromium not installed"
+)
+def test_playwright_runtime_round_trips():
+    from jy.runtime import PlaywrightRuntime
+
+    js = add_js_funcs(CODE, runtime=PlaywrightRuntime(CODE))
+    data = [{"a": 1, "b": [1, 2]}, {"q": 'he said "hi"\nok'}]
+    assert js.echo(data) == data
+    assert js.shout('say "hi"', 2) == 'SAY "HI"!!'
+    assert js.later(3) == {"x": 3}
+    with pytest.raises(JsRuntimeError, match="bad"):
+        js.boom()
+
+
+def test_playwright_runtime_without_playwright_names_the_extra(monkeypatch):
+    import builtins
+
+    from jy.runtime import PlaywrightRuntime
+
+    real_import = builtins.__import__
+
+    def no_playwright(name, *a, **k):
+        if name.startswith("playwright"):
+            raise ImportError(name)
+        return real_import(name, *a, **k)
+
+    monkeypatch.setattr(builtins, "__import__", no_playwright)
+    with pytest.raises(JsRuntimeError, match="browser"):
+        PlaywrightRuntime("")("1")

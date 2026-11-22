@@ -48,6 +48,10 @@ Issues = "https://github.com/i2mint/jy/issues"
 Changelog = "https://github.com/i2mint/jy/blob/main/CHANGELOG.md"
 
 [project.optional-dependencies]
+# Browser runtime (jy.runtime.PlaywrightRuntime) -- lazily imported, opt-in.
+browser = [
+    "playwright",
+]
 # TypeScript parsing (jy.ts_parse.parse_ts) -- lazily imported, opt-in.
 ts = [
     "tree-sitter",

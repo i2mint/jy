@@ -3,6 +3,7 @@
 A runtime is any callable ``(call_text: str) -> value``. :class:`NodeRuntime`
 runs the call in a fresh ``node`` process loaded with the JS source, and decodes
 the JSON-serialized result (``Promise`` results are awaited).
+:class:`PlaywrightRuntime` does the same in a browser page.
 
 >>> from jy import add_js_funcs
 >>> from jy.runtime import NodeRuntime
@@ -77,3 +78,63 @@ class NodeRuntime:
             if line.startswith(RESULT_MARKER):
                 return json.loads(line[len(RESULT_MARKER) :])
         raise JsRuntimeError("the JS call produced no result")
+
+
+class PlaywrightRuntime:
+    """Execute jy call strings in a browser page (Playwright), one page per call.
+
+    ``js_code`` is injected into a blank page (or the page at ``url``) as a script,
+    then the call runs in the page, so DOM and browser APIs are available. Results
+    are JSON-serialized by Playwright; ``Promise`` results are awaited.
+
+    Needs the optional ``browser`` extra of jy (it installs ``playwright``; then run
+    ``playwright install chromium``). It is imported only when a call is made.
+
+    >>> from jy import add_js_funcs
+    >>> from jy.runtime import PlaywrightRuntime
+    >>> code = "function title(s) { return document.title + s }"
+    >>> js = add_js_funcs(code, runtime=PlaywrightRuntime(code))  # doctest: +SKIP
+    >>> js.title("!")  # doctest: +SKIP
+    '!'
+    """
+
+    def __init__(
+        self,
+        js_code: str = "",
+        *,
+        url: str | None = None,
+        browser: str = "chromium",
+        headless: bool = True,
+        timeout: float | None = 60,
+    ):
+        self.js_code = js_code
+        self.url = url
+        self.browser = browser
+        self.headless = headless
+        self.timeout = timeout
+
+    def __call__(self, call_text: str):
+        try:
+            from playwright.sync_api import Error as PlaywrightError
+            from playwright.sync_api import sync_playwright
+        except ImportError as e:
+            raise JsRuntimeError(
+                "PlaywrightRuntime needs the 'browser' extra of jy (playwright), "
+                "then: playwright install chromium"
+            ) from e
+        with sync_playwright() as p:
+            browser = getattr(p, self.browser).launch(headless=self.headless)
+            try:
+                page = browser.new_page()
+                if self.timeout is not None:
+                    page.set_default_timeout(self.timeout * 1000)
+                if self.url:
+                    page.goto(self.url)
+                if self.js_code:
+                    page.add_script_tag(content=self.js_code)
+                try:
+                    return page.evaluate(f"async () => ({call_text})")
+                except PlaywrightError as e:
+                    raise JsRuntimeError(f"browser call failed: {e}") from e
+            finally:
+                browser.close()
