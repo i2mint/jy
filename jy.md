@@ -1,4 +1,4 @@
-> built 2026-11-22 11:56 UTC from 72d0c9d (main) · jy 0.1.20. Details: build_info.json
+> built 2026-11-22 18:40 UTC from 4132094 (main) · jy 0.1.21. Details: build_info.json
 
 # index.html.md
 
@@ -382,6 +382,7 @@ Runtimes that execute the call strings jy builds, and return their values.
 A runtime is any callable `(call_text: str) -> value`. [`NodeRuntime`](_autosummary/jy.runtime.html.md#jy.runtime.NodeRuntime)
 runs the call in a fresh `node` process loaded with the JS source, and decodes
 the JSON-serialized result (`Promise` results are awaited).
+[`PlaywrightRuntime`](_autosummary/jy.runtime.html.md#jy.runtime.PlaywrightRuntime) does the same in a browser page.
 
 ```pycon
 >>> from jy import add_js_funcs
@@ -399,8 +400,9 @@ the JSON-serialized result (`Promise` results are awaited).
 
 ### Classes
 
-| [`NodeRuntime`](_autosummary/jy.runtime.html.md#jy.runtime.NodeRuntime)([js_code, prelude, node, timeout])   | Execute jy call strings in `node` (one process per call, stateless).   |
-|---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
+| [`NodeRuntime`](_autosummary/jy.runtime.html.md#jy.runtime.NodeRuntime)([js_code, prelude, node, timeout])   | Execute jy call strings in `node` (one process per call, stateless).       |
+|---------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| [`PlaywrightRuntime`](_autosummary/jy.runtime.html.md#jy.runtime.PlaywrightRuntime)([js_code, url, browser, ...])  | Execute jy call strings in a browser page (Playwright), one page per call. |
 
 ### Exceptions
 
@@ -429,6 +431,28 @@ The full program run for one call.
 
 * **Return type:**
   [`str`](https://docs.python.org/3/builtins/stdtypes.html#str)
+
+### *class* jy.runtime.PlaywrightRuntime(js_code='', , url=None, browser='chromium', headless=True, timeout=60)
+
+Bases: [`object`](https://docs.python.org/3/builtins/functions.html#object)
+
+Execute jy call strings in a browser page (Playwright), one page per call.
+
+`js_code` is injected into a blank page (or the page at `url`) as a script,
+then the call runs in the page, so DOM and browser APIs are available. Results
+are JSON-serialized by Playwright; `Promise` results are awaited.
+
+Needs the optional `browser` extra of jy (it installs `playwright`; then run
+`playwright install chromium`). It is imported only when a call is made.
+
+```pycon
+>>> from jy import add_js_funcs
+>>> from jy.runtime import PlaywrightRuntime
+>>> code = "function title(s) { return document.title + s }"
+>>> js = add_js_funcs(code, runtime=PlaywrightRuntime(code))
+>>> js.title("!")
+'!'
+```
 
 ### jy.runtime.RESULT_MARKER *= '\\x00jy-result\\x00'*
 
@@ -614,16 +638,18 @@ alias of [`JsFiles`](_autosummary/jy.util.html.md#jy.util.JsFiles)
 
 # About this build
 
-This documentation was built on **2026-11-22 11:56 UTC** from commit <a href="https://github.com/i2mint/jy/commit/72d0c9d80251f9aab819e8679118129b3eb676b0"><code>72d0c9d</code></a> on branch <code>main</code>, for **jy 0.1.20** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-22 18:40 UTC** from commit <a href="https://github.com/i2mint/jy/commit/41320949bbf6d6a7d968a7fdcafc60479757a0eb"><code>4132094</code></a> on branch <code>main</code>, for **jy 0.1.21** (from <code>pyproject.toml</code>).
 
-#### NOTE
-Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
+#### WARNING
+The documentation and the package may be misaligned:
+
+- The documented version (0.1.21) is behind the latest release on PyPI (0.1.22): `pip install jy` gives newer code than these docs describe.
 
 ## Source
 
 |                     |                                                                                                                                                  |
 |---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/i2mint/jy/commit/72d0c9d80251f9aab819e8679118129b3eb676b0"><code>72d0c9d80251f9aab819e8679118129b3eb676b0</code></a> |
+| Commit              | <a href="https://github.com/i2mint/jy/commit/41320949bbf6d6a7d968a7fdcafc60479757a0eb"><code>41320949bbf6d6a7d968a7fdcafc60479757a0eb</code></a> |
 | Branch              | <code>main</code>                                                                                                                                |
 | Tags at this commit | none                                                                                                                                             |
 | Working tree        | clean                                                                                                                                            |
@@ -634,9 +660,9 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>i2mint/jy</code>                                                                     |
-| Run          | <a href="https://github.com/i2mint/jy/actions/runs/45019611239">45019611239</a>            |
+| Run          | <a href="https://github.com/i2mint/jy/actions/runs/45056242824">45056242824</a>            |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>72d0c9d80251f9aab819e8679118129b3eb676b0</code> (in the history of the built commit) |
+| Event commit | <code>41320949bbf6d6a7d968a7fdcafc60479757a0eb</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -661,13 +687,13 @@ Nothing suggests a mismatch: the tree was clean at the commit above, and the doc
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/jy/0.1.20/">0.1.20</a>, the same as the documented version.
+Latest release: <a href="https://pypi.org/project/jy/0.1.22/">0.1.22</a>, newer than the documented version (0.1.21).
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/i2mint/jy && cd jy
-git checkout 72d0c9d80251f9aab819e8679118129b3eb676b0
+git checkout 41320949bbf6d6a7d968a7fdcafc60479757a0eb
 pip install "epythet==0.2.23"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```

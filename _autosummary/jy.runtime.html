@@ -44,7 +44,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
-    <script src="../_static/documentation_options.js?v=17aaaefc"></script>
+    <script src="../_static/documentation_options.js?v=b3d22ae5"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -58,7 +58,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.20" />
+  <meta name="docsearch:version" content="0.1.21" />
   
     
     <script src="../_static/searchtools.js"></script>
@@ -386,7 +386,8 @@
 <p>Runtimes that execute the call strings jy builds, and return their values.</p>
 <p>A runtime is any callable <code class="docutils literal notranslate"><span class="pre">(call_text:</span> <span class="pre">str)</span> <span class="pre">-&gt;</span> <span class="pre">value</span></code>. <a class="reference internal" href="#jy.runtime.NodeRuntime" title="jy.runtime.NodeRuntime"><code class="xref py py-class docutils literal notranslate"><span class="pre">NodeRuntime</span></code></a>
 runs the call in a fresh <code class="docutils literal notranslate"><span class="pre">node</span></code> process loaded with the JS source, and decodes
-the JSON-serialized result (<code class="docutils literal notranslate"><span class="pre">Promise</span></code> results are awaited).</p>
+the JSON-serialized result (<code class="docutils literal notranslate"><span class="pre">Promise</span></code> results are awaited).
+<a class="reference internal" href="#jy.runtime.PlaywrightRuntime" title="jy.runtime.PlaywrightRuntime"><code class="xref py py-class docutils literal notranslate"><span class="pre">PlaywrightRuntime</span></code></a> does the same in a browser page.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">jy</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_js_funcs</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">jy.runtime</span><span class="w"> </span><span class="kn">import</span> <span class="n">NodeRuntime</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">code</span> <span class="o">=</span> <span class="s2">"function shout(s, n=1) { return s.toUpperCase() + '!'.repeat(n) }"</span>
@@ -409,6 +410,9 @@ the JSON-serialized result (<code class="docutils literal notranslate"><span cla
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#jy.runtime.NodeRuntime" title="jy.runtime.NodeRuntime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NodeRuntime</span></code></a>([js_code, prelude, node, timeout])</p></td>
 <td><p>Execute jy call strings in <code class="docutils literal notranslate"><span class="pre">node</span></code> (one process per call, stateless).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jy.runtime.PlaywrightRuntime" title="jy.runtime.PlaywrightRuntime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PlaywrightRuntime</span></code></a>([js_code, url, browser, ...])</p></td>
+<td><p>Execute jy call strings in a browser page (Playwright), one page per call.</p></td>
 </tr>
 </tbody>
 </table>
@@ -450,6 +454,28 @@ first, e.g. a <code class="docutils literal notranslate"><span class="pre">requi
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="jy.runtime.PlaywrightRuntime">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">jy.runtime.</span></span><span class="sig-name descname"><span class="pre">PlaywrightRuntime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">js_code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">browser</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'chromium'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">headless</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">60</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/jy/runtime.html#PlaywrightRuntime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jy.runtime.PlaywrightRuntime" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#object" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Execute jy call strings in a browser page (Playwright), one page per call.</p>
+<p><code class="docutils literal notranslate"><span class="pre">js_code</span></code> is injected into a blank page (or the page at <code class="docutils literal notranslate"><span class="pre">url</span></code>) as a script,
+then the call runs in the page, so DOM and browser APIs are available. Results
+are JSON-serialized by Playwright; <code class="docutils literal notranslate"><span class="pre">Promise</span></code> results are awaited.</p>
+<p>Needs the optional <code class="docutils literal notranslate"><span class="pre">browser</span></code> extra of jy (it installs <code class="docutils literal notranslate"><span class="pre">playwright</span></code>; then run
+<code class="docutils literal notranslate"><span class="pre">playwright</span> <span class="pre">install</span> <span class="pre">chromium</span></code>). It is imported only when a call is made.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">jy</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_js_funcs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">jy.runtime</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlaywrightRuntime</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">code</span> <span class="o">=</span> <span class="s2">"function title(s) { return document.title + s }"</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">js</span> <span class="o">=</span> <span class="n">add_js_funcs</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">PlaywrightRuntime</span><span class="p">(</span><span class="n">code</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">js</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"!"</span><span class="p">)</span>
+<span class="go">'!'</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+</dl>
 </dd></dl>
 
 <dl class="py data">
@@ -512,6 +538,7 @@ first, e.g. a <code class="docutils literal notranslate"><span class="pre">requi
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jy.runtime.NodeRuntime.script"><code class="docutils literal notranslate"><span class="pre">NodeRuntime.script()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jy.runtime.PlaywrightRuntime"><code class="docutils literal notranslate"><span class="pre">PlaywrightRuntime</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jy.runtime.RESULT_MARKER"><code class="docutils literal notranslate"><span class="pre">RESULT_MARKER</span></code></a></li>
 </ul>
   </nav></div>

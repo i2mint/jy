@@ -41,7 +41,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=75c7c72ae941e8b558d8" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=75c7c72ae941e8b558d8" />
 
-    <script src="../../_static/documentation_options.js?v=17aaaefc"></script>
+    <script src="../../_static/documentation_options.js?v=b3d22ae5"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -411,7 +411,7 @@ window.runMermaid = runMermaid;</script>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="color-scheme" content="light dark"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="0.1.20" />
+  <meta name="docsearch:version" content="0.1.21" />
   
     
     <script src="../../_static/searchtools.js"></script>
@@ -703,6 +703,7 @@ window.runMermaid = runMermaid;</script>
 <span class="sd">A runtime is any callable ``(call_text: str) -&gt; value``. :class:`NodeRuntime`</span>
 <span class="sd">runs the call in a fresh ``node`` process loaded with the JS source, and decodes</span>
 <span class="sd">the JSON-serialized result (``Promise`` results are awaited).</span>
+<span class="sd">:class:`PlaywrightRuntime` does the same in a browser page.</span>
 
 <span class="sd">&gt;&gt;&gt; from jy import add_js_funcs</span>
 <span class="sd">&gt;&gt;&gt; from jy.runtime import NodeRuntime</span>
@@ -785,6 +786,69 @@ window.runMermaid = runMermaid;</script>
             <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">RESULT_MARKER</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">RESULT_MARKER</span><span class="p">)</span> <span class="p">:])</span>
         <span class="k">raise</span> <span class="n">JsRuntimeError</span><span class="p">(</span><span class="s2">"the JS call produced no result"</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="PlaywrightRuntime">
+<a class="viewcode-back" href="../../_autosummary/jy.runtime.html#jy.runtime.PlaywrightRuntime">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PlaywrightRuntime</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Execute jy call strings in a browser page (Playwright), one page per call.</span>
+
+<span class="sd">    ``js_code`` is injected into a blank page (or the page at ``url``) as a script,</span>
+<span class="sd">    then the call runs in the page, so DOM and browser APIs are available. Results</span>
+<span class="sd">    are JSON-serialized by Playwright; ``Promise`` results are awaited.</span>
+
+<span class="sd">    Needs the optional ``browser`` extra of jy (it installs ``playwright``; then run</span>
+<span class="sd">    ``playwright install chromium``). It is imported only when a call is made.</span>
+
+<span class="sd">    &gt;&gt;&gt; from jy import add_js_funcs</span>
+<span class="sd">    &gt;&gt;&gt; from jy.runtime import PlaywrightRuntime</span>
+<span class="sd">    &gt;&gt;&gt; code = "function title(s) { return document.title + s }"</span>
+<span class="sd">    &gt;&gt;&gt; js = add_js_funcs(code, runtime=PlaywrightRuntime(code))  # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; js.title("!")  # doctest: +SKIP</span>
+<span class="sd">    '!'</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">js_code</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">browser</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"chromium"</span><span class="p">,</span>
+        <span class="n">headless</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">js_code</span> <span class="o">=</span> <span class="n">js_code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">browser</span> <span class="o">=</span> <span class="n">browser</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headless</span> <span class="o">=</span> <span class="n">headless</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">call_text</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">playwright.sync_api</span><span class="w"> </span><span class="kn">import</span> <span class="n">Error</span> <span class="k">as</span> <span class="n">PlaywrightError</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">playwright.sync_api</span><span class="w"> </span><span class="kn">import</span> <span class="n">sync_playwright</span>
+        <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">JsRuntimeError</span><span class="p">(</span>
+                <span class="s2">"PlaywrightRuntime needs the 'browser' extra of jy (playwright), "</span>
+                <span class="s2">"then: playwright install chromium"</span>
+            <span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+        <span class="k">with</span> <span class="n">sync_playwright</span><span class="p">()</span> <span class="k">as</span> <span class="n">p</span><span class="p">:</span>
+            <span class="n">browser</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">browser</span><span class="p">)</span><span class="o">.</span><span class="n">launch</span><span class="p">(</span><span class="n">headless</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">headless</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">page</span> <span class="o">=</span> <span class="n">browser</span><span class="o">.</span><span class="n">new_page</span><span class="p">()</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">page</span><span class="o">.</span><span class="n">set_default_timeout</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">:</span>
+                    <span class="n">page</span><span class="o">.</span><span class="n">goto</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">js_code</span><span class="p">:</span>
+                    <span class="n">page</span><span class="o">.</span><span class="n">add_script_tag</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">js_code</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">page</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="sa">f</span><span class="s2">"async () =&gt; (</span><span class="si">{</span><span class="n">call_text</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+                <span class="k">except</span> <span class="n">PlaywrightError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">JsRuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"browser call failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">browser</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
 </pre></div>
 

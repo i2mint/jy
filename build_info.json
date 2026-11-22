@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-22T11:56:10Z",
+  "built_at": "2026-11-22T18:40:01Z",
   "package": {
     "name": "jy",
-    "version": "0.1.20",
+    "version": "0.1.21",
     "display_name": "jy",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "72d0c9d80251f9aab819e8679118129b3eb676b0",
-    "short_commit": "72d0c9d",
+    "commit": "41320949bbf6d6a7d968a7fdcafc60479757a0eb",
+    "short_commit": "4132094",
     "branch": "main",
     "tags": [],
     "dirty": false,
     "remote_url": "https://github.com/i2mint/jy",
-    "commit_url": "https://github.com/i2mint/jy/commit/72d0c9d80251f9aab819e8679118129b3eb676b0",
+    "commit_url": "https://github.com/i2mint/jy/commit/41320949bbf6d6a7d968a7fdcafc60479757a0eb",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "i2mint/jy",
-    "sha": "72d0c9d80251f9aab819e8679118129b3eb676b0",
+    "sha": "41320949bbf6d6a7d968a7fdcafc60479757a0eb",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "45019611239",
-    "run_url": "https://github.com/i2mint/jy/actions/runs/45019611239",
+    "run_id": "45056242824",
+    "run_url": "https://github.com/i2mint/jy/actions/runs/45056242824",
     "server_url": "https://github.com"
   },
   "tools": {
@@ -56,18 +56,20 @@
   },
   "site": {
     "modules_documented": 9,
-    "objects_documented": 31
+    "objects_documented": 32
   },
   "pypi": {
     "checked": true,
-    "latest": "0.1.20",
-    "relation": "same",
+    "latest": "0.1.22",
+    "relation": "behind",
     "error": null
   },
-  "reproduce": "git clone https://github.com/i2mint/jy && cd jy\ngit checkout 72d0c9d80251f9aab819e8679118129b3eb676b0\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/i2mint/jy && cd jy\ngit checkout 41320949bbf6d6a7d968a7fdcafc60479757a0eb\npip install \"epythet==0.2.23\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
-    "aligned": true,
-    "notes": []
+    "aligned": false,
+    "notes": [
+      "The documented version (0.1.21) is behind the latest release on PyPI (0.1.22): `pip install jy` gives newer code than these docs describe."
+    ]
   }
 }

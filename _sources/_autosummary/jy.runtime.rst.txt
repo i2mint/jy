@@ -15,6 +15,7 @@ jy.runtime
    .. autosummary::
    
       NodeRuntime
+      PlaywrightRuntime
    
    .. rubric:: Exceptions
 
