@@ -1,32 +1,32 @@
 {
   "schema_version": 1,
-  "built_at": "2026-11-24T01:19:31Z",
+  "built_at": "2026-11-24T01:33:06Z",
   "package": {
     "name": "jy",
-    "version": "0.1.22",
+    "version": "0.1.23",
     "display_name": "jy",
     "source": "pyproject.toml"
   },
   "git": {
     "available": true,
-    "commit": "ee2cfc8620e2e720c0483773a049e85d302c716c",
-    "short_commit": "ee2cfc8",
+    "commit": "a238f1512bef214a99e1ee1b4aae5cdf3c25f4cf",
+    "short_commit": "a238f15",
     "branch": "main",
     "tags": [],
     "dirty": false,
     "remote_url": "https://github.com/i2mint/jy",
-    "commit_url": "https://github.com/i2mint/jy/commit/ee2cfc8620e2e720c0483773a049e85d302c716c",
+    "commit_url": "https://github.com/i2mint/jy/commit/a238f1512bef214a99e1ee1b4aae5cdf3c25f4cf",
     "error": null
   },
   "ci": {
     "provider": "github",
     "repository": "i2mint/jy",
-    "sha": "ee2cfc8620e2e720c0483773a049e85d302c716c",
+    "sha": "a238f1512bef214a99e1ee1b4aae5cdf3c25f4cf",
     "sha_in_history": true,
     "ref": "refs/heads/main",
     "ref_name": "main",
-    "run_id": "45304007921",
-    "run_url": "https://github.com/i2mint/jy/actions/runs/45304007921",
+    "run_id": "45305659893",
+    "run_url": "https://github.com/i2mint/jy/actions/runs/45305659893",
     "server_url": "https://github.com"
   },
   "tools": {
@@ -61,15 +61,13 @@
   "pypi": {
     "checked": true,
     "latest": "0.1.23",
-    "relation": "behind",
+    "relation": "same",
     "error": null
   },
-  "reproduce": "git clone https://github.com/i2mint/jy && cd jy\ngit checkout ee2cfc8620e2e720c0483773a049e85d302c716c\npip install \"epythet==0.2.25\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "reproduce": "git clone https://github.com/i2mint/jy && cd jy\ngit checkout a238f1512bef214a99e1ee1b4aae5cdf3c25f4cf\npip install \"epythet==0.2.25\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
   "warnings": [],
   "alignment": {
-    "aligned": false,
-    "notes": [
-      "The documented version (0.1.22) is behind the latest release on PyPI (0.1.23): `pip install jy` gives newer code than these docs describe."
-    ]
+    "aligned": true,
+    "notes": []
   }
 }

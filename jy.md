@@ -1,4 +1,4 @@
-> built 2026-11-24 01:19 UTC from ee2cfc8 (main) · jy 0.1.22. Details: build_info.json
+> built 2026-11-24 01:33 UTC from a238f15 (main) · jy 0.1.23. Details: build_info.json
 
 # index.html.md
 
@@ -638,18 +638,16 @@ alias of [`JsFiles`](_autosummary/jy.util.html.md#jy.util.JsFiles)
 
 # About this build
 
-This documentation was built on **2026-11-24 01:19 UTC** from commit <a href="https://github.com/i2mint/jy/commit/ee2cfc8620e2e720c0483773a049e85d302c716c"><code>ee2cfc8</code></a> on branch <code>main</code>, for **jy 0.1.22** (from <code>pyproject.toml</code>).
+This documentation was built on **2026-11-24 01:33 UTC** from commit <a href="https://github.com/i2mint/jy/commit/a238f1512bef214a99e1ee1b4aae5cdf3c25f4cf"><code>a238f15</code></a> on branch <code>main</code>, for **jy 0.1.23** (from <code>pyproject.toml</code>).
 
-#### WARNING
-The documentation and the package may be misaligned:
-
-- The documented version (0.1.22) is behind the latest release on PyPI (0.1.23): `pip install jy` gives newer code than these docs describe.
+#### NOTE
+Nothing suggests a mismatch: the tree was clean at the commit above, and the documented version is the one on PyPI.
 
 ## Source
 
 |                     |                                                                                                                                                  |
 |---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
-| Commit              | <a href="https://github.com/i2mint/jy/commit/ee2cfc8620e2e720c0483773a049e85d302c716c"><code>ee2cfc8620e2e720c0483773a049e85d302c716c</code></a> |
+| Commit              | <a href="https://github.com/i2mint/jy/commit/a238f1512bef214a99e1ee1b4aae5cdf3c25f4cf"><code>a238f1512bef214a99e1ee1b4aae5cdf3c25f4cf</code></a> |
 | Branch              | <code>main</code>                                                                                                                                |
 | Tags at this commit | none                                                                                                                                             |
 | Working tree        | clean                                                                                                                                            |
@@ -660,9 +658,9 @@ The documentation and the package may be misaligned:
 |              |                                                                                            |
 |--------------|--------------------------------------------------------------------------------------------|
 | Repository   | <code>i2mint/jy</code>                                                                     |
-| Run          | <a href="https://github.com/i2mint/jy/actions/runs/45304007921">45304007921</a>            |
+| Run          | <a href="https://github.com/i2mint/jy/actions/runs/45305659893">45305659893</a>            |
 | Ref          | <code>refs/heads/main</code>                                                               |
-| Event commit | <code>ee2cfc8620e2e720c0483773a049e85d302c716c</code> (in the history of the built commit) |
+| Event commit | <code>a238f1512bef214a99e1ee1b4aae5cdf3c25f4cf</code> (in the history of the built commit) |
 
 ## Tools
 
@@ -687,13 +685,13 @@ The documentation and the package may be misaligned:
 
 ## Package on PyPI
 
-Latest release: <a href="https://pypi.org/project/jy/0.1.23/">0.1.23</a>, newer than the documented version (0.1.22).
+Latest release: <a href="https://pypi.org/project/jy/0.1.23/">0.1.23</a>, the same as the documented version.
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/i2mint/jy && cd jy
-git checkout ee2cfc8620e2e720c0483773a049e85d302c716c
+git checkout a238f1512bef214a99e1ee1b4aae5cdf3c25f4cf
 pip install "epythet==0.2.25"
 epythet quickstart . --ignore tests/ scrap/ examples/
 ```
