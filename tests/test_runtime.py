@@ -75,3 +75,12 @@ def test_playwright_runtime_without_playwright_names_the_extra(monkeypatch):
     monkeypatch.setattr(builtins, "__import__", no_playwright)
     with pytest.raises(JsRuntimeError, match="browser"):
         PlaywrightRuntime("")("1")
+
+
+@pytest.mark.skipif(not shutil.which("node"), reason="node not installed")
+@pytest.mark.parametrize("sep", [" ", " ", "\x85", "\x0b", "\x1c"])
+def test_node_runtime_returns_strings_with_unicode_line_separators(sep):
+    """JSON.stringify leaves these unescaped; the result line must not be split on them."""
+    js = add_js_funcs(CODE, runtime=NodeRuntime(CODE))
+    assert js.echo(f"a{sep}b") == f"a{sep}b"
+    assert js.echo({"k": f"é{sep}"}) == {"k": f"é{sep}"}
