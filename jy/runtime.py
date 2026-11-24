@@ -70,11 +70,14 @@ class NodeRuntime:
             input=self.script(call_text),
             capture_output=True,
             text=True,
+            encoding="utf-8",  # node reads and writes UTF-8 whatever the locale
             timeout=self.timeout,
         )
         if proc.returncode != 0:
             raise JsRuntimeError(f"node failed: {proc.stderr.strip()}")
-        for line in reversed(proc.stdout.splitlines()):
+        # Split on "\n" only: str.splitlines also splits on U+2028, U+2029 and \x85,
+        # which JSON.stringify leaves unescaped inside strings.
+        for line in reversed(proc.stdout.split("\n")):
             if line.startswith(RESULT_MARKER):
                 return json.loads(line[len(RESULT_MARKER) :])
         raise JsRuntimeError("the JS call produced no result")
